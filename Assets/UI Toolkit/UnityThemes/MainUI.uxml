@@ -1,0 +1,13 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <ui:VisualElement style="flex-grow: 1; -unity-background-image-tint-color: rgb(0, 0, 0); background-color: rgb(106, 144, 180); -unity-slice-type: sliced; flex-direction: column; width: auto;">
+        <ui:Button text="Top" name="TopButton" style="border-top-left-radius: 10px; border-top-right-radius: 10px; border-bottom-right-radius: 10px; border-bottom-left-radius: 10px; border-top-width: 1px; border-right-width: 1px; border-bottom-width: 1px; border-left-width: 1px; margin-top: 6px; margin-right: 6px; margin-bottom: 6px; margin-left: 4px;" />
+        <ui:Button text="Middle" name="MiddleButton" style="border-top-left-radius: 10px; border-top-right-radius: 10px; border-bottom-right-radius: 10px; border-bottom-left-radius: 10px;" />
+        <ui:Button text="Bottom" name="BottomButton" style="border-top-left-radius: 10px; border-top-right-radius: 10px; border-bottom-right-radius: 10px; border-bottom-left-radius: 10px; margin-top: 2px; margin-right: 6px; margin-bottom: 6px; margin-left: 4px;" />
+    </ui:VisualElement>
+    <ui:VisualElement style="flex-grow: 1;">
+        <ui:Toggle label="Toggle1" name="TopToggle" />
+        <ui:Toggle label="Toggle2" name="BottomToggle" />
+    </ui:VisualElement>
+    <ui:VisualElement style="flex-grow: 1;" />
+    <ui:Slider label="Slider" value="42" high-value="100" name="MySlider" style="color: rgb(255, 255, 255);" />
+</ui:UXML>
