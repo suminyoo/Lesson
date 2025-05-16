@@ -27,7 +27,6 @@ public class MainUI : MonoBehaviour
         bottomButton = root.Q<Button>("BottomButton");
 
         mySlider = root.Q<Slider>("MySlider");
-        m_Slider = root.Q<Slider>("MySlider");
 
         if (topButton != null)
             topButton.clicked += OnMyButtonClick;
@@ -45,10 +44,12 @@ public class MainUI : MonoBehaviour
                 var newValue = v.newValue;
                 Debug.Log(v.newValue);
             });
+
         }
 
-
     }
+
+
     private void OnMyButtonClick()
     {
         StartCoroutine("ZeroToHundredCor");
