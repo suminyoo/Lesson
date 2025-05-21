@@ -6,28 +6,36 @@ public class Player : MonoBehaviour
 {
     //충돌시 이벤트발생: Action<GameObject> 만들어서 invoke();
     //어떤 오브젝트에 충돌했는지 알기 위함
-    public static event Action OnPlayerHitSomethingEvent;
-    public static event Action<GameObject> OnPlayerHitSomethingEventWithObj;
-    
+    public static event Action OnPlayerCollisionEvent;
+    public static event Action<GameObject> OnPlayerCollisionEventWithObj;
 
-
+    public static event Action OnPlayerTriggerEvent;
+    public static event Action<GameObject> OnPlayerTriggerEventWithObj;
 
     public Animator anim;
     public Rigidbody rigid;
-    public float moveSpeed = 5f;
+    public float moveSpeed = 5.0f;
+    public float jumpPower = 5.0f;
+    public bool isGrounded = true;
     private float h;
     private float v;
 
+    public int hp = 100;
     private void OnCollisionEnter(Collision collision) //부딪혔을때 캐릭터나 충돌체에 영향이 갈때
     {
-        OnPlayerHitSomethingEvent?.Invoke();
-        OnPlayerHitSomethingEventWithObj?.Invoke(collision.gameObject);
-        //어떤 물체와 부딫혔는지 로그창으로 확인할 수 있게
+        OnPlayerCollisionEvent?.Invoke();
+        OnPlayerCollisionEventWithObj?.Invoke(collision.gameObject);
+
+        if (collision.gameObject.CompareTag("Ground"))
+        {
+            isGrounded = true;
+        }
     }
 
-    private void OnTriggerEnter(Collider other) //주딪혔을때 영향은 없고 점수가 변경된다거나?
+    private void OnTriggerEnter(Collider other) //부딪혔을때 영향은 없고 점수가 변경된다거나? 아이템 같은거
     {
-        OnPlayerHitSomethingEventWithObj?.Invoke(other.gameObject);
+        OnPlayerTriggerEvent.Invoke();
+        OnPlayerTriggerEventWithObj?.Invoke(other.gameObject);
 
     }
 
@@ -52,9 +60,15 @@ public class Player : MonoBehaviour
         {
             anim.SetTrigger("Attack04");
         }
-        if (Input.GetKeyDown(KeyCode.Space))
+
+
+        if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
         {
             anim.SetTrigger("Jump");
+
+            rigid.AddForce(Vector3.up * jumpPower, ForceMode.Impulse);
+
+            isGrounded = false;
         }
 
     }
@@ -64,25 +78,23 @@ public class Player : MonoBehaviour
         Vector3 movement = new Vector3(h, 0, v).normalized;
         float movementSpeed = movement.magnitude;
 
-        // 애니메이션 속도 업데이트
-        //anim.SetFloat("Speed", movementSpeed);
-
-        // 캐릭터 회전 및 이동 처리
         if (movementSpeed > 0.1f) // 이동 시에만 회전 및 이동 처리
         {
             anim.SetBool("Walk", true);
-            // 회전 처리 (Slerp 사용해 부드럽게)
-            Quaternion newRotation = Quaternion.LookRotation(movement);
+            Quaternion newRotation = Quaternion.LookRotation(movement);// 회전 처리 (Slerp 사용해 부드럽게)
             rigid.MoveRotation(Quaternion.Slerp(transform.rotation, newRotation, 0.2f));
-
-            // Rigidbody를 사용한 이동 처리
             rigid.MovePosition(transform.position + movement * moveSpeed * Time.fixedDeltaTime);
         }
         else
         {
             anim.SetBool("Walk", false);
-            // 멈출 때 Idle 애니메이션 상태 유지
-            //anim.SetTrigger("Idle");
         }
+
     }
+
+    public void ChangePlayerHP(int var)
+    {
+        hp += var;
+    }
+
 }
