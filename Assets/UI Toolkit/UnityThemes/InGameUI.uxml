@@ -1,0 +1,10 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <ui:VisualElement name="Background" style="flex-grow: 1; flex-direction: column; align-items: auto; justify-content: flex-start; align-self: flex-start; align-content: flex-start;">
+        <ui:VisualElement name="PlayerInfo" style="flex-grow: 1; flex-direction: row; background-image: url(&quot;project://database/Assets/OArielG/2DSimpleUIPack/Examples/Graphics/ui-large-buttons-horizontal.png?fileID=-6811698044768618517&amp;guid=3316aabd5dd7e2743ad1214e35350560&amp;type=3#ui-large-buttons-horizontal_21&quot;); align-self: center; justify-content: flex-start; -unity-text-align: middle-left; align-content: auto; width: 166px; max-height: 50px; flex-shrink: 1; background-size: 100% 100%; background-position-x: left 0; background-position-y: bottom 0; -unity-background-scale-mode: scale-to-fit;">
+            <ui:VisualElement name="HP" style="flex-grow: 1; flex-direction: row; border-top-width: 15px; border-right-width: 15px; border-bottom-width: 15px; border-left-width: 20px; height: 51px;">
+                <ui:Label text="HP:" name="HPLabel" style="-unity-font-style: bold;" />
+                <ui:Label text="100" name="HPVar" style="-unity-font-style: bold;" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>
