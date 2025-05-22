@@ -1,7 +1,6 @@
 using System;
 using UnityEngine;
 
-
 public class Player : MonoBehaviour
 {
     //충돌시 이벤트발생: Action<GameObject> 만들어서 invoke();
@@ -16,15 +15,20 @@ public class Player : MonoBehaviour
     public Rigidbody rigid;
     public Transform cameraTransform;
 
-    float turnSpeed = 0.05f; // 더 작을수록 느림
-
+    public float turnSpeed = 0.05f; // 더 작을수록 느림
     public float moveSpeed = 5.0f;
     public float jumpPower = 5.0f;
+
     public bool isGrounded = true;
+
     private float h;
     private float v;
 
     public int hp = 100;
+    public int life = 3;
+
+
+
     private void OnCollisionEnter(Collision collision) //부딪혔을때 캐릭터나 충돌체에 영향이 갈때
     {
         OnPlayerCollisionEvent?.Invoke();
@@ -34,6 +38,7 @@ public class Player : MonoBehaviour
         {
             isGrounded = true;
         }
+
     }
 
     private void OnTriggerEnter(Collider other) //부딪혔을때 영향은 없고 점수가 변경된다거나? 아이템 같은거
@@ -66,16 +71,20 @@ public class Player : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
         {
             anim.SetTrigger("Jump");
-
             rigid.AddForce(Vector3.up * jumpPower, ForceMode.Impulse);
-
             isGrounded = false;
         }
 
     }
 
+    public void OnDie()
+    {
+        life -= 1;
+    }
+
     void FixedUpdate()
     {
+        //플레이어 이동
         Vector3 inputDir = new Vector3(h, 0, v).normalized;
 
         if (inputDir.magnitude < 0.1f)
@@ -112,5 +121,11 @@ public class Player : MonoBehaviour
     {
         hp += var;
     }
+    public void PushPlayer(int pow)
+    {
+        //rigid.AddForce(Vector3.up * pow, ForceMode.Impulse);
+
+    }
+
 
 }

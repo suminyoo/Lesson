@@ -9,6 +9,7 @@ TagManager:
   - Item
   - Life
   - Ground
+  - Bomb
   layers:
   - Default
   - TransparentFX
