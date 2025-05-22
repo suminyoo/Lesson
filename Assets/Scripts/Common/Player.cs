@@ -14,6 +14,10 @@ public class Player : MonoBehaviour
 
     public Animator anim;
     public Rigidbody rigid;
+    public Transform cameraTransform;
+
+    float turnSpeed = 0.05f; // 더 작을수록 느림
+
     public float moveSpeed = 5.0f;
     public float jumpPower = 5.0f;
     public bool isGrounded = true;
@@ -49,9 +53,6 @@ public class Player : MonoBehaviour
         h = Input.GetAxis("Horizontal");
         v = Input.GetAxis("Vertical");
 
-        //transform.Translate(Vector3.forward * moveSpeed * h * Time.deltaTime);
-        //transform.Translate(Vector3.left * moveSpeed * v * Time.deltaTime);
-
         if (Input.GetKeyDown(KeyCode.Z)) 
         {
             anim.SetTrigger("Attack01");
@@ -72,24 +73,39 @@ public class Player : MonoBehaviour
         }
 
     }
-    private void FixedUpdate()
-    {
-        // 이동 방향 및 속도 계산 (단일 계산 후 재사용)
-        Vector3 movement = new Vector3(h, 0, v).normalized;
-        float movementSpeed = movement.magnitude;
 
-        if (movementSpeed > 0.1f) // 이동 시에만 회전 및 이동 처리
-        {
-            anim.SetBool("Walk", true);
-            Quaternion newRotation = Quaternion.LookRotation(movement);// 회전 처리 (Slerp 사용해 부드럽게)
-            rigid.MoveRotation(Quaternion.Slerp(transform.rotation, newRotation, 0.2f));
-            rigid.MovePosition(transform.position + movement * moveSpeed * Time.fixedDeltaTime);
-        }
-        else
+    void FixedUpdate()
+    {
+        Vector3 inputDir = new Vector3(h, 0, v).normalized;
+
+        if (inputDir.magnitude < 0.1f)
         {
             anim.SetBool("Walk", false);
+            return;
         }
 
+        // 1. 카메라 기준 방향 계산
+        Vector3 camForward = cameraTransform.forward;
+        Vector3 camRight = cameraTransform.right;
+        camForward.y = 0;
+        camRight.y = 0;
+        camForward.Normalize();
+        camRight.Normalize();
+
+        // 2. 이동 방향을 카메라 기준으로 변환
+        Vector3 moveDir = camForward * inputDir.z + camRight * inputDir.x;
+
+        // 3. 회전 (부드럽게)
+        Quaternion targetRotation = Quaternion.LookRotation(moveDir);
+        Quaternion smoothedRotation = Quaternion.Slerp(transform.rotation, targetRotation, turnSpeed);
+        rigid.MoveRotation(smoothedRotation);
+
+        // 4. 이동
+        Vector3 moveAmount = moveDir * moveSpeed * Time.fixedDeltaTime;
+        rigid.MovePosition(rigid.position + moveAmount);
+
+        // 5. 애니메이션 처리
+        anim.SetBool("Walk", true);
     }
 
     public void ChangePlayerHP(int var)

@@ -1,16 +1,22 @@
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.UIElements;
 
 public class InGameUI : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    [SerializeField] UIDocument myUI;
+    [SerializeField] Player player;
+
+    private Label hpVar ;
     void Start()
     {
-        
+        VisualElement root = myUI.rootVisualElement;
+        hpVar = root.Q<Label>("HPVar");
     }
 
-    // Update is called once per frame
-    void Update()
+    public void ChangePlayerHP(int var)
     {
-        
+        hpVar.text = var.ToString();
     }
+
 }
