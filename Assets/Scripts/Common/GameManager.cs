@@ -9,18 +9,14 @@ public class GameManager : MonoBehaviour
 
     public int stage = 0;
 
-
-
     public void Start()
     {
         ChangeStage();
         ChangePlayerLife();
 
-        Player.OnPlayerCollisionEvent += playerCollision;
         Player.OnPlayerCollisionEventWithObj += playerCollisionObj;
-
-        Player.OnPlayerTriggerEvent += playerTrigger;
         Player.OnPlayerTriggerEventWithObj += playerTriggerObj;
+        Player.OnPlayerDie += PlayerDie;
     }
 
     private void ChangeStage()
@@ -29,64 +25,32 @@ public class GameManager : MonoBehaviour
         inGameUIDoc.ChangeStageUI(stage);
 
     }
-    private void ChangePlayerHP(int var)
+    private void PlayerDie()
     {
-        player.ChangePlayerHP(var);
-        if (player.hp <= 0) 
-        {
-            player.OnDie();
-            ChangePlayerLife();
-        }
-        inGameUIDoc.ChangePlayerHPUI(player.hp);
+        ChangePlayerHP();
+        ChangePlayerLife();
+    }
 
+    private void ChangePlayerHP()
+    {
+        inGameUIDoc.ChangePlayerHPUI(player.hp);
     }
 
     private void ChangePlayerLife()
     {
         inGameUIDoc.ChangePlayerLifeUI(player.life);
-
     }
 
-
-    private void playerCollision()
-    {
-        //Debug.Log("Player Got Hit");
-    }
     private void playerCollisionObj(GameObject obj)
     {
         Debug.Log("Player Got Hit by " + obj.gameObject.name);
-
-        if (obj == null) { return; }
-
-        if(obj.layer == 6) 
-        {
-            ChangePlayerHP(-10);
-            if (obj.gameObject.CompareTag("Bomb"))
-            {
-                //플레이어 뒤로 넘어감
-                player.PushPlayer(10);
-
-            }
-        }
-
-
+        inGameUIDoc.ChangePlayerHPUI(player.hp);
     }
-    private void playerTrigger()
-    {
-        Debug.Log("Player Trigger");
-    }
+
     private void playerTriggerObj(GameObject obj)
     {
         Debug.Log("Player Triggered " + obj.gameObject.name);
-        if (obj == null) { return; }
+        inGameUIDoc.ChangePlayerHPUI(player.hp);
 
-        if (obj.layer == 7)
-        {
-            if (obj.tag == "Life")
-            {
-                ChangePlayerHP(10);
-                obj.SetActive(false);
-            }
-        }
     }
 }

@@ -1,15 +1,15 @@
 using System;
+using System.Collections;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    //충돌시 이벤트발생: Action<GameObject> 만들어서 invoke();
-    //어떤 오브젝트에 충돌했는지 알기 위함
-    public static event Action OnPlayerCollisionEvent;
     public static event Action<GameObject> OnPlayerCollisionEventWithObj;
-
-    public static event Action OnPlayerTriggerEvent;
     public static event Action<GameObject> OnPlayerTriggerEventWithObj;
+
+    public static event Action OnPlayerDie;
+
 
     public Animator anim;
     public Rigidbody rigid;
@@ -27,25 +27,50 @@ public class Player : MonoBehaviour
     public int hp = 100;
     public int life = 3;
 
-
+    Vector3 playerRespawnPosition = new Vector3(7, 5, 12);
 
     private void OnCollisionEnter(Collision collision) //부딪혔을때 캐릭터나 충돌체에 영향이 갈때
     {
-        OnPlayerCollisionEvent?.Invoke();
-        OnPlayerCollisionEventWithObj?.Invoke(collision.gameObject);
-
         if (collision.gameObject.CompareTag("Ground"))
         {
             isGrounded = true;
         }
+        if (collision == null) { return; }
+
+        if (collision.gameObject.layer == 6)
+        {
+            if (collision.gameObject.CompareTag("Bomb"))
+            {
+                ChangePlayerHP(-100);
+            }
+            else if (collision.gameObject.CompareTag("Hammer"))
+            {
+                StartCoroutine(BounceOffPlayer(10));
+            }
+            else
+            {
+                ChangePlayerHP(-10);
+            }
+        }
+
+
+        OnPlayerCollisionEventWithObj?.Invoke(collision.gameObject);
 
     }
 
     private void OnTriggerEnter(Collider other) //부딪혔을때 영향은 없고 점수가 변경된다거나? 아이템 같은거
     {
-        OnPlayerTriggerEvent.Invoke();
-        OnPlayerTriggerEventWithObj?.Invoke(other.gameObject);
+        if (other == null) { return; }
 
+        if (other.gameObject.layer == 7)
+        {
+            if (other.tag == "Life")
+            {
+                ChangePlayerHP(10);
+                other.gameObject.SetActive(false);
+            }
+        }
+        OnPlayerTriggerEventWithObj?.Invoke(other.gameObject);
     }
 
     private void Start()
@@ -80,6 +105,8 @@ public class Player : MonoBehaviour
     public void OnDie()
     {
         life -= 1;
+        hp = 100;
+        transform.position = playerRespawnPosition;
     }
 
     void FixedUpdate()
@@ -120,12 +147,36 @@ public class Player : MonoBehaviour
     public void ChangePlayerHP(int var)
     {
         hp += var;
+        if(hp > 100)
+        {
+            hp = 100;
+        }
+        if (hp <= 0)
+        {
+            OnDie();
+            OnPlayerDie.Invoke();
+
+        }
+
     }
-    public void PushPlayer(int pow)
+    public float duration = 1.5f;
+    public IEnumerator BounceOffPlayer(int pow)
     {
-        //rigid.AddForce(Vector3.up * pow, ForceMode.Impulse);
+        
+        Vector3 dir = new Vector3(0.5f, 0.5f, 0);
+
+        float elapsed = 0f;
+        while (elapsed < duration)
+        {
+            float t = elapsed / duration;
+            transform.position = Vector3.Slerp(transform.position, transform.position + dir, 0.1f);
+
+            elapsed += Time.deltaTime;
+            yield return null; 
+
+        }
+
+        //mesh collider로 부딫힌 방향을 알고 그 방향의 반대로 튕길 수 있게
 
     }
-
-
 }

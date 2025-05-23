@@ -23,12 +23,16 @@ public class InGameUI : MonoBehaviour
         lifeLabel = root.Q<Label>("Life");
         timeLabel = root.Q<Label>("Time");
 
+    }
+    private void Update()
+    {
+        //ShowTimeUI();
 
     }
 
     public void ShowTimeUI()
     {
-        timeLabel.text = Time.deltaTime.ToString();
+        timeLabel.text = Time.time.ToString();
     }
 
     public void ChangePlayerHPUI(int var)

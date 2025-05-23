@@ -1,10 +1,13 @@
 using System;
 using UnityEngine;
 
-public class Trap : MonoBehaviour
+public class HiddenTrap : MonoBehaviour
 {
     public MeshRenderer meshR;
     public MeshRenderer meshR02;
+
+    //즉사, 넉백, 이동방해
+
 
     //사운드와 이펙트를 위한 이벤트 퍼블리셔와 리스너들
     //SoundManager EffectManager
