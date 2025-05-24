@@ -2,14 +2,14 @@ using System;
 using System.Collections;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class Player : MonoBehaviour
 {
-    public static event Action<GameObject> OnPlayerCollisionEventWithObj;
-    public static event Action<GameObject> OnPlayerTriggerEventWithObj;
+    public static event Action<Player, GameObject> OnPlayerCollisionEventWithObj;
+    public static event Action<Player, GameObject> OnPlayerTriggerEventWithObj;
 
     public static event Action OnPlayerDie;
-
 
     public Animator anim;
     public Rigidbody rigid;
@@ -24,60 +24,52 @@ public class Player : MonoBehaviour
     private float h;
     private float v;
 
-    public int hp = 100;
-    public int life = 3;
+    public int hp;
+    public int life;
 
-    Vector3 playerRespawnPosition = new Vector3(7, 5, 12);
+    Vector3 playerRespawnPosition;
 
-    private void OnCollisionEnter(Collision collision) //부딪혔을때 캐릭터나 충돌체에 영향이 갈때
+    private void Awake()
     {
-        if (collision.gameObject.CompareTag("Ground"))
-        {
-            isGrounded = true;
-        }
-        if (collision == null) { return; }
-
-        if (collision.gameObject.layer == 6)
-        {
-            if (collision.gameObject.CompareTag("Bomb"))
-            {
-                ChangePlayerHP(-100);
-            }
-            else if (collision.gameObject.CompareTag("Hammer"))
-            {
-                StartCoroutine(BounceOffPlayer(10));
-            }
-            else
-            {
-                ChangePlayerHP(-10);
-            }
-        }
-
-
-        OnPlayerCollisionEventWithObj?.Invoke(collision.gameObject);
-
+        InitializePlayer();
     }
 
-    private void OnTriggerEnter(Collider other) //부딪혔을때 영향은 없고 점수가 변경된다거나? 아이템 같은거
+    private void InitializePlayer()
     {
-        if (other == null) { return; }
-
-        if (other.gameObject.layer == 7)
-        {
-            if (other.tag == "Life")
-            {
-                ChangePlayerHP(10);
-                other.gameObject.SetActive(false);
-            }
-        }
-        OnPlayerTriggerEventWithObj?.Invoke(other.gameObject);
+        hp = 100;
+        life = 3;
+        playerRespawnPosition = new Vector3(7, 5, 12);
     }
 
     private void Start()
     {
         anim = GetComponent<Animator>();
         rigid = GetComponent<Rigidbody>();
+
+
     }
+    //private void OnPlayerTrapCollisionEvent(Player player, Trap trap)
+    //{
+    //    OnPlayerCollisionEventWithObj?.Invoke(player, trap.gameObject);
+
+    //}
+    //private void OnPlayerTrapTriggerEvent(Player player, Trap trap)
+    //{
+    //    OnPlayerTriggerEventWithObj?.Invoke(player, trap.gameObject);
+
+    //}
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Ground")) isGrounded = true;
+
+        if (collision.gameObject.CompareTag("Life")) ChangePlayerHP(20);
+
+        if (collision == null) { return; }
+
+
+    }
+
     void Update()
     {
         h = Input.GetAxis("Horizontal");
@@ -92,7 +84,6 @@ public class Player : MonoBehaviour
             anim.SetTrigger("Attack04");
         }
 
-
         if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
         {
             anim.SetTrigger("Jump");
@@ -102,6 +93,12 @@ public class Player : MonoBehaviour
 
     }
 
+
+
+    void FixedUpdate()
+    {
+        PlayerMovement();
+    }
     public void OnDie()
     {
         life -= 1;
@@ -109,8 +106,31 @@ public class Player : MonoBehaviour
         transform.position = playerRespawnPosition;
     }
 
-    void FixedUpdate()
+    public void ChangePlayerHP(int var)
     {
+        Debug.Log("ChangePlayerHP: " + hp);
+        hp += var;
+        if (hp > 100)
+        {
+            hp = 100;
+        }
+        if (hp <= 0)
+        {
+            OnDie();
+            OnPlayerDie.Invoke();
+
+        }
+
+    }
+
+    public void ChangePlayerSpeed(float speed)
+    {
+        moveSpeed = speed;
+    }
+
+    private void PlayerMovement()
+    {
+
         //플레이어 이동
         Vector3 inputDir = new Vector3(h, 0, v).normalized;
 
@@ -143,40 +163,5 @@ public class Player : MonoBehaviour
         // 5. 애니메이션 처리
         anim.SetBool("Walk", true);
     }
-
-    public void ChangePlayerHP(int var)
-    {
-        hp += var;
-        if(hp > 100)
-        {
-            hp = 100;
-        }
-        if (hp <= 0)
-        {
-            OnDie();
-            OnPlayerDie.Invoke();
-
-        }
-
-    }
-    public float duration = 1.5f;
-    public IEnumerator BounceOffPlayer(int pow)
-    {
-        
-        Vector3 dir = new Vector3(0.5f, 0.5f, 0);
-
-        float elapsed = 0f;
-        while (elapsed < duration)
-        {
-            float t = elapsed / duration;
-            transform.position = Vector3.Slerp(transform.position, transform.position + dir, 0.1f);
-
-            elapsed += Time.deltaTime;
-            yield return null; 
-
-        }
-
-        //mesh collider로 부딫힌 방향을 알고 그 방향의 반대로 튕길 수 있게
-
-    }
+   
 }

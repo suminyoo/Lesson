@@ -1,20 +1,17 @@
 using System;
 using UnityEngine;
 
-public class HiddenTrap : MonoBehaviour
+public class HiddenTrap : Trap
 {
-    public MeshRenderer meshR;
-    public MeshRenderer meshR02;
-
-    //즉사, 넉백, 이동방해
-
-
     //사운드와 이펙트를 위한 이벤트 퍼블리셔와 리스너들
     //SoundManager EffectManager
-    public static event Action<Vector3> OnTrapActivateEvent;
+    //public static event Action<Vector3> OnTrapActivateEvent;
 
 
-    void Start()
+    [SerializeField] private MeshRenderer meshR;
+    [SerializeField] private MeshRenderer meshR02;
+
+    private void Start()
     {
         meshR.enabled = false;
         meshR02.enabled = false;
@@ -22,18 +19,21 @@ public class HiddenTrap : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        //OnTrapActivateEvent.Invoke(transform.position);
-        if (other.gameObject == null) return;
-        if(other.gameObject.tag == "Player")
+        if (other.CompareTag("Player"))
         {
             meshR.enabled = true;
             meshR02.enabled = true;
         }
+        if (other.TryGetComponent<Player>(out var player))
+        {
+            TrapTrigger(player);
+            base.TrapTrigger(player);
+        }
     }
+
     private void OnTriggerExit(Collider other)
     {
-        if (other.gameObject == null) return;
-        if (other.gameObject.tag == "Player")
+        if (other.CompareTag("Player"))
         {
             meshR.enabled = false;
             meshR02.enabled = false;

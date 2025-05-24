@@ -30,24 +30,28 @@ public class InGameUI : MonoBehaviour
 
     }
 
-    public void ShowTimeUI()
+    public void UIShowTime()
     {
         timeLabel.text = Time.time.ToString();
     }
 
-    public void ChangePlayerHPUI(int var)
+    public void UIChangePlayerHP(int var)
     {
+        Debug.Log("UI UIChangePlayerHP: " + var);
+
         hpbar.value = var;
     }
-    public void ChangeStageUI(int var)
+    public void UIChangeStage(int var)
     {
-        Debug.Log("change stage var is " + var);
-        Debug.Log("stageLabel " + stageLabel);
+        Debug.Log("UI UIChangeStage: " + var);
+
         stageLabel.text = "Stage: " + var.ToString();
 
     }
-    public void ChangePlayerLifeUI(int var)
+    public void UIChangePlayerLife(int var)
     {
+        Debug.Log("UI UIChangePlayerLife: " + var);
+
         lifeLabel.text = "Life: " + var.ToString();
     }
 
