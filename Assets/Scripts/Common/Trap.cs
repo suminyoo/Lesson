@@ -3,36 +3,16 @@ using UnityEngine;
 
 public class Trap : MonoBehaviour
 {
-    public static event Action<Player, Trap> OnAnyTrapTrigger;
-    public static event Action<Player, Trap> OnAnyTrapCollision;
-    private void OnCollisionEnter(Collision collision)
-    {
-        Player player = collision.gameObject.GetComponent<Player>();
+    public static event Action<Trap> OnAnyTrapTrigger;
+    public static event Action<Trap> OnAnyTrapCollision;
 
-        if (player != null)
-        {
-            TrapCollision(player);
-        }
-    }
-    private void OnTriggerEnter(Collider other)
+    protected virtual void OnCollisionEnter(Collision collision)
     {
-        if (other.TryGetComponent(out Player player))
-        {
-            TrapTrigger(player);
-        }
+        OnAnyTrapCollision?.Invoke(this);
     }
-
-    protected virtual void TrapCollision(Player player) //필수 호출
+    protected virtual void OnTriggerEnter(Collider other)
     {
-        Debug.Log("Trap Collision" + this);
-        OnAnyTrapCollision?.Invoke(player, this);
+        OnAnyTrapTrigger?.Invoke(this);
     }
-    protected virtual void TrapTrigger(Player player) //필수 호출
-    {
-        Debug.Log("Trap triggered" + this);
-        OnAnyTrapTrigger?.Invoke(player, this);
-    }
-
-
 
 }

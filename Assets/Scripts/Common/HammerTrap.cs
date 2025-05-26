@@ -7,25 +7,15 @@ public class HammerTrap : Trap
 {
     [SerializeField] private int damage = 10;
     public float duration = 1.5f;
-
-    protected override void TrapCollision(Player player)
+    protected override void OnCollisionEnter(Collision collision)
     {
-        Debug.Log("HammerTrap " + damage);
+        collision.gameObject.GetComponent<Player>().ChangePlayerHP(-damage);
+        // 충돌한 지점 중 첫 번째를 사용
+        Vector3 contact = collision.GetContact(0).point;
 
-        player.ChangePlayerHP(-damage);
-        base.TrapCollision(player);
-    }
+        StartCoroutine(BounceOffObj(collision.gameObject.GetComponent<Player>(), contact));
+        base.OnCollisionEnter(collision);
 
-    private void OnCollisionEnter(Collision collision)
-    {
-        if (collision.gameObject.TryGetComponent(out Player player))
-        {
-            // 충돌한 지점 중 첫 번째를 사용
-            Vector3 contact = collision.GetContact(0).point;
-
-            StartCoroutine(BounceOffObj(player, contact));
-            TrapCollision(player);
-        }
     }
     public IEnumerator BounceOffObj(Player player, Vector3 contactPoint)
     {

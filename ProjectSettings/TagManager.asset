@@ -12,6 +12,8 @@ TagManager:
   - Bomb
   - Hammer
   - Spikes
+  - Clear
+  - DeathArea
   layers:
   - Default
   - TransparentFX

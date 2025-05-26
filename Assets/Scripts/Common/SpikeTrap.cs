@@ -3,13 +3,11 @@ using UnityEngine;
 
 public class SpikeTrap : Trap
 {
-
     [SerializeField] private int damage = 10;
-
-    protected override void TrapCollision(Player player)
+    protected override void OnCollisionEnter(Collision collision)
     {
-        Debug.Log("Spike " + damage);
-        player.ChangePlayerHP(-damage);
-        base.TrapCollision(player);
+        collision.gameObject.GetComponent<Player>().ChangePlayerHP(-damage);
+        base.OnCollisionEnter(collision);
     }
+
 }

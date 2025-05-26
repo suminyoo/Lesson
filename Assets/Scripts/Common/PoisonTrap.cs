@@ -8,37 +8,30 @@ public class PoisonTrap : Trap
     public float tickInterval = 1.0f;
 
     private float tickTimer = 0f;
+    protected override void OnTriggerEnter(Collider other)
+    {
+        other.GetComponent<Player>().ChangePlayerSpeed(2);
+        base.OnTriggerEnter(other);
+    }
 
     private void OnTriggerStay(Collider other)
     {
-        if (other.TryGetComponent<Player>(out var player))
-        {
-            tickTimer -= Time.deltaTime;
+        tickTimer -= Time.deltaTime;
 
-            if (tickTimer <= 0f)
-            {
-                TrapTrigger(player);
-                tickTimer = tickInterval;
-            }
+        if (tickTimer <= 0f)
+        {
+            tickTimer = tickInterval;
+            other.GetComponent<Player>().ChangePlayerHP(-damage);
+            base.OnTriggerEnter(other);
         }
+
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Player"))
-        {
-            tickTimer = 0f; // 빠져나가면 즉시 리셋
-        }
+        tickTimer = 0f; // 빠져나가면 리셋
+        other.GetComponent<Player>().ChangePlayerSpeed(5);
     }
-
-    protected override void TrapTrigger(Player player)
-    {
-        Debug.Log("PoisonTrap " + damage);
-
-        player.ChangePlayerHP(-damage);
-        base.TrapTrigger(player);
-    }
-
 
 
 }

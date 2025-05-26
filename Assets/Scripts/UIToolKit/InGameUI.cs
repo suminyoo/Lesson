@@ -6,14 +6,11 @@ using UnityEngine.UIElements;
 public class InGameUI : MonoBehaviour
 {
     [SerializeField] UIDocument myUI;
-    [SerializeField] Player player;
 
     private ProgressBar hpbar;
     private Label stageLabel;
     private Label lifeLabel;
     private Label timeLabel;
-
-
 
     void Awake()
     {

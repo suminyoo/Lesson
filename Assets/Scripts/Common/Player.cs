@@ -9,6 +9,8 @@ public class Player : MonoBehaviour
     public static event Action<Player, GameObject> OnPlayerCollisionEventWithObj;
     public static event Action<Player, GameObject> OnPlayerTriggerEventWithObj;
 
+    public static event Action OnGameEnd;
+
     public static event Action OnPlayerDie;
 
     public Animator anim;
@@ -38,7 +40,7 @@ public class Player : MonoBehaviour
     {
         hp = 100;
         life = 3;
-        playerRespawnPosition = new Vector3(7, 5, 12);
+        playerRespawnPosition = new Vector3(23, 2, 2.5f);
     }
 
     private void Start()
@@ -46,26 +48,38 @@ public class Player : MonoBehaviour
         anim = GetComponent<Animator>();
         rigid = GetComponent<Rigidbody>();
 
-
     }
-    //private void OnPlayerTrapCollisionEvent(Player player, Trap trap)
-    //{
-    //    OnPlayerCollisionEventWithObj?.Invoke(player, trap.gameObject);
 
-    //}
-    //private void OnPlayerTrapTriggerEvent(Player player, Trap trap)
-    //{
-    //    OnPlayerTriggerEventWithObj?.Invoke(player, trap.gameObject);
-
-    //}
 
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag("Ground")) isGrounded = true;
 
-        if (collision.gameObject.CompareTag("Life")) ChangePlayerHP(20);
 
         if (collision == null) { return; }
+
+        OnPlayerCollisionEventWithObj?.Invoke(this, collision.gameObject);
+
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+
+        if (other.gameObject.CompareTag("Life"))
+        {
+            ChangePlayerHP(20);
+            other.gameObject.SetActive(false);
+        }
+        else if (other.gameObject.CompareTag("Clear"))
+        {
+            OnGameEnd.Invoke();
+        }
+        else if (other.gameObject.CompareTag("DeathArea"))
+        {
+            OnDie();
+        }
+
+        OnPlayerTriggerEventWithObj?.Invoke(this, other.gameObject);
 
 
     }
@@ -103,6 +117,11 @@ public class Player : MonoBehaviour
     {
         life -= 1;
         hp = 100;
+        if(life <= 0) 
+        {
+            OnGameEnd.Invoke();
+        }
+        OnPlayerDie.Invoke();
         transform.position = playerRespawnPosition;
     }
 
@@ -117,7 +136,6 @@ public class Player : MonoBehaviour
         if (hp <= 0)
         {
             OnDie();
-            OnPlayerDie.Invoke();
 
         }
 

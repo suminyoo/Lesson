@@ -1,25 +1,34 @@
-﻿using UnityEngine;
+﻿using System.Xml.Serialization;
+using UnityEngine;
 using UnityEngine.UIElements;
 
 public class GameManager : MonoBehaviour
 {
     public Player player;
     public InGameUI inGameUIDoc;
+    public GameClearUI gameClearUIDoc;
+
 
     public int stage;
 
     public void Start()
     {
+        gameClearUIDoc.ClearUIDeactivate();
         ChangeStage();
         ChangePlayerLife();
 
-        Trap.OnAnyTrapCollision += playerCollisionTrap;
-        Trap.OnAnyTrapTrigger += playerTriggerTrap;
+        Trap.OnAnyTrapCollision += TrapCollision;
+        Trap.OnAnyTrapTrigger += TrapTrigger;
 
-        //Player.OnPlayerCollisionEventWithObj += playerCollisionObj;
-        //Player.OnPlayerTriggerEventWithObj += playerTriggerObj;
+        Player.OnPlayerCollisionEventWithObj += playerCollisionObj;
+        Player.OnPlayerTriggerEventWithObj += playerTriggerObj;
         Player.OnPlayerDie += PlayerDie;
+        Player.OnGameEnd += GameEnd;
 
+    }
+    private void GameEnd()
+    {
+        gameClearUIDoc.ClearUIActivate();
     }
     private void PlayerDie()
     {
@@ -44,26 +53,23 @@ public class GameManager : MonoBehaviour
         inGameUIDoc.UIChangePlayerLife(player.life);
     }
 
-    //private void playerCollisionObj(Player player, GameObject obj)
-    //{
-    //    //Debug.Log("Player Got Hit by " + obj.gameObject.name);
-    //    inGameUIDoc.UIChangePlayerHP(player.hp);
-    //}
+    private void playerCollisionObj(Player player, GameObject obj)
+    {
+        inGameUIDoc.UIChangePlayerHP(player.hp);
+    }
 
-    //private void playerTriggerObj(Player player, GameObject obj)
-    //{
-    //    //Debug.Log("Player Triggered " + obj.gameObject.name);
-    //    inGameUIDoc.UIChangePlayerHP(player.hp);
+    private void playerTriggerObj(Player player, GameObject obj)
+    {
+        inGameUIDoc.UIChangePlayerHP(player.hp);
 
-    //}
-
-    private void playerCollisionTrap(Player player, Trap trap)
+    }
+    private void TrapCollision(Trap trap)
     {
         Debug.Log("Player Got Hit by " + trap.name);
         inGameUIDoc.UIChangePlayerHP(player.hp);
     }
 
-    private void playerTriggerTrap(Player player, Trap trap)
+    private void TrapTrigger(Trap trap)
     {
         Debug.Log("Player Triggered " + trap.name);
         inGameUIDoc.UIChangePlayerHP(player.hp);

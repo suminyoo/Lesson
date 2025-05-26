@@ -17,18 +17,14 @@ public class HiddenTrap : Trap
         meshR02.enabled = false;
     }
 
-    private void OnTriggerEnter(Collider other)
+    protected override void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
             meshR.enabled = true;
             meshR02.enabled = true;
         }
-        if (other.TryGetComponent<Player>(out var player))
-        {
-            TrapTrigger(player);
-            base.TrapTrigger(player);
-        }
+        base.OnTriggerEnter(other);
     }
 
     private void OnTriggerExit(Collider other)
