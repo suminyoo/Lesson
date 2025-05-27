@@ -53,14 +53,18 @@ public class GameManager : MonoBehaviour
         inGameUIDoc.UIChangePlayerLife(player.life);
     }
 
-    private void playerCollisionObj(Player player, GameObject obj)
+    private void playerCollisionObj(GameObject obj)
     {
         inGameUIDoc.UIChangePlayerHP(player.hp);
     }
 
-    private void playerTriggerObj(Player player, GameObject obj)
+    private void playerTriggerObj(GameObject obj)
     {
         inGameUIDoc.UIChangePlayerHP(player.hp);
+
+        inGameUIDoc.ChangeJumpPowerUI(4);
+
+
 
     }
     private void TrapCollision(Trap trap)

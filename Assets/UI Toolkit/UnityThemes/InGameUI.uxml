@@ -2,6 +2,8 @@
     <ui:VisualElement name="Background" style="flex-grow: 1; flex-direction: row;">
         <ui:VisualElement name="LeftInfo" style="flex-grow: 1; color: rgb(255, 255, 255);">
             <ui:ProgressBar value="100" title="HP" name="HP" style="color: rgb(0, 0, 0); -unity-background-image-tint-color: rgb(255, 255, 255); background-color: rgb(255, 255, 255);" />
+            <ui:Label text="Jump Power" name="JumpPower" style="-unity-font-style: bold; -unity-text-outline-width: 0.5px; -unity-text-outline-color: rgb(0, 0, 0);" />
+            <ui:Label text="Speed" name="Speed" style="-unity-text-outline-width: 0.5px; -unity-text-outline-color: rgb(0, 0, 0); -unity-font-style: bold;" />
         </ui:VisualElement>
         <ui:VisualElement name="RightInfo" style="flex-grow: 1; -unity-text-align: upper-right;">
             <ui:Label text="Stage 1" name="Stage" enable-rich-text="false" style="-unity-font-style: bold; color: rgb(255, 255, 255); font-size: 16px; -unity-text-outline-width: 0.5px; -unity-text-outline-color: rgb(0, 0, 0);" />

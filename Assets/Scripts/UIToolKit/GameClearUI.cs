@@ -9,7 +9,7 @@ public class GameClearUI : MonoBehaviour
     void Start()
     {
         VisualElement root = myUI.rootVisualElement;
-        restartButton = root.Q<Button>("Restart");
+        restartButton = root.Q<Button>("NextStage");
         quitButton = root.Q<Button>("Quit");
     }
     public void ClearUIDeactivate()

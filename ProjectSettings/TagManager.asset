@@ -14,6 +14,8 @@ TagManager:
   - Spikes
   - Clear
   - DeathArea
+  - SpeedUp
+  - JumpUp
   layers:
   - Default
   - TransparentFX

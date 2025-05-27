@@ -6,8 +6,12 @@ using UnityEngine.UIElements;
 
 public class Player : MonoBehaviour
 {
-    public static event Action<Player, GameObject> OnPlayerCollisionEventWithObj;
-    public static event Action<Player, GameObject> OnPlayerTriggerEventWithObj;
+    public static event Action<GameObject> OnPlayerCollisionEventWithObj;
+    public static event Action<GameObject> OnPlayerTriggerEventWithObj;
+
+    public static event Action<int> OnPlayerSpeedChangeEvent;
+    public static event Action<int> OnPlayerJumpPowChangeEvent;
+
 
     public static event Action OnGameEnd;
 
@@ -50,7 +54,6 @@ public class Player : MonoBehaviour
 
     }
 
-
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag("Ground")) isGrounded = true;
@@ -58,7 +61,7 @@ public class Player : MonoBehaviour
 
         if (collision == null) { return; }
 
-        OnPlayerCollisionEventWithObj?.Invoke(this, collision.gameObject);
+        OnPlayerCollisionEventWithObj?.Invoke(collision.gameObject);
 
     }
 
@@ -74,12 +77,22 @@ public class Player : MonoBehaviour
         {
             OnGameEnd.Invoke();
         }
+        else if (other.gameObject.CompareTag("SpeedUp"))
+        {
+            ChangePlayerSpeed(8);
+            other.gameObject.SetActive(false);
+        }
+        else if (other.gameObject.CompareTag("JumpUp"))
+        {
+            ChangePlayerJumpPow(8);
+            other.gameObject.SetActive(false);
+        }
         else if (other.gameObject.CompareTag("DeathArea"))
         {
             OnDie();
         }
 
-        OnPlayerTriggerEventWithObj?.Invoke(this, other.gameObject);
+        OnPlayerTriggerEventWithObj?.Invoke(other.gameObject);
 
 
     }
@@ -144,6 +157,13 @@ public class Player : MonoBehaviour
     public void ChangePlayerSpeed(float speed)
     {
         moveSpeed = speed;
+        OnPlayerSpeedChangeEvent.Invoke(8);
+    }
+    public void ChangePlayerJumpPow(float jumpPow)
+    {
+        jumpPower = jumpPow;
+        OnPlayerJumpPowChangeEvent.Invoke(8);
+
     }
 
     private void PlayerMovement()
