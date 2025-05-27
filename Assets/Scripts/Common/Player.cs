@@ -9,11 +9,11 @@ public class Player : MonoBehaviour
     public static event Action<GameObject> OnPlayerCollisionEventWithObj;
     public static event Action<GameObject> OnPlayerTriggerEventWithObj;
 
-    public static event Action<int> OnPlayerSpeedChangeEvent;
-    public static event Action<int> OnPlayerJumpPowChangeEvent;
+    public static event Action<float, float> OnPlayerSpeedChangeEvent;
+    public static event Action<float, float> OnPlayerJumpPowChangeEvent;
 
 
-    public static event Action OnGameEnd;
+    public static event Action OnGameClear;
 
     public static event Action OnPlayerDie;
 
@@ -22,8 +22,22 @@ public class Player : MonoBehaviour
     public Transform cameraTransform;
 
     public float turnSpeed = 0.05f; // 더 작을수록 느림
-    public float moveSpeed = 5.0f;
-    public float jumpPower = 5.0f;
+    public float moveSpeed = 5f;
+    public float jumpPower = 5f;
+
+    public float maxSpeed = 8f;
+    public float maxJumpPow = 8f;
+
+    public float normalSpeed = 5f;
+    public float normalJumpPow = 5f;
+
+    public float speedRemainTime = 5f;
+    public float JumpPowRemainTime = 5f;
+
+   
+    bool SpeedUpUsable;
+    bool JumpPowUpUsable;
+
 
     public bool isGrounded = true;
 
@@ -51,13 +65,11 @@ public class Player : MonoBehaviour
     {
         anim = GetComponent<Animator>();
         rigid = GetComponent<Rigidbody>();
-
     }
 
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag("Ground")) isGrounded = true;
-
 
         if (collision == null) { return; }
 
@@ -75,16 +87,18 @@ public class Player : MonoBehaviour
         }
         else if (other.gameObject.CompareTag("Clear"))
         {
-            OnGameEnd.Invoke();
+            OnGameClear.Invoke();
         }
         else if (other.gameObject.CompareTag("SpeedUp"))
         {
-            ChangePlayerSpeed(8);
+            SpeedUpUsable = false;
+            ChangePlayerSpeed(maxSpeed);
             other.gameObject.SetActive(false);
         }
         else if (other.gameObject.CompareTag("JumpUp"))
         {
-            ChangePlayerJumpPow(8);
+            JumpPowUpUsable = false;
+            ChangePlayerJumpPow(maxJumpPow);
             other.gameObject.SetActive(false);
         }
         else if (other.gameObject.CompareTag("DeathArea"))
@@ -94,6 +108,31 @@ public class Player : MonoBehaviour
 
         OnPlayerTriggerEventWithObj?.Invoke(other.gameObject);
 
+
+    }
+    public void OnDie()
+    {
+        life -= 1;
+        hp = 100;
+        OnPlayerDie.Invoke();
+        transform.position = playerRespawnPosition;
+    }
+    public void ChangePlayerHP(int var)
+    {
+        hp += var;
+        if (hp > 100) hp = 100;
+        if (hp <= 0) OnDie();
+    }
+    public void ChangePlayerSpeed(float speed)
+    {
+        moveSpeed = speed;
+        OnPlayerSpeedChangeEvent.Invoke(normalSpeed, speed);
+
+    }
+    public void ChangePlayerJumpPow(float jumpPow)
+    {
+        jumpPower = jumpPow;
+        OnPlayerJumpPowChangeEvent.Invoke(normalJumpPow, jumpPow);
 
     }
 
@@ -118,52 +157,36 @@ public class Player : MonoBehaviour
             isGrounded = false;
         }
 
+        if (!SpeedUpUsable)
+        {
+            speedRemainTime -= Time.deltaTime;
+            //Debug.Log("speedRemainTime "+ speedRemainTime +" Time.deltaTime" +  Time.deltaTime);
+            if (speedRemainTime < 0)
+            {
+                speedRemainTime = 5f;
+                SpeedUpUsable = true;
+                ChangePlayerSpeed(normalSpeed);
+
+            }
+        }
+        if (!JumpPowUpUsable)
+        {
+            JumpPowRemainTime -= Time.deltaTime;
+            //Debug.Log("JumpPowRemainTime "+ JumpPowRemainTime +" Time.deltaTime" +  Time.deltaTime);
+
+            if (JumpPowRemainTime < 0)
+            {
+                JumpPowRemainTime = 5f;
+                JumpPowUpUsable = true;
+                ChangePlayerJumpPow(normalJumpPow);
+            }
+        }
+
     }
-
-
 
     void FixedUpdate()
     {
         PlayerMovement();
-    }
-    public void OnDie()
-    {
-        life -= 1;
-        hp = 100;
-        if(life <= 0) 
-        {
-            OnGameEnd.Invoke();
-        }
-        OnPlayerDie.Invoke();
-        transform.position = playerRespawnPosition;
-    }
-
-    public void ChangePlayerHP(int var)
-    {
-        Debug.Log("ChangePlayerHP: " + hp);
-        hp += var;
-        if (hp > 100)
-        {
-            hp = 100;
-        }
-        if (hp <= 0)
-        {
-            OnDie();
-
-        }
-
-    }
-
-    public void ChangePlayerSpeed(float speed)
-    {
-        moveSpeed = speed;
-        OnPlayerSpeedChangeEvent.Invoke(8);
-    }
-    public void ChangePlayerJumpPow(float jumpPow)
-    {
-        jumpPower = jumpPow;
-        OnPlayerJumpPowChangeEvent.Invoke(8);
-
     }
 
     private void PlayerMovement()

@@ -1,22 +1,22 @@
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public class GameClearUI : MonoBehaviour
+public class GameOverUI : MonoBehaviour
 {
     [SerializeField] UIDocument myUI;
-    private Button nextStageButton;
+    private Button restartButton;
     private Button quitButton;
     void Start()
     {
         VisualElement root = myUI.rootVisualElement;
-        nextStageButton = root.Q<Button>("NextStage");
+        restartButton = root.Q<Button>("Restart");
         quitButton = root.Q<Button>("Quit");
     }
-    public void ClearUIDeactivate()
+    public void GameOverUIDeactivate()
     {
         myUI.rootVisualElement.visible = false;
     }
-    public void ClearUIActivate()
+    public void GameOverUIActivate()
     {
         myUI.rootVisualElement.visible = true;
     }

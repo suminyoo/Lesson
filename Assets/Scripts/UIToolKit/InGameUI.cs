@@ -19,9 +19,6 @@ public class InGameUI : MonoBehaviour
     private Label jumpLabel;
     private Label speedLabel;
 
-    public int normalSpeed;
-    public int normalJumpPow;
-
     void Awake()
     {
         VisualElement root = myUI.rootVisualElement;
@@ -47,36 +44,47 @@ public class InGameUI : MonoBehaviour
         //ShowTimeUI();
     }
 
-    public void ChangeSpeedUI(int speed)
+    public void ChangeSpeedUI(float normalSpeed, float maxSpeed)
     {
-        if (speed == normalSpeed) return;
-        else if(speed > normalSpeed)
+        //Debug.Log("UI===current Speed " +maxSpeed+ " normalSpeed "+normalSpeed);
+
+        if (maxSpeed > normalSpeed)
         {
             speedLabel.text = "Speed UP!";
             speedLabel.visible = true;
         }
-        else if (speed < normalSpeed)
+        else if (maxSpeed < normalSpeed)
         {
             speedLabel.text = "Speed Down!";
             speedLabel.visible = true;
         }
+        else
+        {
+            speedLabel.visible = false;
+        }
 
     }
-    public void ChangeJumpPowerUI(int jumpPow)
+    public void ChangeJumpPowerUI(float normalJumpPow, float maxJumpPow)
     {
-        if (jumpPow == normalJumpPow) return;
-        else if (jumpPow > normalJumpPow)
+        //Debug.Log("UI===current JumpPow " +maxJumpPow+ " normalJumpPow "+normalJumpPow);
+
+        if (maxJumpPow > normalJumpPow)
         {
             jumpLabel.text = "Jump Power UP!";
             jumpLabel.visible = true;
         }
-        else if (jumpPow < normalJumpPow)
+        else if (maxJumpPow < normalJumpPow)
         {
             jumpLabel.text = "Jump Power Down!";
             jumpLabel.visible = true;
         }
+        else
+        {
+            jumpLabel.visible = false;
 
-        
+        }
+
+
     }
 
     
@@ -87,20 +95,20 @@ public class InGameUI : MonoBehaviour
 
     public void UIChangePlayerHP(int var)
     {
-        Debug.Log("UI UIChangePlayerHP: " + var);
+        //Debug.Log("UI UIChangePlayerHP: " + var);
 
         hpbar.value = var;
     }
     public void UIChangeStage(int var)
     {
-        Debug.Log("UI UIChangeStage: " + var);
+        //Debug.Log("UI UIChangeStage: " + var);
 
         stageLabel.text = "Stage: " + var.ToString();
 
     }
     public void UIChangePlayerLife(int var)
     {
-        Debug.Log("UI UIChangePlayerLife: " + var);
+        //Debug.Log("UI UIChangePlayerLife: " + var);
 
         lifeLabel.text = "Life: " + var.ToString();
     }

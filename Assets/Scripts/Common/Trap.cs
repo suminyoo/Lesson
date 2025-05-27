@@ -8,11 +8,11 @@ public class Trap : MonoBehaviour
 
     protected virtual void OnCollisionEnter(Collision collision)
     {
-        OnAnyTrapCollision?.Invoke(this);
+        OnAnyTrapCollision?.Invoke(this as Trap);
     }
     protected virtual void OnTriggerEnter(Collider other)
     {
-        OnAnyTrapTrigger?.Invoke(this);
+        OnAnyTrapTrigger?.Invoke(this as Trap);
     }
 
 }
