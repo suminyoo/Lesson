@@ -2,7 +2,7 @@ using System;
 using System.Collections;
 using UnityEngine;
 
-public class PoisonTrap : Trap
+public class PoisonTrap : Traps
 {
     public int damage = 5;
     public float tickInterval = 1.0f;

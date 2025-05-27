@@ -1,9 +1,7 @@
-using System;
 using System.Collections;
-using Unity.VisualScripting;
 using UnityEngine;
 
-public class HammerTrap : Trap
+public class HammerTrap : Traps
 {
     [SerializeField] private int damage = 10;
     public float duration = 1.5f;

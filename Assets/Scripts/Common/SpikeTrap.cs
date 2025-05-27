@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class SpikeTrap : Trap
+public class SpikeTrap : Traps
 {
     [SerializeField] private int damage = 10;
     protected override void OnCollisionEnter(Collision collision)

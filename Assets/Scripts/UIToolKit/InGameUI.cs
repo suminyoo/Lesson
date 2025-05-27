@@ -1,10 +1,5 @@
-using UnityEditor.SceneManagement;
-using UnityEditor.ShaderGraph;
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.UIElements;
-using static System.Net.Mime.MediaTypeNames;
-using System;
 
 
 public class InGameUI : MonoBehaviour
@@ -46,8 +41,6 @@ public class InGameUI : MonoBehaviour
 
     public void ChangeSpeedUI(float normalSpeed, float maxSpeed)
     {
-        //Debug.Log("UI===current Speed " +maxSpeed+ " normalSpeed "+normalSpeed);
-
         if (maxSpeed > normalSpeed)
         {
             speedLabel.text = "Speed UP!";
@@ -62,12 +55,9 @@ public class InGameUI : MonoBehaviour
         {
             speedLabel.visible = false;
         }
-
     }
     public void ChangeJumpPowerUI(float normalJumpPow, float maxJumpPow)
     {
-        //Debug.Log("UI===current JumpPow " +maxJumpPow+ " normalJumpPow "+normalJumpPow);
-
         if (maxJumpPow > normalJumpPow)
         {
             jumpLabel.text = "Jump Power UP!";
@@ -84,32 +74,21 @@ public class InGameUI : MonoBehaviour
 
         }
 
-
     }
-
-    
     public void UIShowTime()
     {
         timeLabel.text = Time.time.ToString();
     }
-
     public void UIChangePlayerHP(int var)
     {
-        //Debug.Log("UI UIChangePlayerHP: " + var);
-
         hpbar.value = var;
     }
     public void UIChangeStage(int var)
     {
-        //Debug.Log("UI UIChangeStage: " + var);
-
         stageLabel.text = "Stage: " + var.ToString();
-
     }
     public void UIChangePlayerLife(int var)
     {
-        //Debug.Log("UI UIChangePlayerLife: " + var);
-
         lifeLabel.text = "Life: " + var.ToString();
     }
 

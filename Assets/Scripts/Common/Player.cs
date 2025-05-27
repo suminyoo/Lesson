@@ -58,7 +58,7 @@ public class Player : MonoBehaviour
     {
         hp = 100;
         life = 3;
-        playerRespawnPosition = new Vector3(23, 2, 2.5f);
+        playerRespawnPosition = new Vector3(0, 2.5f, 0);
     }
 
     private void Start()

@@ -4,11 +4,6 @@ using UnityEngine;
 using UnityEngine.UIElements;
 using static UnityEditor.PlayerSettings;
 
-public enum Trap 
-{
-    spikeTrapPrefab,
-
-}
 
 public class GameManager : MonoBehaviour
 {
@@ -22,11 +17,12 @@ public class GameManager : MonoBehaviour
     public GameObject poisonTrapPrefab;
     public GameObject hiddenBombTrapPrefab;
 
-    public GameObject[] TrapList = new GameObject[4];
+    public static int trapNum = 4;
+    public GameObject[] TrapList = new GameObject[trapNum];
 
     [SerializeField] Transform _parent;
 
-    public int trapNum = 5;
+    
     public Transform[] pos = new Transform[0];
 
     public int stage;
@@ -39,8 +35,8 @@ public class GameManager : MonoBehaviour
         ChangeStage();
         ChangePlayerLife();
 
-        Trap.OnAnyTrapCollision += TrapCollision;
-        Trap.OnAnyTrapTrigger += TrapTrigger;
+        Traps.OnAnyTrapCollision += TrapCollision;
+        Traps.OnAnyTrapTrigger += TrapTrigger;
 
         Player.OnPlayerCollisionEventWithObj += playerCollisionObj;
         Player.OnPlayerTriggerEventWithObj += playerTriggerObj;
@@ -63,11 +59,22 @@ public class GameManager : MonoBehaviour
     private void CreateTrap()
     {
 
+        TrapList[0] = spikeTrapPrefab;
+        TrapList[1] = hammerTrapPrefab;
+        TrapList[2] = poisonTrapPrefab;
+        TrapList[3] = hiddenBombTrapPrefab;
 
+        
         for (int i = 0;  i < pos.Length; i++)
         {
-            GameObject obj = Instantiate(TrapList[Random.Range(0, 4)], pos[i].position, Quaternion.identity);
+            int posCorrec = 2;
+            GameObject obj = Instantiate(TrapList[Random.Range(0, trapNum)], pos[i].position, Quaternion.identity);
             obj.transform.parent = _parent;
+            if (obj.gameObject.CompareTag("Hammer"))
+            {
+                posCorrec = 6;
+            }
+            obj.transform.Translate(Vector3.up * posCorrec);
         }
 
 
@@ -104,13 +111,13 @@ public class GameManager : MonoBehaviour
         inGameUIDoc.UIChangePlayerHP(player.hp);
 
     }
-    private void TrapCollision(Trap trap)
+    private void TrapCollision(Traps trap)
     {
         //Debug.Log("Player Got Hit by " + trap.name);
         inGameUIDoc.UIChangePlayerHP(player.hp);
     }
 
-    private void TrapTrigger(Trap trap)
+    private void TrapTrigger(Traps trap)
     {
         //Debug.Log("Player Triggered " + trap.name);
         inGameUIDoc.UIChangePlayerHP(player.hp);
