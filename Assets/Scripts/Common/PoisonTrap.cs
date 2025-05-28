@@ -11,6 +11,7 @@ public class PoisonTrap : Traps
     protected override void OnTriggerEnter(Collider other)
     {
         other.GetComponent<Player>().ChangePlayerSpeed(2);
+        other.GetComponent<Player>().ChangePlayerJumpPow(2);
         base.OnTriggerEnter(other);
     }
 

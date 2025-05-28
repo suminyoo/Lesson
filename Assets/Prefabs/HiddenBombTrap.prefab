@@ -10,7 +10,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: c9d8d61d34cdb3d449415a3282f5b93f, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 1.57
+      value: 3.5699997
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: c9d8d61d34cdb3d449415a3282f5b93f, type: 3}
       propertyPath: m_LocalPosition.y
@@ -18,7 +18,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: c9d8d61d34cdb3d449415a3282f5b93f, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 17.79
+      value: -15.18
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: c9d8d61d34cdb3d449415a3282f5b93f, type: 3}
       propertyPath: m_LocalRotation.w
@@ -145,7 +145,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   meshR: {fileID: 3530060389190506681}
   meshR02: {fileID: 6026675571369749912}
-  damage: 100
+  damage: 50
+  bounceForce: 3
 --- !u!23 &3530060389190506681 stripped
 MeshRenderer:
   m_CorrespondingSourceObject: {fileID: -7511558181221131132, guid: c9d8d61d34cdb3d449415a3282f5b93f, type: 3}
