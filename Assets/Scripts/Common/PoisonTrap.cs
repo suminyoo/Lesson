@@ -2,14 +2,21 @@ using System;
 using System.Collections;
 using UnityEngine;
 
-public class PoisonTrap : Traps
+public class PoisonTrap : Trap
 {
-    public int damage = 5;
     public float tickInterval = 1.0f;
-
     private float tickTimer = 0f;
+
+
+    public void Awake()
+    {
+        base.damage = 5;
+    }
+
+
     protected override void OnTriggerEnter(Collider other)
     {
+        //속도가 다른 상태에서 들어오면???
         other.GetComponent<Player>().ChangePlayerSpeed(2);
         other.GetComponent<Player>().ChangePlayerJumpPow(2);
         base.OnTriggerEnter(other);
@@ -32,6 +39,8 @@ public class PoisonTrap : Traps
     {
         tickTimer = 0f; // 빠져나가면 리셋
         other.GetComponent<Player>().ChangePlayerSpeed(5);
+        other.GetComponent<Player>().ChangePlayerJumpPow(5);
+
     }
 
 

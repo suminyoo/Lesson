@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -14,6 +15,15 @@ public class InGameUI : MonoBehaviour
     private Label jumpLabel;
     private Label speedLabel;
 
+    private Label trap01Label;
+    private Label trap02Label;
+    private Label trap03Label;
+    private Label trap04Label;
+
+    private Label totalTrapDamageLabel;
+
+    private float time;
+
     void Awake()
     {
         VisualElement root = myUI.rootVisualElement;
@@ -24,7 +34,15 @@ public class InGameUI : MonoBehaviour
 
         jumpLabel = root.Q<Label>("JumpPower");
         speedLabel = root.Q<Label>("Speed");
-        
+
+
+        trap01Label = root.Q<Label>("Trap01Num");
+        trap02Label = root.Q<Label>("Trap02Num");
+        trap03Label = root.Q<Label>("Trap03Num");
+        trap04Label = root.Q<Label>("Trap04Num");
+
+        totalTrapDamageLabel = root.Q<Label>("TotalTrapDamage");
+
         jumpLabel.visible = false;
         speedLabel.visible = false;
     }
@@ -36,8 +54,20 @@ public class InGameUI : MonoBehaviour
     }
     private void Update()
     {
-        //ShowTimeUI();
+        UIShowTime();
     }
+    
+    public void ChangeDifficultyUI(int[] trapNumList, float totalDamage)
+    {
+
+        trap01Label.text = "spikeTrap#: " + trapNumList[0].ToString();
+        trap02Label.text = "hammerTrap#: " + trapNumList[1].ToString();
+        trap03Label.text = "poisonTrap3#: " + trapNumList[2].ToString();
+        trap04Label.text = "hiddenBombTrap#: " + trapNumList[3].ToString();
+
+        totalTrapDamageLabel.text = "Total Trap Damage: " + totalDamage.ToString();
+    }
+
 
     public void ChangeSpeedUI(float normalSpeed, float maxSpeed)
     {
@@ -77,9 +107,18 @@ public class InGameUI : MonoBehaviour
     }
     public void UIShowTime()
     {
-        timeLabel.text = Time.time.ToString();
+        //time += Time.deltaTime;
+        //if (time >= 60f)
+        //{
+        //    min += 1;
+        //    time = 0;
+        //}
+
+        //gameTime.text = string.Format("{0:D2}:{1:D2}", min, (int)sec);
     }
-    public void UIChangePlayerHP(int var)
+
+
+public void UIChangePlayerHP(int var)
     {
         hpbar.value = var;
     }

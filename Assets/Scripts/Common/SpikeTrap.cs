@@ -1,9 +1,13 @@
 using System.Collections;
 using UnityEngine;
 
-public class SpikeTrap : Traps
+public class SpikeTrap : Trap
 {
-    [SerializeField] private int damage = 10;
+
+    public void Awake()
+    {
+        base.damage = 10;
+    }
     protected override void OnCollisionEnter(Collision collision)
     {
         collision.gameObject.GetComponent<Player>().ChangePlayerHP(-damage);

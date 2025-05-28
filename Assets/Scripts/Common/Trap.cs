@@ -2,10 +2,12 @@ using System;
 using System.Collections;
 using UnityEngine;
 
-public class Traps : MonoBehaviour
+public class Trap : MonoBehaviour
 {
-    public static event Action<Traps> OnAnyTrapTrigger;
-    public static event Action<Traps> OnAnyTrapCollision;
+    public static event Action<Trap> OnAnyTrapTrigger;
+    public static event Action<Trap> OnAnyTrapCollision;
+
+    public int damage;
 
     protected virtual void OnCollisionEnter(Collision collision)
     {

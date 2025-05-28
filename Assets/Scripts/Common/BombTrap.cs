@@ -4,10 +4,12 @@ using UnityEngine;
 
 public class BombTrap : HiddenTrap
 {
-    [SerializeField] private int damage = 50;
     public float duration = 1.5f;
     public float bounceForce = 10f;
-
+    public void Awake()
+    {
+        base.damage = 50;
+    }
     protected override void OnCollisionEnter(Collision collision)
     {
         collision.gameObject.GetComponent<Player>().ChangePlayerHP(-damage);

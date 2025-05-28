@@ -1,16 +1,18 @@
 using System.Collections;
 using UnityEngine;
 
-public class HammerTrap : Traps
+public class HammerTrap : Trap
 {
-    [SerializeField] private int damage = 10;
     public float duration = 1.5f;
 
     public float swingAngle = 50f;     // 좌우 최대 회전 각도
     public float swingSpeed = 2f;      // 좌우로 움직이는 속도
 
     private Quaternion startRotation;
-
+    public void Awake()
+    {
+        base.damage = 10;
+    }
     void Start()
     {
         startRotation = transform.localRotation;  // 초기 회전값 저장

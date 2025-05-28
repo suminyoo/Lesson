@@ -1,8 +1,4 @@
-﻿using System.Xml.Serialization;
-using Unity.VisualScripting;
-using UnityEngine;
-using UnityEngine.UIElements;
-using static UnityEditor.PlayerSettings;
+﻿using UnityEngine;
 
 
 public class GameManager : MonoBehaviour
@@ -12,13 +8,15 @@ public class GameManager : MonoBehaviour
     public GameClearUI gameClearUIDoc;
     public GameOverUI gameOverUIDoc;
 
-    public GameObject spikeTrapPrefab;
-    public GameObject hammerTrapPrefab;
-    public GameObject poisonTrapPrefab;
-    public GameObject hiddenBombTrapPrefab;
+    public Trap spikeTrapPrefab;
+    public Trap hammerTrapPrefab;
+    public Trap poisonTrapPrefab;
+    public Trap hiddenBombTrapPrefab;
+
 
     public static int trapNum = 4;
-    public GameObject[] TrapList = new GameObject[trapNum];
+    public Trap[] TrapList = new Trap[trapNum];
+    public int[] TrapNumList = new int[trapNum];
 
     [SerializeField] Transform _parent;
 
@@ -26,17 +24,15 @@ public class GameManager : MonoBehaviour
     public Transform[] pos = new Transform[0];
 
     public int stage;
+    public int totalTrapDamage;
 
     public void Start()
     {
         gameClearUIDoc.ClearUIDeactivate();
         gameOverUIDoc.GameOverUIDeactivate();
 
-        ChangeStage();
-        ChangePlayerLife();
-
-        Traps.OnAnyTrapCollision += TrapCollision;
-        Traps.OnAnyTrapTrigger += TrapTrigger;
+        Trap.OnAnyTrapCollision += TrapCollision;
+        Trap.OnAnyTrapTrigger += TrapTrigger;
 
         Player.OnPlayerCollisionEventWithObj += playerCollisionObj;
         Player.OnPlayerTriggerEventWithObj += playerTriggerObj;
@@ -45,6 +41,10 @@ public class GameManager : MonoBehaviour
 
 
         CreateTrap();
+
+
+        ChangeStage();
+        ChangePlayerLife();
     }
     private void GameClear()
     {
@@ -58,33 +58,37 @@ public class GameManager : MonoBehaviour
 
     private void CreateTrap()
     {
-
         TrapList[0] = spikeTrapPrefab;
         TrapList[1] = hammerTrapPrefab;
         TrapList[2] = poisonTrapPrefab;
         TrapList[3] = hiddenBombTrapPrefab;
 
-        
         for (int i = 0;  i < pos.Length; i++)
         {
-            int posCorrec = 2;
-            GameObject obj = Instantiate(TrapList[Random.Range(0, trapNum)], pos[i].position, Quaternion.identity);
+            float posCorrec = pos[i].gameObject.GetComponent<Collider>().bounds.size.y;
+            int tnum = Random.Range(0, trapNum);
+            Trap obj = Instantiate(TrapList[tnum], pos[i].position, Quaternion.identity);
             obj.transform.parent = _parent;
+
             if (obj.gameObject.CompareTag("Hammer"))
             {
-                posCorrec = 6;
+                posCorrec += obj.gameObject.GetComponent<Collider>().bounds.size.y;
             }
+
             obj.transform.Translate(Vector3.up * posCorrec);
+            totalTrapDamage += obj.damage;
+            TrapNumList[tnum] += 1;
         }
 
-
     }
+
 
 
     private void ChangeStage()
     {
         stage += 1;
         inGameUIDoc.UIChangeStage(stage);
+        inGameUIDoc.ChangeDifficultyUI(TrapNumList, totalTrapDamage);
     }
 
     private void ChangePlayerHP()
@@ -111,13 +115,13 @@ public class GameManager : MonoBehaviour
         inGameUIDoc.UIChangePlayerHP(player.hp);
 
     }
-    private void TrapCollision(Traps trap)
+    private void TrapCollision(Trap trap)
     {
         //Debug.Log("Player Got Hit by " + trap.name);
         inGameUIDoc.UIChangePlayerHP(player.hp);
     }
 
-    private void TrapTrigger(Traps trap)
+    private void TrapTrigger(Trap trap)
     {
         //Debug.Log("Player Triggered " + trap.name);
         inGameUIDoc.UIChangePlayerHP(player.hp);

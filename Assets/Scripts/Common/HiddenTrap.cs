@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-public class HiddenTrap : Traps
+public class HiddenTrap : Trap
 {
     //사운드와 이펙트를 위한 이벤트 퍼블리셔와 리스너들
     //SoundManager EffectManager
