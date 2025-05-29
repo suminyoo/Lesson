@@ -1,7 +1,5 @@
-using System;
 using UnityEngine;
 using UnityEngine.UIElements;
-
 
 public class InGameUI : MonoBehaviour
 {
@@ -11,15 +9,10 @@ public class InGameUI : MonoBehaviour
     private Label stageLabel;
     private Label lifeLabel;
     private Label timeLabel;
-
     private Label jumpLabel;
     private Label speedLabel;
 
-    private Label trap01Label;
-    private Label trap02Label;
-    private Label trap03Label;
-    private Label trap04Label;
-
+    private Label[] trapLabelList = new Label[4];
     private Label totalTrapDamageLabel;
 
     private float time;
@@ -28,6 +21,7 @@ public class InGameUI : MonoBehaviour
     void Awake()
     {
         VisualElement root = myUI.rootVisualElement;
+
         hpbar = root.Q<ProgressBar>("HP");
         stageLabel = root.Q<Label>("Stage");
         lifeLabel = root.Q<Label>("Life");
@@ -36,58 +30,47 @@ public class InGameUI : MonoBehaviour
         jumpLabel = root.Q<Label>("JumpPower");
         speedLabel = root.Q<Label>("Speed");
 
-
-        trap01Label = root.Q<Label>("Trap01Num");
-        trap02Label = root.Q<Label>("Trap02Num");
-        trap03Label = root.Q<Label>("Trap03Num");
-        trap04Label = root.Q<Label>("Trap04Num");
-
+        trapLabelList[0] = root.Q<Label>("Trap01Num");
+        trapLabelList[1] = root.Q<Label>("Trap02Num");
+        trapLabelList[2] = root.Q<Label>("Trap03Num");
+        trapLabelList[3] = root.Q<Label>("Trap04Num");
         totalTrapDamageLabel = root.Q<Label>("TotalTrapDamage");
-
-        jumpLabel.visible = false;
-        speedLabel.visible = false;
     }
-
     private void Start()
     {
         Player.OnPlayerSpeedChangeEvent += ChangeSpeedUI;
         Player.OnPlayerJumpPowChangeEvent += ChangeJumpPowerUI;
-
         GameManager.OnPaused += Pause;
 
+        jumpLabel.visible = false;
+        speedLabel.visible = false;
         ResetTimer();
     }
     private void Update()
     {
         if (isPaused) return;
         ShowTimeUI();
-        
+    }
+    public void ChangeDifficultyUI(Trap[] trapList, int[] trapNumList, float totalDamage)
+    {
+        for (int i = 0; i < trapLabelList.Length; i++)
+        {
+            trapLabelList[i].text = trapList[i].gameObject.name.ToString()+" : "+trapNumList[i].ToString();
+        }
+        totalTrapDamageLabel.text = "Total Trap Damage: " + totalDamage.ToString();
     }
     private void Pause(bool boo)
     {
         isPaused = boo;
     }
-
-    
-    public void ChangeDifficultyUI(int[] trapNumList, float totalDamage)
+    public void ChangeSpeedUI(float normalSpeed, float curSpeed)
     {
-        trap01Label.text = "spikeTrap#: " + trapNumList[0].ToString();
-        trap02Label.text = "hammerTrap#: " + trapNumList[1].ToString();
-        trap03Label.text = "poisonTrap3#: " + trapNumList[2].ToString();
-        trap04Label.text = "hiddenBombTrap#: " + trapNumList[3].ToString();
-
-        totalTrapDamageLabel.text = "Total Trap Damage: " + totalDamage.ToString();
-    }
-
-
-    public void ChangeSpeedUI(float normalSpeed, float maxSpeed)
-    {
-        if (maxSpeed > normalSpeed)
+        if (curSpeed > normalSpeed)
         {
             speedLabel.text = "Speed UP!";
             speedLabel.visible = true;
         }
-        else if (maxSpeed < normalSpeed)
+        else if (curSpeed < normalSpeed)
         {
             speedLabel.text = "Speed Down!";
             speedLabel.visible = true;
@@ -97,24 +80,19 @@ public class InGameUI : MonoBehaviour
             speedLabel.visible = false;
         }
     }
-    public void ChangeJumpPowerUI(float normalJumpPow, float maxJumpPow)
+    public void ChangeJumpPowerUI(float normalJumpPow, float curJumpPow)
     {
-        if (maxJumpPow > normalJumpPow)
-        {
+        if (curJumpPow > normalJumpPow){
             jumpLabel.text = "Jump Power UP!";
             jumpLabel.visible = true;
         }
-        else if (maxJumpPow < normalJumpPow)
-        {
+        else if (curJumpPow < normalJumpPow){
             jumpLabel.text = "Jump Power Down!";
             jumpLabel.visible = true;
         }
-        else
-        {
+        else{
             jumpLabel.visible = false;
-
         }
-
     }
     public void ShowTimeUI()
     {
@@ -127,8 +105,7 @@ public class InGameUI : MonoBehaviour
     {
         time = 0;
     }
-
-
+    
     public void ChangePlayerHPUI(int var)
     {
         hpbar.value = var;
@@ -141,5 +118,4 @@ public class InGameUI : MonoBehaviour
     {
         lifeLabel.text = "Life: " + var.ToString();
     }
-
 }

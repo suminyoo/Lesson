@@ -16,6 +16,7 @@ TagManager:
   - DeathArea
   - SpeedUp
   - JumpUp
+  - Poison
   layers:
   - Default
   - TransparentFX

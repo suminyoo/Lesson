@@ -2386,17 +2386,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 588475996022498918, guid: 40f548cdb6947b845aabde2e765d35bb, type: 3}
   m_PrefabInstance: {fileID: 1337785015}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &838728988 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 906396699960931575, guid: 40f548cdb6947b845aabde2e765d35bb, type: 3}
-  m_PrefabInstance: {fileID: 1337785015}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 538c186479155c445a120f77338653c9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &849332442 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 96d96933c8bb05c4a8bd87411e462022, type: 3}
@@ -2585,18 +2574,12 @@ MonoBehaviour:
   stageClearUIDoc: {fileID: 336218489}
   stageOverUIDoc: {fileID: 1274436371}
   cameraController: {fileID: 1807625479}
-  spikeTrapPrefab: {fileID: 5181220388562524735, guid: f1298e85a8b5d6d4f8bce4a4b3183920, type: 3}
-  hammerTrapPrefab: {fileID: 838728988}
-  poisonTrapPrefab: {fileID: 2474367108900607613, guid: f44982a458f5ec945be175416d67107b, type: 3}
-  hiddenBombTrapPrefab: {fileID: 6322508232951901443, guid: 3e1dd4d865e2c3f458bc319de427bdea, type: 3}
   TrapList:
   - {fileID: 5181220388562524735, guid: f1298e85a8b5d6d4f8bce4a4b3183920, type: 3}
-  - {fileID: 906396699960931575, guid: 40f548cdb6947b845aabde2e765d35bb, type: 3}
+  - {fileID: 5721145428466738337, guid: 40f548cdb6947b845aabde2e765d35bb, type: 3}
   - {fileID: 2474367108900607613, guid: f44982a458f5ec945be175416d67107b, type: 3}
   - {fileID: 6322508232951901443, guid: 3e1dd4d865e2c3f458bc319de427bdea, type: 3}
-  - {fileID: 0}
   TrapNumList: 00000000000000000000000000000000
-  _parent: {fileID: 0}
   pos:
   - {fileID: 1448399628}
   - {fileID: 84688510}
@@ -2619,6 +2602,7 @@ MonoBehaviour:
   - {fileID: 39603279}
   - {fileID: 312616555}
   totalTrapDamage: 0
+  isPaused: 0
 --- !u!4 &916230331
 Transform:
   m_ObjectHideFlags: 0
@@ -4054,6 +4038,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   myUI: {fileID: 1322371917}
+  isPaused: 0
 --- !u!1001 &1337785015
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4435,6 +4420,8 @@ MonoBehaviour:
   anim: {fileID: 1450583627}
   rigid: {fileID: 1450583630}
   cameraTransform: {fileID: 1807625476}
+  hp: 100
+  life: 3
   turnSpeed: 0.05
   moveSpeed: 5
   jumpPower: 6
@@ -4444,9 +4431,10 @@ MonoBehaviour:
   normalJumpPow: 5
   speedRemainTime: 5
   JumpPowRemainTime: 5
+  SpeedUpUsable: 0
+  JumpPowUpUsable: 0
   isGrounded: 1
-  hp: 100
-  life: 3
+  isPaused: 0
 --- !u!54 &1450583630
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -7488,6 +7476,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1985551390}
     m_Modifications:
+    - target: {fileID: 2474367108900607613, guid: f44982a458f5ec945be175416d67107b, type: 3}
+      propertyPath: player
+      value: 
+      objectReference: {fileID: 1450583628}
     - target: {fileID: 8523003893111949651, guid: f44982a458f5ec945be175416d67107b, type: 3}
       propertyPath: m_Name
       value: PoisonTrap

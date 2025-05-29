@@ -1,7 +1,6 @@
 ﻿using System;
 using UnityEngine;
 
-
 public class GameManager : MonoBehaviour
 {
     public static event Action<bool> OnPaused;
@@ -12,15 +11,8 @@ public class GameManager : MonoBehaviour
     public StageOverUI stageOverUIDoc;
     public CameraController cameraController;
 
-    public Trap spikeTrapPrefab;
-    public Trap hammerTrapPrefab;
-    public Trap poisonTrapPrefab;
-    public Trap hiddenBombTrapPrefab;
-
-
-    public static int trapNum = 4;
-    public Trap[] TrapList = new Trap[trapNum];
-    public int[] TrapNumList = new int[trapNum];
+    public Trap[] TrapList = new Trap[0];
+    public int[] TrapNumList;
     
     public Transform[] pos = new Transform[0];
 
@@ -61,7 +53,6 @@ public class GameManager : MonoBehaviour
         player.InitializePlayer();
         ChangePlayerHP();
         ChangePlayerLife();
-
     }
     private void RestartStage()
     {
@@ -70,7 +61,6 @@ public class GameManager : MonoBehaviour
         GameResume();
 
         stageOverUIDoc.ShowGameOverUI(false);
-
     }
     private void ResetTraps()
     {
@@ -79,10 +69,7 @@ public class GameManager : MonoBehaviour
         ClearTraps();
         CreateTraps();
         ChangeStageDifficulty();
-
     }
-
-
     public void SetStage()
     {
         cameraController.SetCursorVisible(false);
@@ -97,18 +84,15 @@ public class GameManager : MonoBehaviour
         ChangeStageNumber();
 
         InitializePlayer();
-
     }
     private void NextStage()
     {
         stageList[stageNum].SetActive(false);
         stageNum += 1;
         stageList[stageNum].SetActive(true);
-
         SetStage();
         GameResume();
     }
-
     private void StageOver()
     {
         GamePause();
@@ -121,7 +105,6 @@ public class GameManager : MonoBehaviour
         cameraController.SetCursorVisible(true);
         stageClearUIDoc.ShowClearUI(true);
     }
-    
     private void GamePause()
     {
         OnPaused.Invoke(true);
@@ -130,8 +113,6 @@ public class GameManager : MonoBehaviour
     {
         OnPaused.Invoke(false);
     }
-
-
     private void PlayerDie()
     {
         ChangePlayerHP();
@@ -140,34 +121,30 @@ public class GameManager : MonoBehaviour
 
     private void CreateTraps()
     {
+        totalTrapDamage = 0;
+        TrapNumList = new int[TrapList.Length];
         trapGroup = new GameObject("TrapGroup");
-
-        TrapList[0] = spikeTrapPrefab;
-        TrapList[1] = hammerTrapPrefab;
-        TrapList[2] = poisonTrapPrefab;
-        TrapList[3] = hiddenBombTrapPrefab;
-
         for (int i = 0;  i < pos.Length; i++)
         {
-            float posCorrec = pos[i].gameObject.GetComponent<Collider>().bounds.size.y;
-            int tnum = UnityEngine.Random.Range(0, trapNum);
-            Trap obj = Instantiate(TrapList[tnum], pos[i].position, Quaternion.identity);
+            float posCorrection = pos[i].gameObject.GetComponent<Collider>().bounds.size.y;
+            int tNum = UnityEngine.Random.Range(0, TrapList.Length);
+            Trap obj = Instantiate(TrapList[tNum], pos[i].position, Quaternion.identity);
             obj.transform.SetParent(trapGroup.transform);
 
             if (obj.gameObject.CompareTag("Hammer"))
             {
-                posCorrec += obj.gameObject.GetComponent<Collider>().bounds.size.y;
+                posCorrection += obj.gameObject.GetComponent<Collider>().bounds.size.y;
             }
-            obj.transform.Translate(Vector3.up * posCorrec);
+
+            obj.transform.Translate(Vector3.up * posCorrection);
             totalTrapDamage += obj.damage;
-            TrapNumList[tnum] += 1;
+            TrapNumList[tNum] += 1;
         }
     }
     private void ClearTraps()
     {
         Destroy(trapGroup);
     }
-
     private void ChangePlayerHP()
     {
         inGameUIDoc.ChangePlayerHPUI(player.hp);
@@ -182,15 +159,12 @@ public class GameManager : MonoBehaviour
     }
     private void ChangeStageDifficulty()
     {
-        inGameUIDoc.ChangeDifficultyUI(TrapNumList, totalTrapDamage);
-
+        inGameUIDoc.ChangeDifficultyUI(TrapList, TrapNumList, totalTrapDamage);
     }
     private void ChangeStageNumber()
     {
         inGameUIDoc.ChangeStageUI(stageNum);
     }
-
-
     private void playerCollisionObj(GameObject obj)
     {
         inGameUIDoc.ChangePlayerHPUI(player.hp);
@@ -207,7 +181,6 @@ public class GameManager : MonoBehaviour
     {
         inGameUIDoc.ChangePlayerHPUI(player.hp);
     }
-
     public void GameQuit()
     {
         Application.Quit();

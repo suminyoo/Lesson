@@ -1,9 +1,7 @@
 using System.Collections;
 using UnityEngine;
-
 public class SpikeTrap : Trap
 {
-
     public void Awake()
     {
         base.damage = 10;

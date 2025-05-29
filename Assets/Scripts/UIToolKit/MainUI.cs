@@ -1,7 +1,6 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UIElements;
-
 public class MainUI : MonoBehaviour
 {
     [SerializeField] UIDocument myUI;
@@ -9,8 +8,6 @@ public class MainUI : MonoBehaviour
     private VisualElement m_Slider;
     private VisualElement m_Dragger;
     private VisualElement m_Bar;
-
-
 
     private Button topButton;
     private Button middleButton;

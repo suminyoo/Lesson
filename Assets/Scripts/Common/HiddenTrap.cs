@@ -1,13 +1,7 @@
-using System;
 using UnityEngine;
 
 public class HiddenTrap : Trap
 {
-    //사운드와 이펙트를 위한 이벤트 퍼블리셔와 리스너들
-    //SoundManager EffectManager
-    //public static event Action<Vector3> OnTrapActivateEvent;
-
-
     [SerializeField] private MeshRenderer meshR;
     [SerializeField] private MeshRenderer meshR02;
 
@@ -16,7 +10,6 @@ public class HiddenTrap : Trap
         meshR.enabled = false;
         meshR02.enabled = false;
     }
-
     protected override void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))

@@ -57,8 +57,16 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2100000, guid: 0651f690e12c99e4ca849109f77be742, type: 2}
     - target: {fileID: -7326293644563089874, guid: 6b29abb86cd26a045936ef0e2ba131c5, type: 3}
+      propertyPath: m_Name
+      value: Hammer_Ball
+      objectReference: {fileID: 0}
+    - target: {fileID: -7326293644563089874, guid: 6b29abb86cd26a045936ef0e2ba131c5, type: 3}
       propertyPath: m_Layer
       value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: -7326293644563089874, guid: 6b29abb86cd26a045936ef0e2ba131c5, type: 3}
+      propertyPath: m_TagString
+      value: Hammer
       objectReference: {fileID: 0}
     - target: {fileID: -2389293526188000665, guid: 6b29abb86cd26a045936ef0e2ba131c5, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
@@ -85,10 +93,13 @@ PrefabInstance:
       addedObject: {fileID: 987086226082733048}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 6b29abb86cd26a045936ef0e2ba131c5, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 906396699960931575}
+      addedObject: {fileID: 5721145428466738337}
     - targetCorrespondingSourceObject: {fileID: -7326293644563089874, guid: 6b29abb86cd26a045936ef0e2ba131c5, type: 3}
       insertIndex: -1
       addedObject: {fileID: 3667623993227512555}
+    - targetCorrespondingSourceObject: {fileID: -7326293644563089874, guid: 6b29abb86cd26a045936ef0e2ba131c5, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1933858536525048267}
   m_SourcePrefab: {fileID: 100100000, guid: 6b29abb86cd26a045936ef0e2ba131c5, type: 3}
 --- !u!1 &243615907152379100 stripped
 GameObject:
@@ -118,7 +129,7 @@ CapsuleCollider:
   m_Height: 3.8
   m_Direction: 1
   m_Center: {x: -0.00000067055225, y: -1.7, z: -0.0000002682209}
---- !u!114 &906396699960931575
+--- !u!114 &5721145428466738337
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -130,9 +141,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 538c186479155c445a120f77338653c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  altiDamage: 0
-  damage: 10
-  duration: 1.5
+  damage: 0
   swingAngle: 50
   swingSpeed: 2
 --- !u!1 &1581836655653025699 stripped
@@ -161,3 +170,16 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.75
   m_Center: {x: 0, y: -2.85, z: 0}
+--- !u!114 &1933858536525048267
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1581836655653025699}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cdf80272dce66b54982194262029f106, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 0

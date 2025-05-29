@@ -2,14 +2,13 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
+    public Transform target;
+    public Vector3 offset = new Vector3(0, 2, -5);
 
-    public Transform target;            // 따라갈 캐릭터
-    public Vector3 offset = new Vector3(0, 2, -5);  // 카메라 거리
     public float mouseSensitivity = 2f;
-    public float distance = 5f;         // 타겟으로부터 거리
+    public float distance = 5f;
     public float minYAngle = -20f;
     public float maxYAngle = 60f;
-
     private float currentYaw = 0f;
     private float currentPitch = 20f;
 
@@ -20,14 +19,10 @@ public class CameraController : MonoBehaviour
         SetCursorVisible(false);
         GameManager.OnPaused += Pause;
     }
-
     private void Pause(bool boo)
     {
         isPaused = boo;
-
     }
-
-
     public void SetCursorVisible(bool isVisible)
     {
         if (isVisible)
@@ -41,17 +36,16 @@ public class CameraController : MonoBehaviour
             Cursor.visible = false;
         }
     }
-
-    void LateUpdate()
+    private void LateUpdate()
     {
         if (isPaused) return;
-        // 마우스 입력
+
         float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity;
         float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity;
 
         currentYaw += mouseX;
         currentPitch -= mouseY;
-        currentPitch = Mathf.Clamp(currentPitch, minYAngle, maxYAngle); // 상하 제한
+        currentPitch = Mathf.Clamp(currentPitch, minYAngle, maxYAngle); //상하 제한
 
         // 회전 계산
         Quaternion rotation = Quaternion.Euler(currentPitch, currentYaw, 0);

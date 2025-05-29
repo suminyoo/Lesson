@@ -9,19 +9,18 @@ public class StageOverUI : MonoBehaviour
 
     public static event Action OnRestartStageEvent;
 
-
     private Button restartButton;
     private Button quitButton;
+
     void Start()
     {
         VisualElement root = myUI.rootVisualElement;
+
         restartButton = root.Q<Button>("Restart");
         quitButton = root.Q<Button>("Quit");
 
-        if (restartButton != null)
-            restartButton.clicked += StageRestart;
-        if (quitButton != null)
-            quitButton.clicked += GameQuit;
+        if (restartButton != null) restartButton.clicked += StageRestart;
+        if (quitButton != null) quitButton.clicked += GameQuit;
     }
     public void StageRestart()
     {
@@ -35,6 +34,4 @@ public class StageOverUI : MonoBehaviour
     {
         myUI.rootVisualElement.visible = boo;
     }
-
-
 }
