@@ -13,8 +13,7 @@ public class Player : MonoBehaviour
     public static event Action<float, float> OnPlayerJumpPowChangeEvent;
 
 
-    public static event Action OnGameClear;
-
+    public static event Action OnStageClear;
     public static event Action OnPlayerDie;
 
     public Animator anim;
@@ -47,24 +46,35 @@ public class Player : MonoBehaviour
     public int hp;
     public int life;
 
-    Vector3 playerRespawnPosition;
+    public bool isPaused = false;
+
+
+    Vector3 playerRespawnPosition = new Vector3(0, 2.5f, 0);
 
     private void Awake()
     {
+
         InitializePlayer();
     }
 
-    private void InitializePlayer()
+    public void InitializePlayer()
     {
         hp = 100;
         life = 3;
-        playerRespawnPosition = new Vector3(0, 2.5f, 0);
+        RespawnPlayer(playerRespawnPosition);
     }
 
     private void Start()
     {
         anim = GetComponent<Animator>();
         rigid = GetComponent<Rigidbody>();
+
+        GameManager.OnPaused += Pause;
+    }
+
+    private void Pause(bool boo)
+    {
+        isPaused = boo;
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -87,7 +97,7 @@ public class Player : MonoBehaviour
         }
         else if (other.gameObject.CompareTag("Clear"))
         {
-            OnGameClear.Invoke();
+            OnStageClear.Invoke();
         }
         else if (other.gameObject.CompareTag("SpeedUp"))
         {
@@ -115,7 +125,15 @@ public class Player : MonoBehaviour
         life -= 1;
         hp = 100;
         OnPlayerDie.Invoke();
-        transform.position = playerRespawnPosition;
+        RespawnPlayer(playerRespawnPosition);
+    }
+
+    public void RespawnPlayer(Vector3 rePos)
+    {
+        rigid.linearVelocity = Vector3.zero;
+        rigid.angularVelocity = Vector3.zero;
+        transform.position = rePos;
+
     }
     public void ChangePlayerHP(int var)
     {
@@ -186,6 +204,7 @@ public class Player : MonoBehaviour
 
     void FixedUpdate()
     {
+        if (isPaused) return;
         PlayerMovement();
     }
 

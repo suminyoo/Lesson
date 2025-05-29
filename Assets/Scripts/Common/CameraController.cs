@@ -12,14 +12,39 @@ public class CameraController : MonoBehaviour
 
     private float currentYaw = 0f;
     private float currentPitch = 20f;
+
+    private bool isPaused = false;
+
     void Start()
     {
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
+        SetCursorVisible(false);
+        GameManager.OnPaused += Pause;
+    }
+
+    private void Pause(bool boo)
+    {
+        isPaused = boo;
+
+    }
+
+
+    public void SetCursorVisible(bool isVisible)
+    {
+        if (isVisible)
+        {
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+        }
+        else
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+        }
     }
 
     void LateUpdate()
     {
+        if (isPaused) return;
         // 마우스 입력
         float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity;
         float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity;

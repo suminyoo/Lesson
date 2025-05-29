@@ -23,6 +23,7 @@ public class InGameUI : MonoBehaviour
     private Label totalTrapDamageLabel;
 
     private float time;
+    public bool isPaused = false;
 
     void Awake()
     {
@@ -51,15 +52,25 @@ public class InGameUI : MonoBehaviour
     {
         Player.OnPlayerSpeedChangeEvent += ChangeSpeedUI;
         Player.OnPlayerJumpPowChangeEvent += ChangeJumpPowerUI;
+
+        GameManager.OnPaused += Pause;
+
+        ResetTimer();
     }
     private void Update()
     {
-        UIShowTime();
+        if (isPaused) return;
+        ShowTimeUI();
+        
     }
+    private void Pause(bool boo)
+    {
+        isPaused = boo;
+    }
+
     
     public void ChangeDifficultyUI(int[] trapNumList, float totalDamage)
     {
-
         trap01Label.text = "spikeTrap#: " + trapNumList[0].ToString();
         trap02Label.text = "hammerTrap#: " + trapNumList[1].ToString();
         trap03Label.text = "poisonTrap3#: " + trapNumList[2].ToString();
@@ -105,28 +116,28 @@ public class InGameUI : MonoBehaviour
         }
 
     }
-    public void UIShowTime()
+    public void ShowTimeUI()
     {
-        //time += Time.deltaTime;
-        //if (time >= 60f)
-        //{
-        //    min += 1;
-        //    time = 0;
-        //}
-
-        //gameTime.text = string.Format("{0:D2}:{1:D2}", min, (int)sec);
+        time += Time.deltaTime;
+        int min = (int)time / 60;
+        int sec = ((int)time - min * 60) % 60;
+        timeLabel.text = string.Format("{0:D2}:{1:D2}", min, sec );
+    }
+    public void ResetTimer()
+    {
+        time = 0;
     }
 
 
-public void UIChangePlayerHP(int var)
+    public void ChangePlayerHPUI(int var)
     {
         hpbar.value = var;
     }
-    public void UIChangeStage(int var)
+    public void ChangeStageUI(int var)
     {
         stageLabel.text = "Stage: " + var.ToString();
     }
-    public void UIChangePlayerLife(int var)
+    public void ChangePlayerLifeUI(int var)
     {
         lifeLabel.text = "Life: " + var.ToString();
     }
