@@ -19,7 +19,7 @@ public class Player : MonoBehaviour
     public int hp;
     public int life;
 
-    Vector3 playerRespawnPosition = new Vector3(0, 2.5f, 0);
+    Vector3 playerRespawnPosition = new Vector3(-2, 2.5f, 0);
 
     public float turnSpeed = 0.05f; // smaller == slower
     public float moveSpeed = 5f;

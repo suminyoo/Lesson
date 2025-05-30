@@ -14,8 +14,7 @@ public class PlayerDeadUI : MonoBehaviour
 
     public static event Action OnPlayerRespawnEvent;
 
-
-    void Start()
+    void Awake()
     {
         VisualElement root = myUI.rootVisualElement;
 
