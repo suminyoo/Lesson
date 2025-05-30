@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 using UnityEngine.UIElements;
 public class GameClearEndUI : MonoBehaviour
@@ -15,7 +14,6 @@ public class GameClearEndUI : MonoBehaviour
 
         if (quitButton != null) quitButton.clicked += GameQuit;
     }
-
     public void GameQuit()
     {
         manager.GameQuit();

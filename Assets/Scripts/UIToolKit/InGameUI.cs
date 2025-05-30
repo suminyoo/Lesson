@@ -112,7 +112,7 @@ public class InGameUI : MonoBehaviour
     }
     public void ChangeStageUI(int var)
     {
-        stageLabel.text = "Stage: " + var.ToString();
+        stageLabel.text = "Stage: " + (var + 1).ToString();
     }
     public void ChangePlayerLifeUI(int var)
     {

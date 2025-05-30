@@ -30,7 +30,7 @@ public class StageOverUI : MonoBehaviour
     {
         manager.GameQuit();
     }
-    public void ShowGameOverUI(bool boo)
+    public void ShowStageOverUI(bool boo)
     {
         myUI.rootVisualElement.visible = boo;
     }

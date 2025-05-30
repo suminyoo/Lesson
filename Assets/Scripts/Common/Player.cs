@@ -1,10 +1,11 @@
-using System;
+Ôªøusing System;
 using UnityEngine;
 
 public class Player : MonoBehaviour
 {
     public static event Action<GameObject> OnPlayerCollisionEventWithObj;
     public static event Action<GameObject> OnPlayerTriggerEventWithObj;
+
     public static event Action<float, float> OnPlayerSpeedChangeEvent;
     public static event Action<float, float> OnPlayerJumpPowChangeEvent;
 
@@ -46,7 +47,7 @@ public class Player : MonoBehaviour
     {
         hp = 100;
         life = 3;
-        RespawnPlayer(playerRespawnPosition);
+        RespawnPlayer();
     }
     private void Start()
     {
@@ -99,13 +100,10 @@ public class Player : MonoBehaviour
         life -= 1;
         hp = 100;
         OnPlayerDie.Invoke();
-        RespawnPlayer(playerRespawnPosition);
     }
-    public void RespawnPlayer(Vector3 rePos)
+    public void RespawnPlayer()
     {
-        rigid.linearVelocity = Vector3.zero;
-        rigid.angularVelocity = Vector3.zero;
-        transform.position = rePos;
+        transform.position = playerRespawnPosition;
     }
     public void ChangePlayerHP(int var)
     {
@@ -177,7 +175,7 @@ public class Player : MonoBehaviour
             anim.SetBool("Walk", false);
             return;
         }
-        // ƒ´∏ﬁ∂Û ±‚¡ÿ πÊ«‚ ∞ËªÍ
+        // Ïπ¥Î©îÎùº Í∏∞Ï§Ä Î∞©Ìñ• Í≥ÑÏÇ∞
         Vector3 camForward = cameraTransform.forward;
         Vector3 camRight = cameraTransform.right;
         camForward.y = 0;
@@ -185,19 +183,19 @@ public class Player : MonoBehaviour
         camForward.Normalize();
         camRight.Normalize();
 
-        // ¿Ãµø πÊ«‚¿ª ƒ´∏ﬁ∂Û ±‚¡ÿ¿∏∑Œ ∫Ø»Ø
+        // Ïù¥Îèô Î∞©Ìñ•ÏùÑ Ïπ¥Î©îÎùº Í∏∞Ï§ÄÏúºÎ°ú Î≥ÄÌôò
         Vector3 moveDir = camForward * inputDir.z + camRight * inputDir.x;
 
-        // »∏¿¸ (∫ŒµÂ∑¥∞‘)
+        // ÌöåÏ†Ñ (Î∂ÄÎìúÎüΩÍ≤å)
         Quaternion targetRotation = Quaternion.LookRotation(moveDir);
         Quaternion smoothedRotation = Quaternion.Slerp(transform.rotation, targetRotation, turnSpeed);
         rigid.MoveRotation(smoothedRotation);
 
-        // ¿Ãµø
+        // Ïù¥Îèô
         Vector3 moveAmount = moveDir * moveSpeed * Time.fixedDeltaTime;
         rigid.MovePosition(rigid.position + moveAmount);
 
-        // æ÷¥œ∏ﬁ¿Ãº«
+        // Ïï†ÎãàÎ©îÏù¥ÏÖò
         anim.SetBool("Walk", true);
     }
 }
