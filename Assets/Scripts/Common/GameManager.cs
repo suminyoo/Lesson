@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour
     public InGameUI inGameUIDoc;
     public StageClearUI stageClearUIDoc;
     public StageOverUI stageOverUIDoc;
+    public GameClearEndUI gameClearEndUI;
     public CameraController cameraController;
 
     public Trap[] TrapList = new Trap[0];
@@ -16,7 +17,7 @@ public class GameManager : MonoBehaviour
     
     public Transform[] pos = new Transform[0];
 
-    public int stageNum;
+    public int stageNum = 0;
 
     public GameObject[] stageList = new GameObject[0];
 
@@ -39,7 +40,6 @@ public class GameManager : MonoBehaviour
         StageClearUI.OnNextStageEvent += NextStage;
         StageOverUI.OnRestartStageEvent += RestartStage;
 
-        stageNum = 0;
         SetStage();
     }
     public void Update()
@@ -75,6 +75,7 @@ public class GameManager : MonoBehaviour
         cameraController.SetCursorVisible(false);
         stageClearUIDoc.ShowClearUI(false);
         stageOverUIDoc.ShowGameOverUI(false);
+        gameClearEndUI.ShowGameClearUI(false);
 
         ClearTraps();
         CreateTraps();
@@ -92,6 +93,13 @@ public class GameManager : MonoBehaviour
         stageList[stageNum].SetActive(true);
         SetStage();
         GameResume();
+
+    }
+    private void GameClearEnd()
+    {
+        GamePause();
+        cameraController.SetCursorVisible(true);
+        gameClearEndUI.ShowGameClearUI(true);
     }
     private void StageOver()
     {
@@ -103,6 +111,13 @@ public class GameManager : MonoBehaviour
     {
         GamePause();
         cameraController.SetCursorVisible(true);
+
+        if (stageNum + 1 == stageList.Length)
+        {
+            GameClearEnd();
+            return;
+        }
+
         stageClearUIDoc.ShowClearUI(true);
     }
     private void GamePause()
@@ -124,6 +139,7 @@ public class GameManager : MonoBehaviour
         totalTrapDamage = 0;
         TrapNumList = new int[TrapList.Length];
         trapGroup = new GameObject("TrapGroup");
+
         for (int i = 0;  i < pos.Length; i++)
         {
             float posCorrection = pos[i].gameObject.GetComponent<Collider>().bounds.size.y;
@@ -140,6 +156,19 @@ public class GameManager : MonoBehaviour
             totalTrapDamage += obj.damage;
             TrapNumList[tNum] += 1;
         }
+    //    Transform placementAnchor = trapInstance.GetComponentsInChildren<Transform>()
+    //.FirstOrDefault(t => t.name == "placementAnchor");
+
+    //    if (placementAnchor != null)
+    //    {
+    //        Vector3 offset = trapInstance.transform.position - placementAnchor.position;
+    //        trapInstance.transform.position = pos[i].position + offset;
+    //        Debug.Log($"[배치 성공] 기준점 오프셋: {offset}");
+    //    }
+    //    else
+    //    {
+    //        Debug.LogWarning($"[배치 실패] placementAnchor가 없음: {trapInstance.name}");
+    //    }
     }
     private void ClearTraps()
     {
