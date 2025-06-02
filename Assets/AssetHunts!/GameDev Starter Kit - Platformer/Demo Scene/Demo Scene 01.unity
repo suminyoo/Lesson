@@ -1340,13 +1340,21 @@ MonoBehaviour:
   - {fileID: 5721145428466738337, guid: 40f548cdb6947b845aabde2e765d35bb, type: 3}
   - {fileID: 2474367108900607613, guid: f44982a458f5ec945be175416d67107b, type: 3}
   - {fileID: 6322508232951901443, guid: 3e1dd4d865e2c3f458bc319de427bdea, type: 3}
-  normalTilePrefab: {fileID: 8784466694678262796, guid: 8abd41b4185e4bc4c987aecfdf30af3d, type: 3}
-  slopeTilePrefab: {fileID: 2972567660156617996, guid: 409a8913742795d47b534841630068e5, type: 3}
   desiredTrapCount: 20
   spawnedTrapNums: 
   totalTrapDamage: 0
-  xTileCount: 41
+  chunkPrefabs:
+  - {fileID: 9076513251067446109, guid: de4a9614eae212d4dbaf6bd24df22635, type: 3}
+  - {fileID: 7935135513578946661, guid: 393ca64734866cf43819acddc77eb754, type: 3}
+  - {fileID: 1035300168568544366, guid: e46e498218eecc842a015a570f5a25ef, type: 3}
+  - {fileID: 8481727039351821443, guid: 389242e7228a598409f12375cb26789d, type: 3}
+  - {fileID: 371487277481247906, guid: d24258552dd61b941bc2a0194c6bc0a8, type: 3}
+  - {fileID: 4338402320923773435, guid: 17d191297c3821043925e655ce524ffb, type: 3}
+  chunkWidth: 3
+  chunkDepth: 4
+  chunkCount: 5
   tileSize: 2
+  trapCandidatePositions: []
 --- !u!1 &459095087
 GameObject:
   m_ObjectHideFlags: 0
@@ -2660,9 +2668,7 @@ MonoBehaviour:
   playerDeadUI: {fileID: 1005018370}
   cameraController: {fileID: 1807625479}
   generateStage: {fileID: 407321858}
-  stageList:
-  - {fileID: 39603279}
-  - {fileID: 312616555}
+  clearStageNum: 3
   isPaused: 0
   stageNum: 0
 --- !u!4 &916230331
@@ -4147,16 +4153,24 @@ PrefabInstance:
     m_TransformParent: {fileID: 459095088}
     m_Modifications:
     - target: {fileID: 2344333383343651070, guid: d3d019ed99a43b240b73af43e2041cfc, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 2344333383343651070, guid: d3d019ed99a43b240b73af43e2041cfc, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2344333383343651070, guid: d3d019ed99a43b240b73af43e2041cfc, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -15.707832
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 2344333383343651070, guid: d3d019ed99a43b240b73af43e2041cfc, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -6.8718443
+      value: -10
       objectReference: {fileID: 0}
     - target: {fileID: 2344333383343651070, guid: d3d019ed99a43b240b73af43e2041cfc, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 6.7821283
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2344333383343651070, guid: d3d019ed99a43b240b73af43e2041cfc, type: 3}
       propertyPath: m_LocalRotation.w
@@ -4520,8 +4534,8 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 80
   m_CollisionDetection: 0
---- !u!65 &1450583631
-BoxCollider:
+--- !u!136 &1450583631
+CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -4538,9 +4552,11 @@ BoxCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 0.5, y: 1.326865, z: 0.5}
-  m_Center: {x: 0, y: 0.6634325, z: 0}
+  serializedVersion: 2
+  m_Radius: 0.25
+  m_Height: 1.4
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.7, z: 0}
 --- !u!1001 &1454563007
 PrefabInstance:
   m_ObjectHideFlags: 0

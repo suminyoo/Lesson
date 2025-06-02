@@ -62,7 +62,7 @@ public class Player : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         if (collision == null) { return; }
-        if (collision.gameObject.CompareTag("Ground")) isGrounded = true;
+        //if (collision.gameObject.CompareTag("Ground")) isGrounded = true;
 
         OnPlayerCollisionEventWithObj?.Invoke(collision.gameObject);
     }
@@ -95,6 +95,30 @@ public class Player : MonoBehaviour
         }
         OnPlayerTriggerEventWithObj?.Invoke(other.gameObject);
     }
+    private void OnCollisionStay(Collision collision)
+    {
+        foreach (ContactPoint contact in collision.contacts)
+        {
+            // 접촉 면이 위쪽을 향할수록 dot 값이 1에 가까움 (0.5 이상이면 수평면)
+            if (Vector3.Dot(contact.normal, Vector3.up) > 0.5f)
+            {
+                if (collision.gameObject.CompareTag("Ground"))
+                {
+                    Debug.Log("Staying in Ground");
+                    isGrounded = true;
+                    return;
+                }
+            }
+        }
+    }
+    private void OnCollisionExit(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Ground"))
+        {
+            isGrounded = false;
+        }
+    }
+
     public void OnDie()
     {
         life -= 1;
@@ -169,6 +193,7 @@ public class Player : MonoBehaviour
     }
     private void PlayerMovement()
     {
+
         Vector3 inputDir = new Vector3(h, 0, v).normalized;
         if (inputDir.magnitude < 0.1f)
         {
@@ -196,6 +221,6 @@ public class Player : MonoBehaviour
         rigid.MovePosition(rigid.position + moveAmount);
 
         // 애니메이션
-        anim.SetBool("Walk", true);
+        anim.SetBool("Walk", isGrounded);
     }
 }

@@ -14,8 +14,9 @@ public class GameManager : MonoBehaviour
     public CameraController cameraController;
     public GenerateStage generateStage;
 
-    public GameObject[] stageList = new GameObject[0];
+    //public GameObject[] stageList = new GameObject[0];
 
+    public int clearStageNum = 3;
     public bool isPaused = false;
     public int stageNum = 0;
 
@@ -34,7 +35,7 @@ public class GameManager : MonoBehaviour
 
         PlayerDeadUI.OnPlayerRespawnEvent += PlayerRespawn;
 
-        DeactivateAllStage();
+        //DeactivateAllStage();
         //stageList[stageNum].SetActive(true); //first stage
         SetStage();
     }
@@ -50,13 +51,13 @@ public class GameManager : MonoBehaviour
         generateStage.CreateTraps();
         generateStage.ChangeStageDifficulty();
     }
-    private void DeactivateAllStage()
-    {
-        for (int i = 0; i < stageList.Length; i++)
-        {
-            stageList[i].SetActive(false);
-        }
-    }
+    //private void DeactivateAllStage()
+    //{
+    //    for (int i = 0; i < stageList.Length; i++)
+    //    {
+    //        stageList[i].SetActive(false);
+    //    }
+    //}
     private void InitializePlayer()
     {
         player.InitializePlayer();
@@ -80,7 +81,8 @@ public class GameManager : MonoBehaviour
         gameClearEndUI.ShowGameClearUI(false);
         playerDeadUI.ShowPlayerDeadUI(false);
 
-        generateStage.GenerateMap();
+        generateStage.ClearMap();
+        generateStage.GenerateChunkMap();
         generateStage.ClearTraps();
         generateStage.CreateTraps();
         generateStage.ChangeStageDifficulty();
@@ -92,9 +94,9 @@ public class GameManager : MonoBehaviour
     }
     private void NextStage()
     {
-        stageList[stageNum].SetActive(false);
+        //stageList[stageNum].SetActive(false);
         stageNum += 1;
-        stageList[stageNum].SetActive(true);
+        //stageList[stageNum].SetActive(true);
         SetStage();
         GameResume();
     }
@@ -132,7 +134,7 @@ public class GameManager : MonoBehaviour
         GamePause();
         cameraController.SetCursorVisible(true);
 
-        if (stageNum + 1 == stageList.Length)
+        if (stageNum == clearStageNum)
         {
             GameClearEnd();
             return;
