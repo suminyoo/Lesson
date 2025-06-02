@@ -5,8 +5,6 @@ using UnityEngine.UIElements;
 public class StageOverUI : MonoBehaviour
 {
     [SerializeField] UIDocument myUI;
-    [SerializeField] GameManager manager;
-
     public static event Action OnRestartStageEvent;
 
     private Button restartButton;
@@ -22,16 +20,8 @@ public class StageOverUI : MonoBehaviour
         if (restartButton != null) restartButton.clicked += StageRestart;
         if (quitButton != null) quitButton.clicked += GameQuit;
     }
-    public void StageRestart()
-    {
-        OnRestartStageEvent.Invoke();
-    }
-    public void GameQuit()
-    {
-        manager.GameQuit();
-    }
-    public void ShowStageOverUI(bool boo)
-    {
-        myUI.rootVisualElement.visible = boo;
-    }
+    public void StageRestart() => OnRestartStageEvent.Invoke();
+    public void GameQuit() => Application.Quit();
+    public void ShowUI(bool boo) => myUI.rootVisualElement.visible = boo;
+    
 }

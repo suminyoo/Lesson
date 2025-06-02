@@ -1,5 +1,4 @@
 using UnityEngine;
-
 public class HiddenTrap : Trap
 {
     [SerializeField] private MeshRenderer meshR;

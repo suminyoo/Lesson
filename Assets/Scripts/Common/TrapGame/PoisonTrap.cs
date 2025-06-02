@@ -4,6 +4,7 @@ public class PoisonTrap : Trap
 {
     public InGameUI gameUI;
     public TG_PlayerData playerData;
+
     public float tickInterval = 1.0f;
     private float tickTimer = 0f;
     private float deBuffedSpeed = 2f;
@@ -15,7 +16,6 @@ public class PoisonTrap : Trap
     }
     protected override void OnTriggerEnter(Collider other)
     {
-        //playerData.moveSpeed = deBuffedSpeed;
         other.GetComponent<Player>().ChangePlayerSpeed(deBuffedSpeed);
         other.GetComponent<Player>().ChangePlayerJumpPow(deBuffedJumpPow);
         base.OnTriggerEnter(other);

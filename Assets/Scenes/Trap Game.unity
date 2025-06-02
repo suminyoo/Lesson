@@ -1260,7 +1260,7 @@ Transform:
   m_Children:
   - {fileID: 1182490098}
   - {fileID: 1191355328}
-  - {fileID: 838728983}
+  - {fileID: 588475994759699665}
   - {fileID: 251648672}
   m_Father: {fileID: 1985551390}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1340,7 +1340,12 @@ MonoBehaviour:
   - {fileID: 5721145428466738337, guid: 40f548cdb6947b845aabde2e765d35bb, type: 3}
   - {fileID: 2474367108900607613, guid: f44982a458f5ec945be175416d67107b, type: 3}
   - {fileID: 6322508232951901443, guid: 3e1dd4d865e2c3f458bc319de427bdea, type: 3}
-  desiredTrapCount: 20
+  itemPrefabList:
+  - {fileID: 4413799610964210378, guid: 4a68f3432de74ee40b46d65a138c0f1b, type: 3}
+  - {fileID: 3099626940402206331, guid: 11aa79a4969a4ac4c89d518bbafbf3ae, type: 3}
+  - {fileID: 8596044596214984550, guid: ff0da40f4fdaeac4f8e17f639e5b6afc, type: 3}
+  desiredTrapCount: 15
+  desiredItemCount: 4
   spawnedTrapNums: 
   totalTrapDamage: 0
   chunkPrefabs:
@@ -2473,11 +2478,6 @@ Transform:
   - {fileID: 516384708}
   m_Father: {fileID: 39603280}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!4 &838728983 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 588475996022498918, guid: 40f548cdb6947b845aabde2e765d35bb, type: 3}
-  m_PrefabInstance: {fileID: 1337785015}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &849332442 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 96d96933c8bb05c4a8bd87411e462022, type: 3}
@@ -7054,6 +7054,11 @@ Transform:
 Transform:
   m_CorrespondingSourceObject: {fileID: 4369111733940748748, guid: 11aa79a4969a4ac4c89d518bbafbf3ae, type: 3}
   m_PrefabInstance: {fileID: 7401369064211568952}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &588475994759699665 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 588475996022498918, guid: 40f548cdb6947b845aabde2e765d35bb, type: 3}
+  m_PrefabInstance: {fileID: 1337785015}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1234889074010476259
 PrefabInstance:

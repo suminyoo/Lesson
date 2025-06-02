@@ -60,14 +60,14 @@ public class InGameUI : MonoBehaviour
     {
         isPaused = boo;
     }
-    public void ChangeSpeedUI(float normalSpeed, float curSpeed)
+    public void ChangeSpeedUI(float curSpeed)
     {
-        if (curSpeed > normalSpeed)
+        if (curSpeed > playerData.normalSpeed)
         {
             speedLabel.text = "Speed UP!";
             speedLabel.visible = true;
         }
-        else if (curSpeed < normalSpeed)
+        else if (curSpeed < playerData.normalSpeed)
         {
             speedLabel.text = "Speed Down!";
             speedLabel.visible = true;
@@ -77,13 +77,13 @@ public class InGameUI : MonoBehaviour
             speedLabel.visible = false;
         }
     }
-    public void ChangeJumpPowerUI(float normalJumpPow, float curJumpPow)
+    public void ChangeJumpPowerUI(float curJumpPow)
     {
-        if (curJumpPow > normalJumpPow){
+        if (curJumpPow > playerData.normalJumpPow){
             jumpLabel.text = "Jump Power UP!";
             jumpLabel.visible = true;
         }
-        else if (curJumpPow < normalJumpPow){
+        else if (curJumpPow < playerData.normalJumpPow){
             jumpLabel.text = "Jump Power Down!";
             jumpLabel.visible = true;
         }
@@ -94,9 +94,7 @@ public class InGameUI : MonoBehaviour
     public void ShowTimeUI()
     {
         time += Time.deltaTime;
-        int min = (int)time / 60;
-        int sec = ((int)time - min * 60) % 60;
-        timeLabel.text = string.Format("{0:D2}:{1:D2}", min, sec );
+        timeLabel.text = string.Format("{0:D2}:{1:D2}", (int)time / 60, ((int)time - (int)time / 60 * 60) % 60 );
     }
     public void ResetTimer()
     {

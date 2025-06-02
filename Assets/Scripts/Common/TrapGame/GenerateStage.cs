@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 public class GenerateStage : MonoBehaviour
@@ -8,16 +7,21 @@ public class GenerateStage : MonoBehaviour
     public InGameUI inGameUIDoc;
 
     public Trap[] trapPrefabList = new Trap[0];
+    public Item[] itemPrefabList = new Item[0];
+
     private GameObject trapGroup;
     private GameObject chunkGroup;
+    private GameObject itemGroup;
 
     public int desiredTrapCount = 15;
+    public int desiredItemCount = 4;
 
     public int[] spawnedTrapNums;
     public int totalTrapDamage;
 
     public GameObject[] chunkPrefabs;
     public GameObject finishPrefab;
+
     public int chunkWidth = 3;
     public int chunkDepth = 4;
     public int chunkCount = 5;
@@ -43,50 +47,65 @@ public class GenerateStage : MonoBehaviour
                 }
             }
         }
-        GameObject finishInstance = Instantiate(finishPrefab, new Vector3(chunkCount * chunkDepth * tileSize, 0f, 0f), Quaternion.identity, chunkGroup.transform);
+        GameObject finishInstance = Instantiate(finishPrefab, 
+            new Vector3(chunkCount * chunkDepth * tileSize, 0f, 0f), Quaternion.identity, chunkGroup.transform);
     }
 
-    public List<Vector3> GetRandomTrapPositions(int count)
+    public (List<Vector3> trapPositions, List<Vector3> itemPositions) GetRandomTrapAndItemPositions(int trapCount, int itemCount)
     {
-        // Fisher-Yates 알고리즘으로 리스트 섞기
-        for (int i = 0; i < trapCandidatePositions.Count; i++)
+        List<Vector3> shuffled = new List<Vector3>(trapCandidatePositions);
+
+        // Fisher-Yates 알고리즘으로 섞기
+        for (int i = 0; i < shuffled.Count; i++)
         {
-            int randIndex = UnityEngine.Random.Range(i, trapCandidatePositions.Count);
-            (trapCandidatePositions[i], trapCandidatePositions[randIndex]) = (trapCandidatePositions[randIndex], trapCandidatePositions[i]);
+            int randIndex = UnityEngine.Random.Range(i, shuffled.Count);
+            (shuffled[i], shuffled[randIndex]) = (shuffled[randIndex], shuffled[i]);
         }
 
-        // 요청한 개수만큼 잘라서 반환
-        int finalCount = Mathf.Min(count, trapCandidatePositions.Count);
-        return trapCandidatePositions.GetRange(0, finalCount);
+        int totalCount = Mathf.Min(trapCount + itemCount, shuffled.Count);
+        int actualTrapCount = Mathf.Min(trapCount, totalCount);
+        int actualItemCount = Mathf.Min(itemCount, totalCount - actualTrapCount);
+
+        List<Vector3> trapPositions = shuffled.GetRange(0, actualTrapCount);
+        List<Vector3> itemPositions = shuffled.GetRange(actualTrapCount, actualItemCount);
+
+        return (trapPositions, itemPositions);
     }
 
-    public void CreateTraps()
+    public void CreateTrapsAndItems()
     {
-        spawnedTrapNums = new int[trapPrefabList.Length]; // 각 종류별 개수 초기화
-        trapGroup = new GameObject("TrapGroup"); // 부모 오브젝트 생성
+        spawnedTrapNums = new int[trapPrefabList.Length];
+        trapGroup = new GameObject("TrapGroup"); 
 
-        // 랜덤한 위치 받아오기
-        List<Vector3> trapPositions = GetRandomTrapPositions(desiredTrapCount);
+        (List<Vector3> trapPositions, List<Vector3> itemPositions) = GetRandomTrapAndItemPositions(desiredTrapCount, desiredItemCount);
 
         foreach (Vector3 tilePos in trapPositions)
         {
-            // 랜덤한 함정 선택
             int tNum = UnityEngine.Random.Range(0, trapPrefabList.Length);
-
-            // 함정 프리팹 인스턴스 생성
             Trap trapInstance = Instantiate(trapPrefabList[tNum], tilePos, Quaternion.identity);
 
-            // 앵커 위치 기준으로 보정
             Transform placementAnchor = trapInstance.transform.Find("PlacementAnchor");
             Vector3 offset = trapInstance.transform.position - placementAnchor.position;
             trapInstance.transform.position = tilePos + offset;
 
-            // 그룹에 속하게 함
             trapInstance.transform.SetParent(trapGroup.transform);
 
-            // 총 피해 및 개수 기록
             totalTrapDamage += trapInstance.damage;
             spawnedTrapNums[tNum] += 1;
+        }
+
+        itemGroup = new GameObject("ItemGroup");
+
+        foreach (Vector3 tilePos in itemPositions)
+        {
+            int iNum = UnityEngine.Random.Range(0, itemPrefabList.Length);
+            Item itemInstance = Instantiate(itemPrefabList[iNum], tilePos, Quaternion.identity);
+
+            Transform placementAnchor = itemInstance.transform.Find("PlacementAnchor");
+            Vector3 offset = itemInstance.transform.position - placementAnchor.position;
+            itemInstance.transform.position = tilePos + offset;
+
+            itemInstance.transform.SetParent(itemGroup.transform);
         }
     }
     public void ClearMap()
@@ -97,10 +116,12 @@ public class GenerateStage : MonoBehaviour
         trapCandidatePositions.Clear();
     }
 
-    public void ClearTraps()
+    public void ClearTrapsAndItems()
     {
         if (trapGroup != null)
             Destroy(trapGroup);
+        if (itemGroup != null)
+            Destroy(itemGroup);
 
         if (spawnedTrapNums != null)
             Array.Clear(spawnedTrapNums, 0, spawnedTrapNums.Length);
