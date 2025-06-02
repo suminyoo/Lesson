@@ -1,0 +1,27 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <ui:ProgressBar value="22" title="my-progress" name="ProgressBar" data-source="project://database/Assets/Scripts/Common/SO/PlayerData.asset?fileID=11400000&amp;guid=9c4f2d44a5938524d95b26482b4356e7&amp;type=2#PlayerData">
+        <Bindings>
+            <ui:DataBinding property="value" data-source-path="HP" binding-mode="ToTarget" />
+        </Bindings>
+    </ui:ProgressBar>
+    <ui:Label text="Label" name="Label01" data-source="project://database/Assets/Scripts/Common/SO/PlayerData.asset?fileID=11400000&amp;guid=9c4f2d44a5938524d95b26482b4356e7&amp;type=2#PlayerData">
+        <Bindings>
+            <ui:DataBinding property="text" data-source-path="Life" binding-mode="ToTarget" />
+        </Bindings>
+    </ui:Label>
+    <ui:Label text="Label" name="Label02" data-source="project://database/Assets/Scripts/Common/SO/PlayerData.asset?fileID=11400000&amp;guid=9c4f2d44a5938524d95b26482b4356e7&amp;type=2#PlayerData">
+        <Bindings>
+            <ui:DataBinding property="text" data-source-path="JumpForce" binding-mode="ToTarget" />
+        </Bindings>
+    </ui:Label>
+    <ui:Label text="Label" data-source="project://database/Assets/Scripts/Common/SO/PlayerData.asset?fileID=11400000&amp;guid=9c4f2d44a5938524d95b26482b4356e7&amp;type=2#PlayerData" name="Label03">
+        <Bindings>
+            <ui:DataBinding property="text" data-source-path="MoveSpeed" binding-mode="ToTarget" />
+        </Bindings>
+    </ui:Label>
+    <ui:Label text="Label" data-source="project://database/Assets/Scripts/Common/SO/PlayerData.asset?fileID=11400000&amp;guid=9c4f2d44a5938524d95b26482b4356e7&amp;type=2#PlayerData" name="Label04">
+        <Bindings>
+            <ui:DataBinding property="text" data-source-path="bounceForce" binding-mode="ToTarget" />
+        </Bindings>
+    </ui:Label>
+</ui:UXML>
