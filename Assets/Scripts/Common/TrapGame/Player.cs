@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    public TG_PlayerData playerData;
+    [SerializeField] TG_PlayerData playerData;
 
     public static event Action<GameObject> OnPlayerCollisionEventWithObj;
     public static event Action<GameObject> OnPlayerTriggerEventWithObj;
@@ -14,20 +14,18 @@ public class Player : MonoBehaviour
     public static event Action OnStageClear;
     public static event Action OnPlayerDie;
 
-    public Animator anim;
-    public Rigidbody rigid;
-    public Transform cameraTransform;
+    private Animator anim;
+    private Rigidbody rigid;
+    private AudioSource audioSource;
 
-    public bool isGrounded;
-    public bool isPaused = false;
+    [SerializeField] Transform cameraTransform;
+
+    private bool isGrounded;
+    private bool isPaused = false;
 
     private float h;
     private float v;
 
-    private void Awake()
-    {
-        InitializePlayer();
-    }
     public void InitializePlayer()
     {
         playerData.hp = 100;
@@ -38,8 +36,11 @@ public class Player : MonoBehaviour
     {
         anim = GetComponent<Animator>();
         rigid = GetComponent<Rigidbody>();
+        audioSource = GetComponent<AudioSource>();
 
         GameManager.OnPaused += Pause;
+
+        InitializePlayer();
     }
     private void OnTriggerEnter(Collider other)
     {
@@ -51,7 +52,6 @@ public class Player : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         if (collision == null) { return; }
-
         OnPlayerCollisionEventWithObj?.Invoke(collision.gameObject);
     }
 
@@ -59,8 +59,7 @@ public class Player : MonoBehaviour
     {
         foreach (ContactPoint contact in collision.contacts)
         {
-            // 접촉 면이 위쪽을 향할수록 dot 값이 1에 가까움 (0.5 이상이면 수평면)
-            if (Vector3.Dot(contact.normal, Vector3.up) > 0.5f)
+            if (Vector3.Dot(contact.normal, Vector3.up) > 0.5f) // 접촉 면이 위쪽을 향할수록 dot 값이 1에 가까움 (0.5 이상이면 수평면)
             {
                 if (collision.gameObject.CompareTag("Ground"))
                 {
@@ -82,10 +81,14 @@ public class Player : MonoBehaviour
     {
         playerData.life -= 1;
         OnPlayerDie.Invoke();
+        SoundManager.Instance.PlaySFX("Death");
+
     }
     public void RespawnPlayer()
     {
         playerData.hp = 100;
+        ChangePlayerSpeed(playerData.normalSpeed);
+        ChangePlayerJumpPow(playerData.normalJumpPow);
         transform.position = playerData.playerRespawnPosition;
     }
     public void ChangePlayerHP(int var)
@@ -97,15 +100,17 @@ public class Player : MonoBehaviour
     public void ChangePlayerSpeed(float speed)
     {
         playerData.moveSpeed = speed;
-        OnPlayerSpeedChangeEvent.Invoke(speed);
+        if(OnPlayerSpeedChangeEvent != null)
+            OnPlayerSpeedChangeEvent.Invoke(speed);
     }
     public void ChangePlayerJumpPow(float jumpPow)
     {
         playerData.jumpPower = jumpPow;
-        OnPlayerJumpPowChangeEvent.Invoke(jumpPow);
+        if (OnPlayerJumpPowChangeEvent != null)
+            OnPlayerJumpPowChangeEvent.Invoke(jumpPow);
     }
 
-    void Update()
+    private void Update()
     {
         h = Input.GetAxis("Horizontal");
         v = Input.GetAxis("Vertical");
@@ -138,7 +143,7 @@ public class Player : MonoBehaviour
             }
         }
     }
-    void FixedUpdate()
+    private void FixedUpdate()
     {
         if (isPaused) return;
         PlayerMovement();

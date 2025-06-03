@@ -6,22 +6,20 @@ public class GameManager : MonoBehaviour
 {
     public static event Action<bool> OnPaused;
 
-    public TG_PlayerData playerData;
+    [SerializeField] TG_PlayerData playerData;
+    [SerializeField] Player player;
+    [SerializeField] InGameUI inGameUIDoc;
+    [SerializeField] StageClearUI stageClearUIDoc;
+    [SerializeField] StageOverUI stageOverUIDoc;
+    [SerializeField] GameClearEndUI gameClearEndUI;
+    [SerializeField] PlayerDeadUI playerDeadUI;
+    [SerializeField] CameraController cameraController;
+    [SerializeField] GenerateStage generateStage;
 
-    public Player player;
-    public InGameUI inGameUIDoc;
-    public StageClearUI stageClearUIDoc;
-    public StageOverUI stageOverUIDoc;
-    public GameClearEndUI gameClearEndUI;
-    public PlayerDeadUI playerDeadUI;
-    public CameraController cameraController;
-    public GenerateStage generateStage;
+    private int clearStageNum = 3;
+    private int stageNum = 0;
 
-    public int clearStageNum = 3;
-    public bool isPaused = false;
-    public int stageNum = 0;
-
-    public void Start()
+    private void Start()
     {
         Player.OnPlayerDie += PlayerDie;
         Player.OnStageClear += StageClear;
@@ -31,7 +29,7 @@ public class GameManager : MonoBehaviour
 
         SetStage();
     }
-    public void Update()
+    private void Update()
     {
         if (Input.GetKeyDown(KeyCode.R)) ResetTraps();
     }
@@ -50,8 +48,7 @@ public class GameManager : MonoBehaviour
         GameResume();
         stageOverUIDoc.ShowUI(false);
     }
-
-    public void SetStage()
+    private void SetStage()
     {
         cameraController.SetCursorVisible(false);
         stageClearUIDoc.ShowUI(false);

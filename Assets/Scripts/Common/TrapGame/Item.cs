@@ -28,7 +28,7 @@ public class Item : MonoBehaviour
             switch (tag)
             {
                 case "Life":
-                    other.gameObject.GetComponent<Player>().ChangePlayerHP(20);
+                    other.gameObject.GetComponent<Player>().ChangePlayerHP(30);
                     break;
 
                 case "SpeedUp":

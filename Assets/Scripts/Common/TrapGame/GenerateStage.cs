@@ -4,29 +4,32 @@ using UnityEngine;
 
 public class GenerateStage : MonoBehaviour
 {
-    public InGameUI inGameUIDoc;
 
-    public Trap[] trapPrefabList = new Trap[0];
-    public Item[] itemPrefabList = new Item[0];
+
+
+    [SerializeField] InGameUI inGameUIDoc;
+    [SerializeField] Trap[] trapPrefabList = new Trap[0];
+    [SerializeField] Item[] itemPrefabList = new Item[0];
+
+    public int[] spawnedTrapNums;
+    public int totalTrapDamage;
+
+    [SerializeField] GameObject[] chunkPrefabs;
+    [SerializeField] GameObject finishPrefab;
+
+    [SerializeField] int desiredTrapCount = 10;
+    [SerializeField] int desiredItemCount = 4;
+    [SerializeField] int chunkCount = 5;
+
+    private int chunkWidth = 3;
+    private int chunkDepth = 4;
+    private float tileSize = 2f;
 
     private GameObject trapGroup;
     private GameObject chunkGroup;
     private GameObject itemGroup;
 
-    public int desiredTrapCount = 15;
-    public int desiredItemCount = 4;
-
-    public int[] spawnedTrapNums;
-    public int totalTrapDamage;
-
-    public GameObject[] chunkPrefabs;
-    public GameObject finishPrefab;
-
-    public int chunkWidth = 3;
-    public int chunkDepth = 4;
-    public int chunkCount = 5;
-    public float tileSize = 2f;
-    public List<Vector3> trapCandidatePositions = new List<Vector3>();
+    private List<Vector3> trapCandidatePositions = new List<Vector3>();
 
     public void GenerateChunkMap()
     {
