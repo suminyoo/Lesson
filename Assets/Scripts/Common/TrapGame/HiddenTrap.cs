@@ -13,6 +13,7 @@ public class HiddenTrap : Trap
     {
         if (other.CompareTag("Player"))
         {
+            SoundManager.Instance.PlayOneList(AudioType.Hit);
             meshR.enabled = true;
             meshR02.enabled = true;
         }
@@ -23,6 +24,7 @@ public class HiddenTrap : Trap
     {
         if (other.CompareTag("Player"))
         {
+
             meshR.enabled = false;
             meshR02.enabled = false;
         }

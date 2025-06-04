@@ -25,6 +25,7 @@ public class Item : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
+            SoundManager.Instance.PlayOneList(AudioType.Item);
             switch (tag)
             {
                 case "Life":
@@ -32,12 +33,14 @@ public class Item : MonoBehaviour
                     break;
 
                 case "SpeedUp":
+                    SoundManager.Instance.PlayOneList(AudioType.PowerUP);
                     playerData.SpeedUpUsable = false;
                     other.gameObject.GetComponent<Player>().ChangePlayerSpeed(playerData.maxSpeed);
                     gameObject.SetActive(false);
                     break;
 
                 case "JumpUp":
+                    SoundManager.Instance.PlayOneList(AudioType.PowerUP);
                     playerData.JumpPowUpUsable = false;
                     other.gameObject.GetComponent<Player>().ChangePlayerJumpPow(playerData.maxJumpPow);
                     gameObject.SetActive(false);

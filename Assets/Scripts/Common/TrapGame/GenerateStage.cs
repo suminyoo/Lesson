@@ -4,9 +4,6 @@ using UnityEngine;
 
 public class GenerateStage : MonoBehaviour
 {
-
-
-
     [SerializeField] InGameUI inGameUIDoc;
     [SerializeField] Trap[] trapPrefabList = new Trap[0];
     [SerializeField] Item[] itemPrefabList = new Item[0];

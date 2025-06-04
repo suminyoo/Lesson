@@ -32,12 +32,23 @@ public class GameManager : MonoBehaviour
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.R)) ResetTraps();
+        if (Input.GetKeyDown(KeyCode.T)) ResetMap();
+
     }
     private void ResetTraps()
     {
         player.InitializePlayer();
         generateStage.ClearTrapsAndItems();
         generateStage.CreateTrapsAndItems();
+        generateStage.ChangeStageDifficulty();
+    }
+    private void ResetMap()
+    {
+        player.InitializePlayer();
+        generateStage.ClearTrapsAndItems();
+        generateStage.CreateTrapsAndItems();
+        generateStage.ClearMap();
+        generateStage.GenerateChunkMap();
         generateStage.ChangeStageDifficulty();
     }
     private void RestartStage()
@@ -75,10 +86,15 @@ public class GameManager : MonoBehaviour
     }
     private void PlayerDie()
     {
+        SoundManager.Instance.PlayOneList(AudioType.Death);
         GamePause();
         cameraController.SetCursorVisible(true);
 
-        if (playerData.life <= 0) stageOverUIDoc.ShowUI(true);
+        if (playerData.life <= 0)
+        {
+            SoundManager.Instance.PlayOneList(AudioType.StageOver);
+            stageOverUIDoc.ShowUI(true);
+        }
         else playerDeadUI.ShowUI(true);
     }
     private void PlayerRespawn()
@@ -89,6 +105,8 @@ public class GameManager : MonoBehaviour
     }
     private void StageClear()
     {
+        SoundManager.Instance.PlayOneList(AudioType.StageClear);
+
         GamePause();
         cameraController.SetCursorVisible(true);
 

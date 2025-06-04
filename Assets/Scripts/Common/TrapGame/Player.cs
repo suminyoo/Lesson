@@ -16,7 +16,6 @@ public class Player : MonoBehaviour
 
     private Animator anim;
     private Rigidbody rigid;
-    private AudioSource audioSource;
 
     [SerializeField] Transform cameraTransform;
 
@@ -36,7 +35,6 @@ public class Player : MonoBehaviour
     {
         anim = GetComponent<Animator>();
         rigid = GetComponent<Rigidbody>();
-        audioSource = GetComponent<AudioSource>();
 
         GameManager.OnPaused += Pause;
 
@@ -81,8 +79,6 @@ public class Player : MonoBehaviour
     {
         playerData.life -= 1;
         OnPlayerDie.Invoke();
-        SoundManager.Instance.PlaySFX("Death");
-
     }
     public void RespawnPlayer()
     {
@@ -119,6 +115,7 @@ public class Player : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.X)) anim.SetTrigger("Attack04");
         if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
         {
+            SoundManager.Instance.PlayOneList(AudioType.Jump);
             anim.SetTrigger("Jump");
             rigid.AddForce(Vector3.up * playerData.jumpPower, ForceMode.Impulse);
         }
@@ -173,5 +170,7 @@ public class Player : MonoBehaviour
         rigid.MovePosition(rigid.position + moveAmount);  // 이동
 
         anim.SetBool("Walk", isGrounded); // 애니메이션
+        //SoundManager.Instance.PlayOneList(AudioType.Walk);
+
     }
 }

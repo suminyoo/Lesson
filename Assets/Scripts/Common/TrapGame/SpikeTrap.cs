@@ -8,6 +8,7 @@ public class SpikeTrap : Trap
     }
     protected override void OnCollisionEnter(Collision collision)
     {
+        SoundManager.Instance.PlayOneList(AudioType.Hit);
         collision.gameObject.GetComponent<Player>().ChangePlayerHP(-damage);
         base.OnCollisionEnter(collision);
     }
