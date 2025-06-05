@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -15,6 +16,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] PlayerDeadUI playerDeadUI;
     [SerializeField] CameraController cameraController;
     [SerializeField] GenerateStage generateStage;
+    [SerializeField] MainMenuUI mainMenuUI;
 
     private int clearStageNum = 3;
     private int stageNum = 0;
@@ -26,8 +28,28 @@ public class GameManager : MonoBehaviour
         StageClearUI.OnNextStageEvent += NextStage;
         StageOverUI.OnRestartStageEvent += RestartStage;
         PlayerDeadUI.OnPlayerRespawnEvent += PlayerRespawn;
+        MainMenuUI.OnGameStart += StartStage;
 
+        StartCoroutine(LateStart());
+
+    }
+    IEnumerator LateStart()
+    {
+        yield return null;
+        MainMenu();
+    }
+    private void MainMenu()
+    {
+        mainMenuUI.ShowUI(true);
+        GamePause();
+    }
+
+    private void StartStage()
+    {
+        mainMenuUI.ShowUI(false);
+        GameResume();
         SetStage();
+        SoundManager.Instance.PlayBGM(EBgm.BGM_GAME);
     }
     private void Update()
     {
@@ -66,6 +88,7 @@ public class GameManager : MonoBehaviour
         stageOverUIDoc.ShowUI(false);
         gameClearEndUI.ShowGameClearUI(false);
         playerDeadUI.ShowUI(false);
+        inGameUIDoc.ShowUI(true);
 
         generateStage.ClearMap();
         generateStage.GenerateChunkMap();
@@ -86,13 +109,12 @@ public class GameManager : MonoBehaviour
     }
     private void PlayerDie()
     {
-        SoundManager.Instance.PlayOneList(AudioType.Death);
+        SoundManager.Instance.PlaySFX(ESfx.Death);
         GamePause();
-        cameraController.SetCursorVisible(true);
 
         if (playerData.life <= 0)
         {
-            SoundManager.Instance.PlayOneList(AudioType.StageOver);
+            SoundManager.Instance.PlaySFX(ESfx.StageOver);
             stageOverUIDoc.ShowUI(true);
         }
         else playerDeadUI.ShowUI(true);
@@ -105,10 +127,9 @@ public class GameManager : MonoBehaviour
     }
     private void StageClear()
     {
-        SoundManager.Instance.PlayOneList(AudioType.StageClear);
+        SoundManager.Instance.PlaySFX(ESfx.StageClear);
 
         GamePause();
-        cameraController.SetCursorVisible(true);
 
         if (stageNum +1 == clearStageNum) gameClearEndUI.ShowGameClearUI(true);
         else stageClearUIDoc.ShowUI(true);

@@ -1,14 +1,12 @@
-using Unity.VisualScripting;
-using Unity.VisualScripting.FullSerializer.Internal;
+using System;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public class StartUI : MonoBehaviour
+public class MainMenuUI : MonoBehaviour
 {
+    public static event Action OnGameStart;
+
     [SerializeField] UIDocument myUI;
-    [SerializeField] UIDocument startUI;
-    [SerializeField] UIDocument optionUI;
-    
 
     private Button startButton;
     private Button continueButton;
@@ -19,7 +17,6 @@ public class StartUI : MonoBehaviour
     private void Start()
     {
         VisualElement root = myUI.rootVisualElement; //hook
-        VisualElement m_option = optionUI.rootVisualElement; //hook
 
         startButton = root.Q<Button>("StartButton"); //Query, 해당 버튼을 찾기
         continueButton = root.Q<Button>("ContinueButton");
@@ -43,21 +40,22 @@ public class StartUI : MonoBehaviour
     void OnStartButtonClick()
     {
         Debug.Log("Start Button Clicked!");
+        OnGameStart.Invoke();
     }
     void OnContinueButtonClick()
     {
         Debug.Log("Continue Button Clicked!");
-
     }
     void OnOptionButtonClick()
     {
         Debug.Log("Option Button Clicked!");
 
-        //root.visible = true;
     }
     void OnQuitButtonClick()
     {
         Debug.Log("Quit Button Clicked!");
         Application.Quit();
     }
+    public void ShowUI(bool boo) => myUI.rootVisualElement.visible = boo;
+
 }

@@ -2740,6 +2740,7 @@ MonoBehaviour:
   playerDeadUI: {fileID: 1005018370}
   cameraController: {fileID: 1807625479}
   generateStage: {fileID: 407321858}
+  mainMenuUI: {fileID: 2103651801}
 --- !u!4 &916230331
 Transform:
   m_ObjectHideFlags: 0
@@ -3860,6 +3861,7 @@ RectTransform:
   - {fileID: 1322371916}
   - {fileID: 820589823}
   - {fileID: 1005018369}
+  - {fileID: 2103651800}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -5739,10 +5741,10 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: d97c6efcb5647c14b8d2e4f6030c099c, type: 3}
-  m_Resource: {fileID: 8300000, guid: d97c6efcb5647c14b8d2e4f6030c099c, type: 3}
+  m_audioClip: {fileID: 0}
+  m_Resource: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 0.552
+  m_Volume: 0.428
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -5935,18 +5937,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3cd8d40efda1ab34a824bef02c8db986, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _audio: {fileID: 1718438138}
-  hit: {fileID: 8300000, guid: 32d4b1811dda14a6cb9e059ee8ad17d2, type: 3}
-  item: {fileID: 8300000, guid: b99da9a57308d4ba1bee1cf1d9038376, type: 3}
-  jump: {fileID: 8300000, guid: 2c5292ba5cf254919a6b9e2b18e04f49, type: 3}
-  walk: {fileID: 8300000, guid: ff5f85da24bc943d1abdc5760a22bc81, type: 3}
-  death: {fileID: 8300000, guid: 5fdb13d3756c84fecac96f5a2d124370, type: 3}
-  bombVisible: {fileID: 8300000, guid: a0010a1a0c474473b81729eb770c485f, type: 3}
-  bombExplode: {fileID: 8300000, guid: 0c008ee3ee72a4362a35be25fa5de043, type: 3}
-  stageOver: {fileID: 8300000, guid: b6428d4edb06344ba829da4edd9967c1, type: 3}
-  stageClear: {fileID: 8300000, guid: 7478151cf36724a7dada558f746c3633, type: 3}
-  powerUP: {fileID: 8300000, guid: 7bd6b897eb5ca4b7d88a205c4a51640c, type: 3}
-  powerDown: {fileID: 8300000, guid: ffb159a21c8a04135a5616979c828fab, type: 3}
+  bgmClips:
+  - {fileID: 8300000, guid: d97c6efcb5647c14b8d2e4f6030c099c, type: 3}
+  sfxClips: []
+  bgmSource: {fileID: 1718438136}
+  sfxSource: {fileID: 1718438138}
 --- !u!1 &1761388303
 GameObject:
   m_ObjectHideFlags: 0
@@ -7541,6 +7536,71 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3216297306056431314, guid: 5517fc9e209744f42b15cec4f8551dc0, type: 3}
   m_PrefabInstance: {fileID: 2073076060}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &2103651799
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2103651800}
+  - component: {fileID: 2103651802}
+  - component: {fileID: 2103651801}
+  m_Layer: 5
+  m_Name: UIDMainMenu
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2103651800
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2103651799}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1147910004}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2103651801
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2103651799}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 660012b1d5a5f8045a911069691abb23, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  myUI: {fileID: 2103651802}
+--- !u!114 &2103651802
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2103651799}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 19102, guid: 0000000000000000e000000000000000, type: 0}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_PanelSettings: {fileID: 11400000, guid: 12377713753b8f54287eeeb31d3f49f1, type: 2}
+  m_ParentUI: {fileID: 0}
+  sourceAsset: {fileID: 9197481963319205126, guid: d8e1c9384501d8a46bc72073a01e8ddd, type: 3}
+  m_SortingOrder: 20
+  m_WorldSpaceSizeMode: 1
+  m_WorldSpaceWidth: 1920
+  m_WorldSpaceHeight: 1080
 --- !u!1 &2110935838 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 96d96933c8bb05c4a8bd87411e462022, type: 3}

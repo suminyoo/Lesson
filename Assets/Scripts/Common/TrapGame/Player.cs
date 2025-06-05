@@ -85,6 +85,8 @@ public class Player : MonoBehaviour
         playerData.hp = 100;
         ChangePlayerSpeed(playerData.normalSpeed);
         ChangePlayerJumpPow(playerData.normalJumpPow);
+        cameraTransform.GetComponent<CameraController>().ResetYaw(transform.eulerAngles.y);
+
         transform.position = playerData.playerRespawnPosition;
     }
     public void ChangePlayerHP(int var)
@@ -115,7 +117,7 @@ public class Player : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.X)) anim.SetTrigger("Attack04");
         if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
         {
-            SoundManager.Instance.PlayOneList(AudioType.Jump);
+            SoundManager.Instance.PlaySFX(ESfx.Jump);
             anim.SetTrigger("Jump");
             rigid.AddForce(Vector3.up * playerData.jumpPower, ForceMode.Impulse);
         }

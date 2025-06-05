@@ -24,7 +24,7 @@ public class HammerBall : Trap
     }
     protected override void OnCollisionEnter(Collision collision)
     {
-        SoundManager.Instance.PlayOneList(AudioType.Hit);
+        SoundManager.Instance.PlaySFX(ESfx.Hit);
         collision.gameObject.GetComponent<Player>().ChangePlayerHP(-damage);
         Vector3 contact = collision.GetContact(0).point;
 

@@ -9,19 +9,23 @@ public class CameraController : MonoBehaviour
     public float distance = 5f;
     public float minYAngle = -20f;
     public float maxYAngle = 60f;
-    private float currentYaw = 0f;
+    private float currentYaw = 90f;
     private float currentPitch = 20f;
 
     private bool isPaused = false;
 
     void Start()
     {
-        SetCursorVisible(false);
         GameManager.OnPaused += Pause;
     }
     private void Pause(bool boo)
     {
         isPaused = boo;
+        SetCursorVisible(boo);
+    }
+    public void ResetYaw(float newYaw)
+    {
+        currentYaw = newYaw;
     }
     public void SetCursorVisible(bool isVisible)
     {

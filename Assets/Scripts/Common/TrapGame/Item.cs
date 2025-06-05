@@ -25,28 +25,29 @@ public class Item : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            SoundManager.Instance.PlayOneList(AudioType.Item);
             switch (tag)
             {
                 case "Life":
+                    SoundManager.Instance.PlaySFX(ESfx.Item);
                     other.gameObject.GetComponent<Player>().ChangePlayerHP(30);
                     break;
 
                 case "SpeedUp":
-                    SoundManager.Instance.PlayOneList(AudioType.PowerUP);
+                    SoundManager.Instance.PlaySFX(ESfx.PowerUp);
                     playerData.SpeedUpUsable = false;
                     other.gameObject.GetComponent<Player>().ChangePlayerSpeed(playerData.maxSpeed);
                     gameObject.SetActive(false);
                     break;
 
                 case "JumpUp":
-                    SoundManager.Instance.PlayOneList(AudioType.PowerUP);
+                    SoundManager.Instance.PlaySFX(ESfx.PowerUp);
                     playerData.JumpPowUpUsable = false;
                     other.gameObject.GetComponent<Player>().ChangePlayerJumpPow(playerData.maxJumpPow);
                     gameObject.SetActive(false);
                     break;
 
                 default:
+                    SoundManager.Instance.PlaySFX(ESfx.Item);
                     Debug.Log("Unknown Item");
                     break;
             }

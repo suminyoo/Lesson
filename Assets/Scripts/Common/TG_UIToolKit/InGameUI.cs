@@ -104,4 +104,6 @@ public class InGameUI : MonoBehaviour
     {
         stageLabel.text = "Stage: " + (var + 1).ToString();
     }
+    public void ShowUI(bool boo) => myUI.rootVisualElement.visible = boo;
+
 }

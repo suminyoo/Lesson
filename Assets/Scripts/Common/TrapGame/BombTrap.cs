@@ -11,7 +11,7 @@ public class BombTrap : HiddenTrap
     }
     protected override void OnCollisionEnter(Collision collision)
     {
-        SoundManager.Instance.PlayOneList(AudioType.BombExplode);
+        SoundManager.Instance.PlaySFX(ESfx.BombExplode);
         collision.gameObject.GetComponent<Player>().ChangePlayerHP(-damage);
         Vector3 contact = collision.GetContact(0).point;
 

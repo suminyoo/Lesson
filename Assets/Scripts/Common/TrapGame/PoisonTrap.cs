@@ -16,7 +16,7 @@ public class PoisonTrap : Trap
     }
     protected override void OnTriggerEnter(Collider other)
     {
-        SoundManager.Instance.PlayOneList(AudioType.PowerDown);
+        SoundManager.Instance.PlaySFX(ESfx.PowerDown);
         other.GetComponent<Player>().ChangePlayerSpeed(deBuffedSpeed);
         other.GetComponent<Player>().ChangePlayerJumpPow(deBuffedJumpPow);
         base.OnTriggerEnter(other);
@@ -26,7 +26,7 @@ public class PoisonTrap : Trap
         tickTimer -= Time.deltaTime;
         if (tickTimer <= 0f)
         {
-            SoundManager.Instance.PlayOneList(AudioType.Hit);
+            SoundManager.Instance.PlaySFX(ESfx.Hit);
             tickTimer = tickInterval;
             other.GetComponent<Player>().ChangePlayerHP(-damage);
             base.OnTriggerEnter(other);
