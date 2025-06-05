@@ -4,14 +4,17 @@ public class HammerBall : Trap
 {
     private Quaternion startRotation;
 
-    public float swingAngle = 50f;
-    public float swingSpeed = 2f;
+    public float swingAngle;
+    public float swingSpeed;
     private float bounceSpeed = 7f;
     private float bounceDistance = 6f;
 
     public void Awake()
     {
         base.damage = 10;
+        swingAngle = Random.Range(30f, 80f);  // 회전 각도
+        swingSpeed = Random.Range(1f, 4f);    // 속도
+
     }
     void Start()
     {

@@ -2,7 +2,11 @@
 using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
-
+//높이에 따른 청크 생성
+//앞에서 날아오는 함정(동적요소추가
+//옆에서 날아오는 함정(동적요소추가
+//이펙트매니저
+//더많은 함정
 public class GameManager : MonoBehaviour
 {
     public static event Action<bool> OnPaused;
