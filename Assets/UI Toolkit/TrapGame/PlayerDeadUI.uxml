@@ -3,6 +3,11 @@
         <ui:VisualElement name="TopSpace" style="flex-grow: 1;" />
         <ui:VisualElement name="Texts" style="flex-grow: 1; justify-content: space-evenly; height: 15%;">
             <ui:Label text="[You Died]" name="PlayerDieLabel" enable-rich-text="false" style="align-self: center; -unity-font-style: bold; color: rgb(229, 150, 53); font-size: 30px; -unity-text-outline-width: 1px; -unity-text-outline-color: rgb(0, 0, 0);" />
+            <ui:Label text="Lives remaining" name="DeathReason" data-source="project://database/Assets/Scripts/Common/TG_UIToolKit/TG_PlayerData.asset?fileID=11400000&amp;guid=8572e4042f7f9c34791e022a5598c284&amp;type=2#TG_PlayerData" style="-unity-text-align: upper-center; color: rgb(0, 0, 0); -unity-font-style: bold; font-size: 16px; -unity-text-outline-width: 0.1px; -unity-text-outline-color: rgb(255, 255, 255);">
+                <Bindings>
+                    <ui:DataBinding property="text" data-source-path="DeathReason" binding-mode="ToTarget" />
+                </Bindings>
+            </ui:Label>
             <ui:Label text="Lives remaining" name="RemainLifeLabel" style="-unity-text-align: upper-center; color: rgb(255, 255, 255); -unity-font-style: bold; font-size: 23px; -unity-text-outline-width: 0.5px; -unity-text-outline-color: rgb(0, 0, 0);" />
             <ui:Label text="0" name="Life" style="-unity-text-align: upper-center; color: rgb(255, 255, 255); -unity-font-style: bold; font-size: 23px; -unity-text-outline-width: 0.5px; -unity-text-outline-color: rgb(0, 0, 0);">
                 <Bindings>

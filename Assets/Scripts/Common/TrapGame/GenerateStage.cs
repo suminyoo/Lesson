@@ -34,17 +34,13 @@ public class GenerateStage : MonoBehaviour
         for (int i = 1; i <= maxSteps; i++)
         {
             Vector3 checkPos = position + direction * tileUnit * i;
-
-            Collider[] hits = Physics.OverlapBox(
-                checkPos,
+            Collider[] hits = Physics.OverlapBox(checkPos,
                 new Vector3(tileUnit * 0.4f, tileUnit * 0.4f, tileUnit * 0.4f));
 
             if (hits.Length > 0)
                 break;
-
             distance += tileUnit;
         }
-
         return distance;
     }
     public void GenerateChunkMap()
@@ -64,12 +60,12 @@ public class GenerateStage : MonoBehaviour
 
                 Vector3 pos = child.position;
 
-                // X축 이동 가능 거리 계산
+                // X축 이동 가능 거리
                 float xRange = GetEmptyDistanceOneDirection(pos, Vector3.right, tileSize, 3);
                 float xRangeL = GetEmptyDistanceOneDirection(pos, Vector3.left, tileSize, 3);
                 float xTotal = Mathf.Min(xRange, xRangeL);
 
-                // Z축 이동 가능 거리 계산
+                // Z축 이동 가능 거리
                 float zRange = GetEmptyDistanceOneDirection(pos, Vector3.forward, tileSize, 3);
                 float zRangeL = GetEmptyDistanceOneDirection(pos, Vector3.back, tileSize, 3);
                 float zTotal = Mathf.Min(zRange, zRangeL);
@@ -108,9 +104,7 @@ public class GenerateStage : MonoBehaviour
                         mover.moveAxis = Vector3.forward;
                         mover.moveDistance = zTotal;
                     }
-
                     mover.moveSpeed = UnityEngine.Random.Range(1.5f, 3f);
-
                     continue; // 함정 후보 제외
                 }
                 // 10% 확률로 FallingTile 붙이기
@@ -118,15 +112,11 @@ public class GenerateStage : MonoBehaviour
                 {
                     if (child.GetComponent<FallingTile>() == null)
                         child.gameObject.AddComponent<FallingTile>();
-
                     continue; // 함정 후보 제외
                 }
 
                 // 나머지는 함정 후보에 추가
-                trapCandidatePositions.Add(new Vector3(
-                    pos.x,
-                    pos.y + tileSize,
-                    pos.z));
+                trapCandidatePositions.Add(new Vector3(pos.x, pos.y + tileSize, pos.z));
             }
         }
 
@@ -136,18 +126,18 @@ public class GenerateStage : MonoBehaviour
             Quaternion.identity,
             chunkGroup.transform);
     }
-    private bool CheckZSpaceEmpty(Vector3 position, float checkDistance)
-    {
-        float half = checkDistance / 2f;
+    //private bool CheckZSpaceEmpty(Vector3 position, float checkDistance)
+    //{
+    //    float half = checkDistance / 2f;
 
-        // 타일의 Z+ 방향과 Z- 방향 모두 체크 (OverlapBox로 주변에 콜라이더 있는지 확인)
-        Collider[] colliders = Physics.OverlapBox(
-            position + new Vector3(0f, 0f, 0f),           // 중심
-            new Vector3(0.4f, 0.4f, half),                // 크기
-            Quaternion.identity);
+    //    // 타일의 Z+ 방향과 Z- 방향 모두 체크 (OverlapBox로 주변에 콜라이더 있는지 확인)
+    //    Collider[] colliders = Physics.OverlapBox(
+    //        position + new Vector3(0f, 0f, 0f),           // 중심
+    //        new Vector3(0.4f, 0.4f, half),                // 크기
+    //        Quaternion.identity);
 
-        return colliders.Length <= 1; // 자기 자신만 있으면 OK
-    }
+    //    return colliders.Length <= 1; // 자기 자신만 있으면 OK
+    //}
     //public void GenerateChunkMap()
     //{
     //    chunkGroup = new GameObject("ChunkMap");
@@ -199,6 +189,7 @@ public class GenerateStage : MonoBehaviour
 
         (List<Vector3> trapPositions, List<Vector3> itemPositions) = GetRandomTrapAndItemPositions(desiredTrapCount, desiredItemCount);
 
+        //traps
         foreach (Vector3 tilePos in trapPositions)
         {
             int tNum = UnityEngine.Random.Range(0, trapPrefabList.Length);
@@ -216,6 +207,7 @@ public class GenerateStage : MonoBehaviour
 
         itemGroup = new GameObject("ItemGroup");
 
+        //items
         foreach (Vector3 tilePos in itemPositions)
         {
             int iNum = UnityEngine.Random.Range(0, itemPrefabList.Length);

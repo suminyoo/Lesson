@@ -52,8 +52,8 @@ MonoBehaviour:
   lensAttenuationMode: 0
   colorGradingSpace: 0
   m_ObsoleteDiffusionProfileSettingsList:
-  - {fileID: 11400000, guid: 78322c7f82657514ebe48203160e3f39, type: 2}
-  - {fileID: 11400000, guid: 26bdddf49760c61438938733f07fa2a2, type: 2}
+  - {fileID: 0}
+  - {fileID: 0}
   - {fileID: 11400000, guid: 5a9a2dc462c7bde4f86d0615a19c2c72, type: 2}
   - {fileID: 11400000, guid: 2b7005ba3a4d8474b8cdc34141ad766e, type: 2}
   specularFade: 0
@@ -197,7 +197,27 @@ MonoBehaviour:
       - rid: 3229205304092917793
       - rid: 3229205304092917794
     m_RuntimeSettings:
-      m_List: []
+      m_List:
+      - rid: 3229205304092917760
+      - rid: 3229205304092917762
+      - rid: 3229205304092917765
+      - rid: 3229205304092917766
+      - rid: 3229205304092917767
+      - rid: 3229205304092917770
+      - rid: 3229205304092917771
+      - rid: 3229205304092917772
+      - rid: 3229205304092917774
+      - rid: 3229205304092917775
+      - rid: 3229205304092917777
+      - rid: 3229205304092917778
+      - rid: 3229205304092917779
+      - rid: 3229205304092917780
+      - rid: 3229205304092917781
+      - rid: 3229205304092917784
+      - rid: 3229205304092917785
+      - rid: 3229205304092917790
+      - rid: 3229205304092917792
+      - rid: 3229205304092917794
   renderingLayerNames:
   - Light LayerDefault
   - InteriorOnly
@@ -246,6 +266,8 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }
     - rid: 3229205304092917760
       type: {class: HDRPRayTracingResources, ns: UnityEngine.Rendering.HighDefinition, asm: Unity.RenderPipelines.HighDefinition.Runtime}
       data:

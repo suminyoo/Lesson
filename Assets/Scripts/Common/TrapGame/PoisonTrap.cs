@@ -23,13 +23,16 @@ public class PoisonTrap : Trap
     }
     private void OnTriggerStay(Collider other)
     {
-        tickTimer -= Time.deltaTime;
-        if (tickTimer <= 0f)
+        if (!playerData.isDead)
         {
-            SoundManager.Instance.PlaySFX(ESfx.Hit);
-            tickTimer = tickInterval;
-            other.GetComponent<Player>().ChangePlayerHP(-damage);
-            base.OnTriggerEnter(other);
+            tickTimer -= Time.deltaTime;
+            if (tickTimer <= 0f)
+            {
+                SoundManager.Instance.PlaySFX(ESfx.Hit);
+                tickTimer = tickInterval;
+                other.GetComponent<Player>().ChangePlayerHP(-damage);
+                base.OnTriggerEnter(other);
+            }
         }
     }
     private void OnTriggerExit(Collider other)

@@ -18,7 +18,7 @@ public class Item : MonoBehaviour
     {
         transform.Rotate(Vector3.up, rotationSpeed * Time.deltaTime);
 
-        float offsetY = Mathf.Sin(Time.time * floatFrequency) * floatAmplitude;// 위아래 부드럽게 떠다니기
+        float offsetY = Mathf.Sin(Time.time * floatFrequency) * floatAmplitude; // 떠다니기
         transform.position = new Vector3(startPos.x, startPos.y + offsetY, startPos.z);
     }
     private void OnTriggerEnter(Collider other)

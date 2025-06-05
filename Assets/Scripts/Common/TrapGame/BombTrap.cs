@@ -13,9 +13,12 @@ public class BombTrap : HiddenTrap
     {
         SoundManager.Instance.PlaySFX(ESfx.BombExplode);
         collision.gameObject.GetComponent<Player>().ChangePlayerHP(-damage);
-        Vector3 contact = collision.GetContact(0).point;
 
-        StartCoroutine(BounceOffObj(collision.gameObject.GetComponent<Player>(), contact, bounceSpeed, bounceDistance));
+        StartCoroutine(BounceOffObj(
+            collision.gameObject.GetComponent<Player>(), 
+            collision.GetContact(0).point, 
+            bounceSpeed, 
+            bounceDistance));
         base.OnCollisionEnter(collision);
     }
 }

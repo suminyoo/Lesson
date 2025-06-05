@@ -1,7 +1,4 @@
-using OpenCover.Framework.Model;
 using UnityEngine;
-
-
 
 public class TempPlayer : MonoBehaviour
 {

@@ -5,18 +5,18 @@ using UnityEngine;
 
 public class Trap : MonoBehaviour
 {
-    public static event Action<Trap> OnAnyTrapTrigger;
-    public static event Action<Trap> OnAnyTrapCollision;
+    public static event Action<string> OnAnyTrapTrigger;
+    public static event Action<string> OnAnyTrapCollision;
 
     public int damage;
 
     protected virtual void OnCollisionEnter(Collision collision)
     {
-        OnAnyTrapCollision?.Invoke(this);
+        OnAnyTrapCollision?.Invoke(this.gameObject.name);
     }
     protected virtual void OnTriggerEnter(Collider other)
     {
-        OnAnyTrapTrigger?.Invoke(this);
+        OnAnyTrapTrigger?.Invoke(this.gameObject.name);
     }
     public IEnumerator BounceOffObj(Player player, Vector3 contactPoint, float bounceSpeed, float bounceDistance)
     {
@@ -35,6 +35,4 @@ public class Trap : MonoBehaviour
             yield return null;
         }
     }
-
-
 }

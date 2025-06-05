@@ -17,7 +17,7 @@ public class FallingTile : MonoBehaviour
 
     private void Start()
     {
-        // 부모 기준으로 흔들리게 하기 위해 localPosition 사용
+        // 부모 기준으로 흔들리게 하기 위해 localPosition
         originalLocalPosition = transform.localPosition;
 
         BoxCollider boxCollider = gameObject.AddComponent<BoxCollider>();

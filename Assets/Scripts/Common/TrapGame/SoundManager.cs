@@ -49,8 +49,6 @@ public class SoundManager : MonoBehaviour
             Destroy(gameObject);
         }
     }
-
-
     private void Start()
     {
         InitDictionaries();
@@ -77,7 +75,6 @@ public class SoundManager : MonoBehaviour
                 Debug.LogWarning($"SFX clip not found: {sfx}");
         }
     }
-
     public void PlayBGM(EBgm bgmType)
     {
         if (bgmDict.TryGetValue(bgmType, out var clip))
@@ -86,12 +83,9 @@ public class SoundManager : MonoBehaviour
             bgmSource.loop = true; // 배경음악은 기본적으로 반복 재생
             bgmSource.Play();
             //Debug.LogWarning("BGM playing" + bgmType + " " + clip);
-
         }
-        else
-        {
-            Debug.LogWarning("BGM not found in Dictionary!");
-        }
+        else Debug.LogWarning("BGM not found in Dictionary!");
+        
     }
     public void StopBGM()
     {
@@ -105,9 +99,6 @@ public class SoundManager : MonoBehaviour
             sfxSource.PlayOneShot(clip);
             //Debug.LogWarning("SFX playing" + sfxType + " " + clip);
         }
-        else
-        {
-            Debug.LogWarning("SFX not found in Dictionary!");
-        }
+        else Debug.LogWarning("SFX not found in Dictionary!");
     }
 }

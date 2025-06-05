@@ -26,3 +26,5 @@ MonoBehaviour:
   JumpPowRemainTime: 5
   SpeedUpUsable: 1
   JumpPowUpUsable: 1
+  DeathReason: Killed By HiddenBombTrap(Clone)
+  isDead: 0

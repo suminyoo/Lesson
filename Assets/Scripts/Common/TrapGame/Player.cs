@@ -5,8 +5,8 @@ public class Player : MonoBehaviour
 {
     [SerializeField] TG_PlayerData playerData;
 
-    public static event Action<GameObject> OnPlayerCollisionEventWithObj;
-    public static event Action<GameObject> OnPlayerTriggerEventWithObj;
+    //public static event Action<GameObject> OnPlayerCollisionEventWithObj;
+    //public static event Action<GameObject> OnPlayerTriggerEventWithObj;
 
     public static event Action<float> OnPlayerSpeedChangeEvent;
     public static event Action<float> OnPlayerJumpPowChangeEvent;
@@ -43,14 +43,21 @@ public class Player : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Clear")) OnStageClear.Invoke();
-        if (other.gameObject.CompareTag("DeathArea")) OnDie();
-
-        OnPlayerTriggerEventWithObj?.Invoke(other.gameObject);
+        if (other.gameObject.CompareTag("DeathArea"))
+        {
+            playerData.DeathReason = "DeathArea";
+            OnDie();
+        }
+        //OnPlayerTriggerEventWithObj?.Invoke(other.gameObject);
     }
     private void OnCollisionEnter(Collision collision)
     {
         if (collision == null) { return; }
-        OnPlayerCollisionEventWithObj?.Invoke(collision.gameObject);
+        //if (collision.gameObject.GetComponent<MovingTile>() != null)
+        //{
+        //    collision.transform.SetParent(transform);
+        //}
+        //OnPlayerCollisionEventWithObj?.Invoke(collision.gameObject);
     }
 
     private void OnCollisionStay(Collision collision)
@@ -77,11 +84,13 @@ public class Player : MonoBehaviour
     }
     public void OnDie()
     {
+        playerData.isDead = true;
         playerData.life -= 1;
         OnPlayerDie.Invoke();
     }
     public void RespawnPlayer()
     {
+        playerData.isDead = false;
         playerData.hp = 100;
         ChangePlayerSpeed(playerData.normalSpeed);
         ChangePlayerJumpPow(playerData.normalJumpPow);

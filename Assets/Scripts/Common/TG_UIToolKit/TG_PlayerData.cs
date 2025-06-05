@@ -24,4 +24,7 @@ public class TG_PlayerData : ScriptableObject
     public bool SpeedUpUsable;
     public bool JumpPowUpUsable;
 
+    public string DeathReason;
+    public bool isDead;
+
 }

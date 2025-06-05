@@ -12,5 +12,4 @@ public class SpikeTrap : Trap
         collision.gameObject.GetComponent<Player>().ChangePlayerHP(-damage);
         base.OnCollisionEnter(collision);
     }
-
 }
