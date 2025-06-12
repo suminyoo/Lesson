@@ -6,23 +6,30 @@ using UnityEngine;
 //날아오는 함정
 //이펙트
 //traps
+public enum State
+{
+    GAME_START,
+    STAGE_OVER,
+    STAGE_RESTART,
+    STAGE_CLEAR,
+    GAME_CLEAR,
+    SET_STAGE,
+    PLAYER_DEAD,
+}
 public class GameManager : MonoBehaviour
 {
     public static event Action<bool> OnPaused;
 
+    public static event Action<State> OnGameStateChange;
+
+
     [SerializeField] TG_PlayerData playerData;
     [SerializeField] Player player;
-    [SerializeField] InGameUI inGameUIDoc;
-    [SerializeField] StageClearUI stageClearUIDoc;
-    [SerializeField] StageOverUI stageOverUIDoc;
-    [SerializeField] GameClearEndUI gameClearEndUI;
-    [SerializeField] PlayerDeadUI playerDeadUI;
+
     [SerializeField] CameraController cameraController;
     [SerializeField] GenerateStage generateStage;
-    [SerializeField] MainMenuUI mainMenuUI;
 
     private int clearStageNum = 3;
-    private int stageNum = 0;
 
     private void Start()
     {
@@ -31,7 +38,7 @@ public class GameManager : MonoBehaviour
         StageClearUI.OnNextStageEvent += NextStage;
         StageOverUI.OnRestartStageEvent += RestartStage;
         PlayerDeadUI.OnPlayerRespawnEvent += PlayerRespawn;
-        MainMenuUI.OnGameStart += StartStage;
+        MainMenuUI.OnGameStart += StartGame;
 
         Trap.OnAnyTrapCollision += DeathReason;
         Trap.OnAnyTrapTrigger += DeathReason;
@@ -41,7 +48,7 @@ public class GameManager : MonoBehaviour
     }
     void DeathReason(string str)
     {
-        if (str == null) playerData.DeathReason = "Killed by";
+        //if (str == null) playerData.DeathReason = "Killed by";
         playerData.DeathReason = "Killed By " + str;
     }
     IEnumerator LateStart()
@@ -51,13 +58,10 @@ public class GameManager : MonoBehaviour
     }
     private void MainMenu()
     {
-        mainMenuUI.ShowUI(true);
         GamePause();
     }
-
-    private void StartStage()
+    private void StartGame()
     {
-        mainMenuUI.ShowUI(false);
         GameResume();
         SetStage();
         SoundManager.Instance.PlayBGM(EBgm.BGM_GAME);
@@ -86,20 +90,15 @@ public class GameManager : MonoBehaviour
     }
     private void RestartStage()
     {
-        inGameUIDoc.ResetTimer();
         player.InitializePlayer();
         SetStage();
         GameResume();
-        stageOverUIDoc.ShowUI(false);
+        OnGameStateChange.Invoke(State.STAGE_RESTART);
+
     }
     private void SetStage()
     {
         cameraController.SetCursorVisible(false);
-        stageClearUIDoc.ShowUI(false);
-        stageOverUIDoc.ShowUI(false);
-        gameClearEndUI.ShowGameClearUI(false);
-        playerDeadUI.ShowUI(false);
-        inGameUIDoc.ShowUI(true);
 
         generateStage.ClearMap();
         generateStage.GenerateChunkMap();
@@ -107,14 +106,13 @@ public class GameManager : MonoBehaviour
         generateStage.CreateTrapsAndItems();
         generateStage.ChangeStageDifficulty();
 
-        inGameUIDoc.ResetTimer();
-        inGameUIDoc.ChangeStageUI(stageNum);
+        OnGameStateChange.Invoke(State.SET_STAGE);
 
         player.InitializePlayer();
     }
     private void NextStage()
     {
-        stageNum += 1;
+        playerData.stageNum += 1;
         SetStage();
         GameResume();
     }
@@ -126,24 +124,25 @@ public class GameManager : MonoBehaviour
         if (playerData.life <= 0)
         {
             SoundManager.Instance.PlaySFX(ESfx.StageOver);
-            stageOverUIDoc.ShowUI(true);
+            OnGameStateChange.Invoke(State.STAGE_OVER);
+
         }
-        else playerDeadUI.ShowUI(true);
+        else OnGameStateChange.Invoke(State.PLAYER_DEAD);
     }
     private void PlayerRespawn()
     {
         player.RespawnPlayer();
-        playerDeadUI.ShowUI(false);
+        OnGameStateChange.Invoke(State.PLAYER_DEAD);
         GameResume();
     }
     private void StageClear()
     {
         SoundManager.Instance.PlaySFX(ESfx.StageClear);
-
         GamePause();
 
-        if (stageNum +1 == clearStageNum) gameClearEndUI.ShowGameClearUI(true);
-        else stageClearUIDoc.ShowUI(true);
+        if (playerData.stageNum +1 == clearStageNum) OnGameStateChange.Invoke(State.GAME_CLEAR);
+        else OnGameStateChange.Invoke(State.STAGE_CLEAR);
+        
     }
     private void GamePause() => OnPaused.Invoke(true);
     private void GameResume() => OnPaused.Invoke(false);

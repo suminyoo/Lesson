@@ -45,7 +45,7 @@ public class Player : MonoBehaviour
         if (other.gameObject.CompareTag("Clear")) OnStageClear.Invoke();
         if (other.gameObject.CompareTag("DeathArea"))
         {
-            playerData.DeathReason = "DeathArea";
+            playerData.DeathReason = "Killed By DeathArea";
             OnDie();
         }
         //OnPlayerTriggerEventWithObj?.Invoke(other.gameObject);
