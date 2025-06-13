@@ -45,7 +45,11 @@ public class Item : MonoBehaviour
                     other.gameObject.GetComponent<Player>().ChangePlayerJumpPow(playerData.maxJumpPow);
                     gameObject.SetActive(false);
                     break;
-
+                case "Coin":
+                    SoundManager.Instance.PlaySFX(ESfx.Item); // to coin
+                    playerData.score += 10;
+                    gameObject.SetActive(false);
+                    break;
                 default:
                     SoundManager.Instance.PlaySFX(ESfx.Item);
                     Debug.Log("Unknown Item");

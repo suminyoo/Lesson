@@ -5,14 +5,8 @@ public class Player : MonoBehaviour
 {
     [SerializeField] TG_PlayerData playerData;
 
-    //public static event Action<GameObject> OnPlayerCollisionEventWithObj;
-    //public static event Action<GameObject> OnPlayerTriggerEventWithObj;
-
-    public static event Action<float> OnPlayerSpeedChangeEvent;
-    public static event Action<float> OnPlayerJumpPowChangeEvent;
-
-    public static event Action OnStageClear;
-    public static event Action OnPlayerDie;
+    public event Action<float> OnPlayerSpeedChangeEvent;
+    public event Action<float> OnPlayerJumpPowChangeEvent;
 
     private Animator anim;
     private Rigidbody rigid;
@@ -27,12 +21,13 @@ public class Player : MonoBehaviour
 
     public void InitializePlayer()
     {
-        playerData.hp = 100;
-        playerData.life = 3;
+        playerData.Reset();
         RespawnPlayer();
     }
     private void Start()
     {
+        playerData.OnLifeLost += HandleLifeLost;
+
         anim = GetComponent<Animator>();
         rigid = GetComponent<Rigidbody>();
 
@@ -43,12 +38,11 @@ public class Player : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         if (playerData.isDead) return; 
-
-        if (other.gameObject.CompareTag("Clear")) OnStageClear.Invoke();
+        if (other.gameObject.CompareTag("Clear")) playerData.IncreaseStage();
         if (other.gameObject.CompareTag("DeathArea"))
         {
             playerData.DeathReason = "Killed By DeathArea";
-            OnDie();
+            playerData.ChangeHP(-100);
         }
     }
     private void OnCollisionStay(Collision collision)
@@ -69,23 +63,17 @@ public class Player : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Ground")) isGrounded = false;
     }
-    private void Pause(bool boo)
-    {
-        isPaused = boo;
-    }
-    public void OnDie()
+    public void HandleLifeLost()
     {
         rigid.isKinematic = true;
         playerData.isDead = true;
-        playerData.life -= 1;
-        OnPlayerDie.Invoke();
     }
     public void RespawnPlayer()
     {
         rigid.isKinematic = false;
 
         playerData.isDead = false;
-        playerData.hp = 100;
+        playerData.Respawn();
         ChangePlayerSpeed(playerData.normalSpeed);
         ChangePlayerJumpPow(playerData.normalJumpPow);
 
@@ -100,13 +88,8 @@ public class Player : MonoBehaviour
         }
         cameraTransform.GetComponent<CameraController>().ResetYaw(90f);
     }
-
-    public void ChangePlayerHP(int var)
-    {
-        playerData.hp += var;
-        if (playerData.hp > 100) playerData.hp = 100;
-        if (playerData.hp <= 0) OnDie();
-    }
+    private void Pause(bool boo) => isPaused = boo;
+    public void ChangePlayerHP(int var) => playerData.ChangeHP(var); 
     public void ChangePlayerSpeed(float speed)
     {
         playerData.moveSpeed = speed;

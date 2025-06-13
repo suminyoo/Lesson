@@ -9,14 +9,11 @@ TagManager:
   - Item
   - Life
   - Ground
-  - Bomb
-  - Hammer
-  - Spikes
   - Clear
   - DeathArea
   - SpeedUp
   - JumpUp
-  - Poison
+  - Coin
   layers:
   - Default
   - TransparentFX

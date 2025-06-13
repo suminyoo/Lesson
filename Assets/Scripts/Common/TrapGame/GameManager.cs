@@ -2,10 +2,7 @@
 using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
-//높이에 따른 청크 생성
-//날아오는 함정
-//이펙트
-//traps
+
 public enum State
 {
     GAME_START,
@@ -31,8 +28,11 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        Player.OnPlayerDie += PlayerDie;
-        Player.OnStageClear += StageClear;
+        playerData.OnGameClear += () => OnGameStateChange?.Invoke(State.GAME_CLEAR);
+        playerData.OnStageClear += HandleStageClear;
+        playerData.OnLifeLost += HandleLifeLost;
+        playerData.OnStageOver += HandleStageOver;
+
         StageClearUI.OnNextStageEvent += NextStage;
         StageOverUI.OnRestartStageEvent += SetStage;
         PlayerDeadUI.OnPlayerRespawnEvent += PlayerRespawn;
@@ -42,6 +42,26 @@ public class GameManager : MonoBehaviour
 
         StartCoroutine(LateStart());
     }
+    private void HandleStageClear()
+    {
+        GamePause();
+        SoundManager.Instance.PlaySFX(ESfx.StageClear);
+        OnGameStateChange?.Invoke(State.STAGE_CLEAR);
+    }
+    private void HandleLifeLost()
+    {
+        GamePause();
+        SoundManager.Instance.PlaySFX(ESfx.Death);
+        OnGameStateChange?.Invoke(State.PLAYER_DEAD);
+    }
+
+    private void HandleStageOver()
+    {
+        GamePause();
+        SoundManager.Instance.PlaySFX(ESfx.StageOver);
+        OnGameStateChange?.Invoke(State.STAGE_OVER);
+    }
+
     void DeathReason(string str)
     {
         playerData.DeathReason = "Killed By " + str;
@@ -69,7 +89,6 @@ public class GameManager : MonoBehaviour
             player.InitializePlayer();
             generateStage.ResetTrapsAndItems();
         }
-
     }
     private void SetStage()
     {
@@ -80,46 +99,17 @@ public class GameManager : MonoBehaviour
     }
     private void NextStage()
     {
-        playerData.stage += 1;
+        generateStage.desiredTrapCount += 5;
         SetStage();
     }
-    private void PlayerDie()
-    {
-        SoundManager.Instance.PlaySFX(ESfx.Death);
-        GamePause();
 
-        if (playerData.life <= 0)
-        {
-            SoundManager.Instance.PlaySFX(ESfx.StageOver);
-            OnGameStateChange.Invoke(State.STAGE_OVER);
-        }
-        else OnGameStateChange.Invoke(State.PLAYER_DEAD);
-    }
     private void PlayerRespawn()
     {
         player.RespawnPlayer();
         OnGameStateChange.Invoke(State.PLAYER_RESPAWN);
         GameResume();
     }
-    private void StageClear()
-    {
-        SoundManager.Instance.PlaySFX(ESfx.StageClear);
-        GamePause();
-
-        if (playerData.stage +1 == clearStageNum) 
-            OnGameStateChange.Invoke(State.GAME_CLEAR);
-        else 
-            OnGameStateChange.Invoke(State.STAGE_CLEAR);
-    }
-    private void GamePause()
-    {
-        //Time.timeScale = 0f;
-        OnPaused.Invoke(true);
-    }
-    private void GameResume() 
-    {
-        //Time.timeScale = 1f;
-        OnPaused.Invoke(false);
-    }
+    private void GamePause() => OnPaused.Invoke(true);
+    private void GameResume() => OnPaused.Invoke(false);
     public void GameQuit() => Application.Quit();
 }

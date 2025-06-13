@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class GenerateStage : MonoBehaviour
 {
-    [SerializeField] InGameUI inGameUIDoc;
+    [SerializeField] InGameUI inGameUIDoc
+        ;
     [SerializeField] Trap[] trapPrefabList = new Trap[0];
     [SerializeField] Item[] itemPrefabList = new Item[0];
 
@@ -14,11 +15,10 @@ public class GenerateStage : MonoBehaviour
     [SerializeField] GameObject[] chunkPrefabs;
     [SerializeField] GameObject finishPrefab;
 
-    [SerializeField] int desiredTrapCount = 10;
-    [SerializeField] int desiredItemCount = 4;
-    [SerializeField] int chunkCount = 5;
+    public int desiredTrapCount = 10;
+    public int desiredItemCount = 4;
+    public int chunkCount = 5;
 
-    private int chunkWidth = 3;
     private int chunkDepth = 4;
     private float tileSize = 2f;
 

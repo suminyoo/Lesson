@@ -5,6 +5,7 @@ public class InGameUI : MonoBehaviour
 {
     [SerializeField] UIDocument myUI;
     public TG_PlayerData playerData;
+    public Player player;
 
     private Label timeLabel;
     private Label jumpLabel;
@@ -32,8 +33,8 @@ public class InGameUI : MonoBehaviour
     }
     private void Start()
     {
-        Player.OnPlayerSpeedChangeEvent += ChangeSpeedUI;
-        Player.OnPlayerJumpPowChangeEvent += ChangeJumpPowerUI;
+        player.OnPlayerSpeedChangeEvent += ChangeSpeedUI;
+        player.OnPlayerJumpPowChangeEvent += ChangeJumpPowerUI;
         GameManager.OnPaused += Pause;
 
         jumpLabel.visible = false;
