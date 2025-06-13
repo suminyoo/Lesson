@@ -4,13 +4,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "TG_PlayerData", menuName = "Scriptable Objects/TG_PlayerData")]
 public class TG_PlayerData : ScriptableObject
 {
-
-    public static event Action OnGameOverEvent;
-    public static event Action OnPlayerDieEvent;
-
-    public int stageNum = 0;
-
-
+    public int clearStageNum = 4;
     public int hp = 100;
 
     public Vector3 playerRespawnPosition = new Vector3(-2, 2.5f, 0);
@@ -34,12 +28,8 @@ public class TG_PlayerData : ScriptableObject
     public string DeathReason;
     public bool isDead;
 
-    public int life;
-    //{
-    //    get { return life; }
-    //    set { life = value;
-    //        if(life <= 0) OnGameOverEvent.Invoke();
-    //        else OnPlayerDieEvent.Invoke();
-    //    }
-    //}
+    public int life = 3;
+    public int stage = 1;
+
+
 }

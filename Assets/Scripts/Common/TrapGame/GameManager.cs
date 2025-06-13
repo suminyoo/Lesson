@@ -10,18 +10,16 @@ public enum State
 {
     GAME_START,
     STAGE_OVER,
-    STAGE_RESTART,
     STAGE_CLEAR,
     GAME_CLEAR,
     SET_STAGE,
     PLAYER_DEAD,
+    PLAYER_RESPAWN,
 }
 public class GameManager : MonoBehaviour
 {
     public static event Action<bool> OnPaused;
-
     public static event Action<State> OnGameStateChange;
-
 
     [SerializeField] TG_PlayerData playerData;
     [SerializeField] Player player;
@@ -36,19 +34,16 @@ public class GameManager : MonoBehaviour
         Player.OnPlayerDie += PlayerDie;
         Player.OnStageClear += StageClear;
         StageClearUI.OnNextStageEvent += NextStage;
-        StageOverUI.OnRestartStageEvent += RestartStage;
+        StageOverUI.OnRestartStageEvent += SetStage;
         PlayerDeadUI.OnPlayerRespawnEvent += PlayerRespawn;
         MainMenuUI.OnGameStart += StartGame;
-
         Trap.OnAnyTrapCollision += DeathReason;
         Trap.OnAnyTrapTrigger += DeathReason;
 
         StartCoroutine(LateStart());
-
     }
     void DeathReason(string str)
     {
-        //if (str == null) playerData.DeathReason = "Killed by";
         playerData.DeathReason = "Killed By " + str;
     }
     IEnumerator LateStart()
@@ -62,59 +57,31 @@ public class GameManager : MonoBehaviour
     }
     private void StartGame()
     {
-        GameResume();
+        OnGameStateChange.Invoke(State.GAME_START);
         SetStage();
         SoundManager.Instance.PlayBGM(EBgm.BGM_GAME);
     }
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.R)) ResetTraps();
-        if (Input.GetKeyDown(KeyCode.T)) ResetMap();
-
-    }
-    private void ResetTraps()
-    {
-        player.InitializePlayer();
-        generateStage.ClearTrapsAndItems();
-        generateStage.CreateTrapsAndItems();
-        generateStage.ChangeStageDifficulty();
-    }
-    private void ResetMap()
-    {
-        player.InitializePlayer();
-        generateStage.ClearTrapsAndItems();
-        generateStage.CreateTrapsAndItems();
-        generateStage.ClearMap();
-        generateStage.GenerateChunkMap();
-        generateStage.ChangeStageDifficulty();
-    }
-    private void RestartStage()
-    {
-        player.InitializePlayer();
-        SetStage();
-        GameResume();
-        OnGameStateChange.Invoke(State.STAGE_RESTART);
+        if (Input.GetKeyDown(KeyCode.T)) SetStage();
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            player.InitializePlayer();
+            generateStage.ResetTrapsAndItems();
+        }
 
     }
     private void SetStage()
     {
-        cameraController.SetCursorVisible(false);
-
-        generateStage.ClearMap();
-        generateStage.GenerateChunkMap();
-        generateStage.ClearTrapsAndItems();
-        generateStage.CreateTrapsAndItems();
-        generateStage.ChangeStageDifficulty();
-
+        generateStage.ResetStage();
         OnGameStateChange.Invoke(State.SET_STAGE);
-
         player.InitializePlayer();
+        GameResume();
     }
     private void NextStage()
     {
-        playerData.stageNum += 1;
+        playerData.stage += 1;
         SetStage();
-        GameResume();
     }
     private void PlayerDie()
     {
@@ -125,14 +92,13 @@ public class GameManager : MonoBehaviour
         {
             SoundManager.Instance.PlaySFX(ESfx.StageOver);
             OnGameStateChange.Invoke(State.STAGE_OVER);
-
         }
         else OnGameStateChange.Invoke(State.PLAYER_DEAD);
     }
     private void PlayerRespawn()
     {
         player.RespawnPlayer();
-        OnGameStateChange.Invoke(State.PLAYER_DEAD);
+        OnGameStateChange.Invoke(State.PLAYER_RESPAWN);
         GameResume();
     }
     private void StageClear()
@@ -140,11 +106,20 @@ public class GameManager : MonoBehaviour
         SoundManager.Instance.PlaySFX(ESfx.StageClear);
         GamePause();
 
-        if (playerData.stageNum +1 == clearStageNum) OnGameStateChange.Invoke(State.GAME_CLEAR);
-        else OnGameStateChange.Invoke(State.STAGE_CLEAR);
-        
+        if (playerData.stage +1 == clearStageNum) 
+            OnGameStateChange.Invoke(State.GAME_CLEAR);
+        else 
+            OnGameStateChange.Invoke(State.STAGE_CLEAR);
     }
-    private void GamePause() => OnPaused.Invoke(true);
-    private void GameResume() => OnPaused.Invoke(false);
+    private void GamePause()
+    {
+        //Time.timeScale = 0f;
+        OnPaused.Invoke(true);
+    }
+    private void GameResume() 
+    {
+        //Time.timeScale = 1f;
+        OnPaused.Invoke(false);
+    }
     public void GameQuit() => Application.Quit();
 }

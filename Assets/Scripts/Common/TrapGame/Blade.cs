@@ -2,10 +2,11 @@ using UnityEngine;
 
 public class Blade : Trap
 {
-    public float speed = 10f;
-    public float lifetime = 5f;
+    public float speed = 7f;
+    public float lifetime = 10f;
 
     private bool isLaunched = false;
+
     public void Awake()
     {
         base.damage = 20;
@@ -20,8 +21,6 @@ public class Blade : Trap
     public void Launch()
     {
         isLaunched = true;
-        // 부모에서 분리 (필요하면)
-        transform.parent = null;
         Destroy(gameObject, lifetime);  // 일정 시간 후 자동 파괴
     }
 

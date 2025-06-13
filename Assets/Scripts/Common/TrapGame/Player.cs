@@ -42,24 +42,15 @@ public class Player : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
+        if (playerData.isDead) return; 
+
         if (other.gameObject.CompareTag("Clear")) OnStageClear.Invoke();
         if (other.gameObject.CompareTag("DeathArea"))
         {
             playerData.DeathReason = "Killed By DeathArea";
             OnDie();
         }
-        //OnPlayerTriggerEventWithObj?.Invoke(other.gameObject);
     }
-    private void OnCollisionEnter(Collision collision)
-    {
-        if (collision == null) { return; }
-        //if (collision.gameObject.GetComponent<MovingTile>() != null)
-        //{
-        //    collision.transform.SetParent(transform);
-        //}
-        //OnPlayerCollisionEventWithObj?.Invoke(collision.gameObject);
-    }
-
     private void OnCollisionStay(Collision collision)
     {
         foreach (ContactPoint contact in collision.contacts)
@@ -84,20 +75,32 @@ public class Player : MonoBehaviour
     }
     public void OnDie()
     {
+        rigid.isKinematic = true;
         playerData.isDead = true;
         playerData.life -= 1;
         OnPlayerDie.Invoke();
     }
     public void RespawnPlayer()
     {
+        rigid.isKinematic = false;
+
         playerData.isDead = false;
         playerData.hp = 100;
         ChangePlayerSpeed(playerData.normalSpeed);
         ChangePlayerJumpPow(playerData.normalJumpPow);
-        cameraTransform.GetComponent<CameraController>().ResetYaw(transform.eulerAngles.y);
 
         transform.position = playerData.playerRespawnPosition;
+        transform.rotation = Quaternion.LookRotation(Vector3.right);
+
+        if (rigid != null)
+        {
+            rigid.linearVelocity = Vector3.zero;
+            rigid.angularVelocity = Vector3.zero;
+            rigid.rotation = Quaternion.LookRotation(Vector3.right);
+        }
+        cameraTransform.GetComponent<CameraController>().ResetYaw(90f);
     }
+
     public void ChangePlayerHP(int var)
     {
         playerData.hp += var;

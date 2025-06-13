@@ -6,7 +6,6 @@ public class InGameUI : MonoBehaviour
     [SerializeField] UIDocument myUI;
     public TG_PlayerData playerData;
 
-    private Label stageLabel;
     private Label timeLabel;
     private Label jumpLabel;
     private Label speedLabel;
@@ -20,8 +19,6 @@ public class InGameUI : MonoBehaviour
     void Awake()
     {
         VisualElement root = myUI.rootVisualElement;
-
-        stageLabel = root.Q<Label>("Stage");
         timeLabel = root.Q<Label>("Time");
 
         jumpLabel = root.Q<Label>("JumpPower");
@@ -56,10 +53,6 @@ public class InGameUI : MonoBehaviour
         }
         totalTrapDamageLabel.text = "Total Trap Damage: " + totalDamage.ToString();
     }
-    private void Pause(bool boo)
-    {
-        isPaused = boo;
-    }
     public void ChangeSpeedUI(float curSpeed)
     {
         if (curSpeed > playerData.normalSpeed)
@@ -79,15 +72,18 @@ public class InGameUI : MonoBehaviour
     }
     public void ChangeJumpPowerUI(float curJumpPow)
     {
-        if (curJumpPow > playerData.normalJumpPow){
+        if (curJumpPow > playerData.normalJumpPow)
+        {
             jumpLabel.text = "Jump Power UP!";
             jumpLabel.visible = true;
         }
-        else if (curJumpPow < playerData.normalJumpPow){
+        else if (curJumpPow < playerData.normalJumpPow)
+        {
             jumpLabel.text = "Jump Power Down!";
             jumpLabel.visible = true;
         }
-        else{
+        else
+        {
             jumpLabel.visible = false;
         }
     }
@@ -96,14 +92,8 @@ public class InGameUI : MonoBehaviour
         time += Time.deltaTime;
         timeLabel.text = string.Format("{0:D2}:{1:D2}", (int)time / 60, ((int)time - (int)time / 60 * 60) % 60 );
     }
-    public void ResetTimer()
-    {
-        time = 0;
-    }
-    public void ChangeStageUI(int var)
-    {
-        stageLabel.text = "Stage: " + (var + 1).ToString();
-    }
+    private void Pause(bool boo) => isPaused = boo;
+    public void ResetTimer() => time = 0;
     public void ShowUI(bool boo) => myUI.rootVisualElement.visible = boo;
 
 }

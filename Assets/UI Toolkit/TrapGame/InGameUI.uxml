@@ -10,7 +10,14 @@
             <ui:Label text="Jump Power" name="JumpPower" style="-unity-font-style: bold; -unity-text-outline-width: 0.5px; -unity-text-outline-color: rgb(0, 0, 0);" />
         </ui:VisualElement>
         <ui:VisualElement name="RightInfo" style="flex-grow: 1; -unity-text-align: upper-right;">
-            <ui:Label text="Stage 1" name="Stage" enable-rich-text="false" style="-unity-font-style: bold; color: rgb(255, 255, 255); font-size: 16px; -unity-text-outline-width: 0.5px; -unity-text-outline-color: rgb(0, 0, 0);" />
+            <ui:VisualElement name="Stage" style="flex-grow: 1; flex-direction: row; align-self: auto; justify-content: flex-end; align-content: auto; align-items: stretch; max-height: 35px;">
+                <ui:Label text="Stage:" name="StageLabel" enable-rich-text="false" style="color: rgb(255, 255, 255); -unity-font-style: bold; -unity-text-outline-width: 0.5px; -unity-text-outline-color: rgb(0, 0, 0); justify-content: flex-start; height: 22px; font-size: 16px;" />
+                <ui:Label text="Stage 1" name="StageNum" enable-rich-text="false" data-source="project://database/Assets/Scripts/Common/TG_UIToolKit/TG_PlayerData.asset?fileID=11400000&amp;guid=8572e4042f7f9c34791e022a5598c284&amp;type=2#TG_PlayerData" style="-unity-font-style: bold; color: rgb(255, 255, 255); font-size: 16px; -unity-text-outline-width: 0.5px; -unity-text-outline-color: rgb(0, 0, 0);">
+                    <Bindings>
+                        <ui:DataBinding property="text" data-source-path="stage" binding-mode="ToTarget" />
+                    </Bindings>
+                </ui:Label>
+            </ui:VisualElement>
             <ui:VisualElement name="LifeArea" style="flex-grow: 1; flex-direction: row; justify-content: flex-end; align-self: auto; height: auto; max-height: 35px;">
                 <ui:Label text="Life: " name="LifeLabel" enable-rich-text="false" style="color: rgb(255, 255, 255); -unity-font-style: bold; -unity-text-outline-width: 0.5px; -unity-text-outline-color: rgb(0, 0, 0); justify-content: flex-start; height: 22px; font-size: 16px;" />
                 <ui:Label text="Life: 3" name="Life" enable-rich-text="false" style="-unity-font-style: bold; color: rgb(255, 255, 255); font-size: 16px; -unity-text-outline-width: 0.5px; -unity-text-outline-color: rgb(0, 0, 0); height: 22px;">

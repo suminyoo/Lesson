@@ -80,9 +80,8 @@ public class SoundManager : MonoBehaviour
         if (bgmDict.TryGetValue(bgmType, out var clip))
         {
             bgmSource.clip = clip;
-            bgmSource.loop = true; // 배경음악은 기본적으로 반복 재생
+            bgmSource.loop = true;
             bgmSource.Play();
-            //Debug.LogWarning("BGM playing" + bgmType + " " + clip);
         }
         else Debug.LogWarning("BGM not found in Dictionary!");
         
@@ -97,7 +96,6 @@ public class SoundManager : MonoBehaviour
         if (sfxDict.TryGetValue(sfxType, out var clip))
         {
             sfxSource.PlayOneShot(clip);
-            //Debug.LogWarning("SFX playing" + sfxType + " " + clip);
         }
         else Debug.LogWarning("SFX not found in Dictionary!");
     }
