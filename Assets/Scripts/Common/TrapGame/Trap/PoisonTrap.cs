@@ -29,6 +29,8 @@ public class PoisonTrap : Trap
             if (tickTimer <= 0f)
             {
                 SoundManager.Instance.PlaySFX(ESfx.Hit);
+                EffectManager.Instance.PlayEffect(EEffect.Hit, other.gameObject.GetComponent<Player>().transform.position);
+
                 tickTimer = tickInterval;
                 other.GetComponent<Player>().ChangePlayerHP(-damage);
                 base.OnTriggerEnter(other);

@@ -70,6 +70,12 @@ public class Player : MonoBehaviour
     }
     public void RespawnPlayer()
     {
+        GameObject[] blades = GameObject.FindGameObjectsWithTag("Blade");
+        foreach (GameObject blade in blades)
+        {
+            Destroy(blade);
+        }
+
         rigid.isKinematic = false;
 
         playerData.isDead = false;
@@ -87,6 +93,10 @@ public class Player : MonoBehaviour
             rigid.rotation = Quaternion.LookRotation(Vector3.right);
         }
         cameraTransform.GetComponent<CameraController>().ResetYaw(90f);
+        EffectManager.Instance.PlayEffect(EEffect.Respawn, transform.position);
+
+
+
     }
     private void Pause(bool boo) => isPaused = boo;
     public void ChangePlayerHP(int var) => playerData.ChangeHP(var); 

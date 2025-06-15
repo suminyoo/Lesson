@@ -12,6 +12,9 @@ public class BombTrap : HiddenTrap
     protected override void OnCollisionEnter(Collision collision)
     {
         SoundManager.Instance.PlaySFX(ESfx.BombExplode);
+        EffectManager.Instance.PlayEffect(EEffect.BombExplode, transform.position);
+        EffectManager.Instance.PlayEffect(EEffect.Hit, collision.gameObject.GetComponent<Player>().transform.position);
+
         collision.gameObject.GetComponent<Player>().ChangePlayerHP(-damage);
 
         StartCoroutine(BounceOffObj(

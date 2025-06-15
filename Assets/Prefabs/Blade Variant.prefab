@@ -12,6 +12,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Blade Variant
       objectReference: {fileID: 0}
+    - target: {fileID: 2875906765977439336, guid: 5517fc9e209744f42b15cec4f8551dc0, type: 3}
+      propertyPath: m_TagString
+      value: Blade
+      objectReference: {fileID: 0}
     - target: {fileID: 3216297306056431314, guid: 5517fc9e209744f42b15cec4f8551dc0, type: 3}
       propertyPath: m_LocalScale.x
       value: 1.7
@@ -115,5 +119,3 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 0
-  speed: 7
-  lifetime: 5

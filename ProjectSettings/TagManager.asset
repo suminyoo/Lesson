@@ -14,6 +14,7 @@ TagManager:
   - SpeedUp
   - JumpUp
   - Coin
+  - Blade
   layers:
   - Default
   - TransparentFX
