@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class BombTrap : HiddenTrap
 {
+    [SerializeField] private EffectEventSO effectEvent;
+
     private float bounceSpeed = 10f;
     private float bounceDistance = 10f;
 
@@ -12,8 +14,10 @@ public class BombTrap : HiddenTrap
     protected override void OnCollisionEnter(Collision collision)
     {
         SoundManager.Instance.PlaySFX(ESfx.BombExplode);
-        EffectManager.Instance.PlayEffect(EEffect.BombExplode, transform.position);
-        EffectManager.Instance.PlayEffect(EEffect.Hit, collision.gameObject.GetComponent<Player>().transform.position);
+        //EffectManager.Instance.PlayEffect(EEffect.BombExplode, transform.position);
+        //EffectManager.Instance.PlayEffect(EEffect.Hit, collision.gameObject.GetComponent<Player>().transform.position);
+        effectEvent.Raise(EEffect.BombExplode, transform.position);
+        effectEvent.Raise(EEffect.Hit, collision.gameObject.GetComponent<Player>().transform.position);
 
         collision.gameObject.GetComponent<Player>().ChangePlayerHP(-damage);
 

@@ -15,10 +15,10 @@ public class BladeShooter : Trap
 
     void Awake()
     {
-        fireInterval = Random.Range(2f, 6f);       // 발사 간격
-        bladeSpeed = Random.Range(5f, 12f);        // 블레이드 속도
-        bladeLifetime = Random.Range(5f, 10f);     // 수명
-        bladeDamage = Random.Range(10, 30);        // 데미지
+        fireInterval = Random.Range(2f, 6f);
+        bladeSpeed = Random.Range(5f, 12f);
+        bladeLifetime = Random.Range(5f, 10f); 
+        bladeDamage = Random.Range(10, 30);
     }
 
     void Update()

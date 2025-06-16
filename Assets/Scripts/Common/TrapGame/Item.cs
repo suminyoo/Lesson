@@ -1,8 +1,10 @@
 using UnityEngine;
+using static UnityEditor.PlayerSettings;
 
 public class Item : MonoBehaviour
 {
     public TG_PlayerData playerData;
+    [SerializeField] private EffectEventSO effectEvent;
 
     public float rotationSpeed = 50f;
     public float floatAmplitude = 0.25f;
@@ -33,7 +35,9 @@ public class Item : MonoBehaviour
                     break;
 
                 case "SpeedUp":
-                    EffectManager.Instance.PlayEffect(EEffect.PowerUp, other.gameObject.GetComponent<Player>().transform.position);
+                    effectEvent.Raise(EEffect.PowerUp, other.gameObject.GetComponent<Player>().transform.position);
+
+                    //EffectManager.Instance.PlayEffect(EEffect.PowerUp, other.gameObject.GetComponent<Player>().transform.position);
                     SoundManager.Instance.PlaySFX(ESfx.PowerUp);
                     playerData.SpeedUpUsable = false;
                     other.gameObject.GetComponent<Player>().ChangePlayerSpeed(playerData.maxSpeed);
@@ -41,7 +45,9 @@ public class Item : MonoBehaviour
                     break;
 
                 case "JumpUp":
-                    EffectManager.Instance.PlayEffect(EEffect.PowerUp, other.gameObject.GetComponent<Player>().transform.position);
+                    effectEvent.Raise(EEffect.PowerUp, other.gameObject.GetComponent<Player>().transform.position);
+
+                    //EffectManager.Instance.PlayEffect(EEffect.PowerUp, other.gameObject.GetComponent<Player>().transform.position);
                     SoundManager.Instance.PlaySFX(ESfx.PowerUp);
                     playerData.JumpPowUpUsable = false;
                     other.gameObject.GetComponent<Player>().ChangePlayerJumpPow(playerData.maxJumpPow);

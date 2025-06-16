@@ -2,7 +2,8 @@ using UnityEngine;
 
 public class PoisonTrap : Trap
 {
-    public InGameUI gameUI;
+    [SerializeField] private EffectEventSO effectEvent;
+
     public TG_PlayerData playerData;
 
     public float tickInterval = 1.0f;
@@ -29,7 +30,8 @@ public class PoisonTrap : Trap
             if (tickTimer <= 0f)
             {
                 SoundManager.Instance.PlaySFX(ESfx.Hit);
-                EffectManager.Instance.PlayEffect(EEffect.Hit, other.gameObject.GetComponent<Player>().transform.position);
+                //EffectManager.Instance.PlayEffect(EEffect.Hit, other.gameObject.GetComponent<Player>().transform.position);
+                effectEvent.Raise(EEffect.Hit, other.gameObject.GetComponent<Player>().transform.position);
 
                 tickTimer = tickInterval;
                 other.GetComponent<Player>().ChangePlayerHP(-damage);

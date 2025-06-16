@@ -119,3 +119,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 0
+  effectEvent: {fileID: 11400000, guid: cfccda4950484334eb867f3ebf371571, type: 2}

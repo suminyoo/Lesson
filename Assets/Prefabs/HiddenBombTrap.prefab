@@ -185,6 +185,7 @@ MonoBehaviour:
   damage: 50
   meshR: {fileID: 3530060389190506681}
   meshR02: {fileID: 6026675571369749912}
+  effectEvent: {fileID: 11400000, guid: cfccda4950484334eb867f3ebf371571, type: 2}
 --- !u!23 &3530060389190506681 stripped
 MeshRenderer:
   m_CorrespondingSourceObject: {fileID: -7511558181221131132, guid: c9d8d61d34cdb3d449415a3282f5b93f, type: 3}

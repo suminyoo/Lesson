@@ -196,7 +196,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 5
-  gameUI: {fileID: 0}
+  effectEvent: {fileID: 11400000, guid: cfccda4950484334eb867f3ebf371571, type: 2}
   playerData: {fileID: 11400000, guid: 8572e4042f7f9c34791e022a5598c284, type: 2}
   tickInterval: 1
 --- !u!4 &9010605880370385897 stripped

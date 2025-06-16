@@ -4,6 +4,7 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     [SerializeField] TG_PlayerData playerData;
+    [SerializeField] private EffectEventSO effectEvent;
 
     public event Action<float> OnPlayerSpeedChangeEvent;
     public event Action<float> OnPlayerJumpPowChangeEvent;
@@ -93,7 +94,9 @@ public class Player : MonoBehaviour
             rigid.rotation = Quaternion.LookRotation(Vector3.right);
         }
         cameraTransform.GetComponent<CameraController>().ResetYaw(90f);
-        EffectManager.Instance.PlayEffect(EEffect.Respawn, transform.position);
+        //EffectManager.Instance.PlayEffect(EEffect.Respawn, transform.position);
+
+        effectEvent.Raise(EEffect.Respawn, transform.position);
 
 
 

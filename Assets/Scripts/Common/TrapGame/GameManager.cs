@@ -12,6 +12,11 @@ public enum State
     SET_STAGE,
     PLAYER_DEAD,
     PLAYER_RESPAWN,
+
+    GAME_PAUSE,
+    GAME_RESUME,
+    OPTION,
+    MAIN_MENU,
 }
 public class GameManager : MonoBehaviour
 {
@@ -24,7 +29,6 @@ public class GameManager : MonoBehaviour
     [SerializeField] CameraController cameraController;
     [SerializeField] GenerateStage generateStage;
 
-    private int clearStageNum = 3;
 
     private void Start()
     {
@@ -99,7 +103,7 @@ public class GameManager : MonoBehaviour
     }
     private void NextStage()
     {
-        generateStage.desiredTrapCount += 5;
+        //generateStage.desiredTrapCount += 5;
         SetStage();
     }
 
@@ -109,6 +113,9 @@ public class GameManager : MonoBehaviour
         OnGameStateChange.Invoke(State.PLAYER_RESPAWN);
         GameResume();
     }
+
+
+
     private void GamePause() => OnPaused.Invoke(true);
     private void GameResume() => OnPaused.Invoke(false);
     public void GameQuit() => Application.Quit();

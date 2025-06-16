@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class HammerBall : Trap
 {
+    [SerializeField] private EffectEventSO effectEvent;
+
     private Quaternion startRotation;
 
     public float swingAngle;
@@ -29,7 +31,8 @@ public class HammerBall : Trap
     {
 
         SoundManager.Instance.PlaySFX(ESfx.Hit);
-        EffectManager.Instance.PlayEffect(EEffect.Hit, collision.gameObject.GetComponent<Player>().transform.position);
+        //EffectManager.Instance.PlayEffect(EEffect.Hit, collision.gameObject.GetComponent<Player>().transform.position);
+        effectEvent.Raise(EEffect.Hit, collision.gameObject.GetComponent<Player>().transform.position);
 
         collision.gameObject.GetComponent<Player>().ChangePlayerHP(-damage);
 

@@ -227,6 +227,7 @@ GameObject:
   m_Component:
   - component: {fileID: 301291216}
   - component: {fileID: 301291217}
+  - component: {fileID: 301291218}
   m_Layer: 0
   m_Name: EffectManager
   m_TagString: Untagged
@@ -261,6 +262,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 519235cb7ebb6044ea4eb2c511b37a13, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &301291218
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 301291215}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 390080f1ff1386e46a1b9e23285e4832, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  effectEvent: {fileID: 11400000, guid: cfccda4950484334eb867f3ebf371571, type: 2}
 --- !u!1 &336218485
 GameObject:
   m_ObjectHideFlags: 0
@@ -1970,6 +1984,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerData: {fileID: 11400000, guid: 8572e4042f7f9c34791e022a5598c284, type: 2}
+  effectEvent: {fileID: 11400000, guid: cfccda4950484334eb867f3ebf371571, type: 2}
   cameraTransform: {fileID: 1807625476}
 --- !u!54 &1450583630
 Rigidbody:
@@ -2201,7 +2216,7 @@ AudioSource:
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 0.428
+  m_Volume: 0.083
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -2298,7 +2313,7 @@ AudioSource:
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.192
   m_Pitch: 1
   Loop: 0
   Mute: 0

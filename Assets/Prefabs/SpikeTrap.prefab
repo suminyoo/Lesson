@@ -152,6 +152,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 10
+  effectEvent: {fileID: 11400000, guid: cfccda4950484334eb867f3ebf371571, type: 2}
 --- !u!4 &9021213277303328168 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 25dd827576c869145841ca3f7e431ae1, type: 3}

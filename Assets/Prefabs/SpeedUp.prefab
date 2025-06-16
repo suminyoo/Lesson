@@ -125,6 +125,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerData: {fileID: 11400000, guid: 8572e4042f7f9c34791e022a5598c284, type: 2}
+  effectEvent: {fileID: 11400000, guid: cfccda4950484334eb867f3ebf371571, type: 2}
   rotationSpeed: 50
   floatAmplitude: 0.25
   floatFrequency: 1

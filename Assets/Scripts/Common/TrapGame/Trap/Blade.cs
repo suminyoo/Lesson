@@ -2,6 +2,9 @@ using UnityEngine;
 
 public class Blade : Trap
 {
+    [SerializeField] private EffectEventSO effectEvent;
+
+
     private float speed;
     private float lifetime;
     private int _damage;
@@ -20,7 +23,8 @@ public class Blade : Trap
     protected override void OnCollisionEnter(Collision collision)
     {
         SoundManager.Instance.PlaySFX(ESfx.Hit);
-        EffectManager.Instance.PlayEffect(EEffect.Hit, collision.gameObject.GetComponent<Player>().transform.position);
+        //EffectManager.Instance.PlayEffect(EEffect.Hit, collision.gameObject.GetComponent<Player>().transform.position);
+        effectEvent.Raise(EEffect.Hit, collision.gameObject.GetComponent<Player>().transform.position);
 
         collision.gameObject.GetComponent<Player>()?.ChangePlayerHP(-_damage);
         base.OnCollisionEnter(collision);
