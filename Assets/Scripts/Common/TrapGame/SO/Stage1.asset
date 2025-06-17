@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ea4260a1587e62f43b359000781d2a9f, type: 3}
+  m_Name: Stage1
+  m_EditorClassIdentifier: 
+  stageName: Stage1
+  repeatCountPerStage: 3
+  trapPrefabs:
+  - {fileID: 5181220388562524735, guid: f1298e85a8b5d6d4f8bce4a4b3183920, type: 3}
+  trapCount: 5
+  trapIncrementPerRepeat: 1
+  itemPrefabs:
+  - {fileID: 4413799610964210378, guid: 4a68f3432de74ee40b46d65a138c0f1b, type: 3}
+  itemCount: 1
+  itemIncrementPerRepeat: 1
+  chunkPrefabs:
+  - {fileID: 9076513251067446109, guid: de4a9614eae212d4dbaf6bd24df22635, type: 3}
+  - {fileID: 7935135513578946661, guid: 393ca64734866cf43819acddc77eb754, type: 3}
+  chunkCount: 3

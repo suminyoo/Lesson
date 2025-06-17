@@ -4,6 +4,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "TG_PlayerData", menuName = "Scriptable Objects/TG_PlayerData")]
 public class TG_PlayerData : ScriptableObject
 {
+    public int stage = 1;
     public int score = 0;
     public string DeathReason;
     public bool isDead;
@@ -21,23 +22,6 @@ public class TG_PlayerData : ScriptableObject
     public bool SpeedUpUsable;
     public bool JumpPowUpUsable;
 
-    #region Stage
-
-    public event Action OnStageClear;
-    public event Action OnGameClear;
-
-    [SerializeField] private int _stage = 1;
-    [SerializeField] private int clearStageNum = 10;
-
-    public int stage => _stage;
-    public void IncreaseStage()
-    {
-        _stage++;
-        if (_stage >= clearStageNum) OnGameClear?.Invoke();
-        else OnStageClear?.Invoke();
-    }
-
-    #endregion
 
     #region HpLife
 

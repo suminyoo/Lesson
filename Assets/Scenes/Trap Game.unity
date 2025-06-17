@@ -226,7 +226,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 301291216}
-  - component: {fileID: 301291217}
   - component: {fileID: 301291218}
   m_Layer: 0
   m_Name: EffectManager
@@ -250,18 +249,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 559188965}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &301291217
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 301291215}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 519235cb7ebb6044ea4eb2c511b37a13, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &301291218
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -519,30 +506,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inGameUIDoc: {fileID: 1322371918}
-  trapPrefabList:
-  - {fileID: 5181220388562524735, guid: f1298e85a8b5d6d4f8bce4a4b3183920, type: 3}
-  - {fileID: 5721145428466738337, guid: 40f548cdb6947b845aabde2e765d35bb, type: 3}
-  - {fileID: 2474367108900607613, guid: f44982a458f5ec945be175416d67107b, type: 3}
-  - {fileID: 6322508232951901443, guid: 3e1dd4d865e2c3f458bc319de427bdea, type: 3}
-  - {fileID: 8355208495791120437, guid: d1fb24ad597bed74caf3379c83a70414, type: 3}
-  itemPrefabList:
-  - {fileID: 4413799610964210378, guid: 4a68f3432de74ee40b46d65a138c0f1b, type: 3}
-  - {fileID: 3099626940402206331, guid: 11aa79a4969a4ac4c89d518bbafbf3ae, type: 3}
-  - {fileID: 8596044596214984550, guid: ff0da40f4fdaeac4f8e17f639e5b6afc, type: 3}
-  - {fileID: 3609176395750161270, guid: 1ebec3c1ff2ac5e4a8b330d705c450fb, type: 3}
+  finishPrefab: {fileID: 6090027830335675125, guid: 1ebbd4dd4e5a10e48a817a6771486d91, type: 3}
   spawnedTrapNums: 
   totalTrapDamage: 0
-  chunkPrefabs:
-  - {fileID: 9076513251067446109, guid: de4a9614eae212d4dbaf6bd24df22635, type: 3}
-  - {fileID: 7935135513578946661, guid: 393ca64734866cf43819acddc77eb754, type: 3}
-  - {fileID: 1035300168568544366, guid: e46e498218eecc842a015a570f5a25ef, type: 3}
-  - {fileID: 8481727039351821443, guid: 389242e7228a598409f12375cb26789d, type: 3}
-  - {fileID: 371487277481247906, guid: d24258552dd61b941bc2a0194c6bc0a8, type: 3}
-  - {fileID: 4338402320923773435, guid: 17d191297c3821043925e655ce524ffb, type: 3}
-  finishPrefab: {fileID: 6090027830335675125, guid: 1ebbd4dd4e5a10e48a817a6771486d91, type: 3}
-  desiredTrapCount: 10
-  desiredItemCount: 4
-  chunkCount: 10
 --- !u!1 &459095087
 GameObject:
   m_ObjectHideFlags: 0
@@ -804,6 +770,7 @@ Transform:
   - {fileID: 1718438135}
   - {fileID: 1747513719}
   - {fileID: 301291216}
+  - {fileID: 1511950979}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &641007720
@@ -1272,6 +1239,7 @@ MonoBehaviour:
   player: {fileID: 1450583628}
   cameraController: {fileID: 1807625479}
   generateStage: {fileID: 407321858}
+  stageManager: {fileID: 1511950980}
 --- !u!4 &916230331
 Transform:
   m_ObjectHideFlags: 0
@@ -2036,6 +2004,56 @@ CapsuleCollider:
   m_Height: 1.4
   m_Direction: 1
   m_Center: {x: 0, y: 0.7, z: 0}
+--- !u!1 &1511950978
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1511950979}
+  - component: {fileID: 1511950980}
+  m_Layer: 0
+  m_Name: StageManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1511950979
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1511950978}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 559188965}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1511950980
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1511950978}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8cc40e302dfe15f48b74895366c59b89, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  generateStage: {fileID: 407321858}
+  playerData: {fileID: 11400000, guid: 8572e4042f7f9c34791e022a5598c284, type: 2}
+  stages:
+  - {fileID: 11400000, guid: 6041bc47f54e5424da074287e3dbf0f4, type: 2}
+  - {fileID: 11400000, guid: f8fc1ef8c3e000644a6df654bea23acc, type: 2}
+  currentStageIndex: 0
 --- !u!1001 &1577245142
 PrefabInstance:
   m_ObjectHideFlags: 0

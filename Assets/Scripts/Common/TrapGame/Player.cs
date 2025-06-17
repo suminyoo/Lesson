@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    public event Action OnStageClear;
+
     [SerializeField] TG_PlayerData playerData;
     [SerializeField] private EffectEventSO effectEvent;
 
@@ -38,8 +40,8 @@ public class Player : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        if (playerData.isDead) return; 
-        if (other.gameObject.CompareTag("Clear")) playerData.IncreaseStage();
+        if (playerData.isDead) return;
+        if (other.gameObject.CompareTag("Clear")) OnStageClear.Invoke();
         if (other.gameObject.CompareTag("DeathArea"))
         {
             playerData.DeathReason = "Killed By DeathArea";

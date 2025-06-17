@@ -4,20 +4,19 @@ using UnityEngine;
 
 public class GenerateStage : MonoBehaviour
 {
-    [SerializeField] InGameUI inGameUIDoc
-        ;
-    [SerializeField] Trap[] trapPrefabList = new Trap[0];
-    [SerializeField] Item[] itemPrefabList = new Item[0];
+    [SerializeField] InGameUI inGameUIDoc;
+    [SerializeField] GameObject finishPrefab;
+
+    private Trap[] trapPrefabList = new Trap[0];
+    private Item[] itemPrefabList = new Item[0];
+    private GameObject[] chunkPrefabList = new GameObject[0];
+
+    private int desiredTrapCount;
+    private int desiredItemCount;
+    private int desiredchunkCount;
 
     public int[] spawnedTrapNums;
     public int totalTrapDamage;
-
-    [SerializeField] GameObject[] chunkPrefabs;
-    [SerializeField] GameObject finishPrefab;
-
-    public int desiredTrapCount = 10;
-    public int desiredItemCount = 4;
-    public int chunkCount = 5;
 
     private int chunkDepth = 4;
     private float tileSize = 2f;
@@ -27,6 +26,28 @@ public class GenerateStage : MonoBehaviour
     private GameObject itemGroup;
 
     private List<Vector3> trapCandidatePositions = new List<Vector3>();
+
+
+    public void SetTrapList(Trap[] list, int count)
+    {
+        trapPrefabList = list;
+        desiredTrapCount = count;
+    }
+    public void SetItemList(Item[] list, int count)
+    {
+        itemPrefabList = list;
+        desiredItemCount = count;
+    }
+    public void SetChunkList(GameObject[] list, int count)
+    {
+        chunkPrefabList = list;
+        desiredchunkCount = count;
+    }
+
+
+
+
+
     private float GetEmptyDistanceOneDirection(Vector3 position, Vector3 direction, float tileUnit, int maxSteps)
     {
         float distance = 0f;
@@ -47,11 +68,11 @@ public class GenerateStage : MonoBehaviour
     {
         chunkGroup = new GameObject("ChunkMap");
 
-        for (int i = 0; i < chunkCount; i++)
+        for (int i = 0; i < desiredchunkCount; i++)
         {
             Vector3 chunkPos = new Vector3(i * chunkDepth * tileSize, 0f, 0f);
 
-            GameObject chunkPrefab = chunkPrefabs[UnityEngine.Random.Range(0, chunkPrefabs.Length)];
+            GameObject chunkPrefab = chunkPrefabList[UnityEngine.Random.Range(0, chunkPrefabList.Length)];
             GameObject chunkInstance = Instantiate(chunkPrefab, chunkPos, Quaternion.identity, chunkGroup.transform);
 
             foreach (Transform child in chunkInstance.GetComponentsInChildren<Transform>())
@@ -122,7 +143,7 @@ public class GenerateStage : MonoBehaviour
 
         GameObject finishInstance = Instantiate(
             finishPrefab,
-            new Vector3(chunkCount * chunkDepth * tileSize, 0f, 0f),
+            new Vector3(desiredchunkCount * chunkDepth * tileSize, 0f, 0f),
             Quaternion.identity,
             chunkGroup.transform);
     }

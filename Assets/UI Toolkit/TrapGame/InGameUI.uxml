@@ -1,7 +1,7 @@
 <ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <ui:VisualElement name="Background" style="flex-grow: 1; flex-direction: row;">
         <ui:VisualElement name="LeftInfo" style="flex-grow: 1; color: rgb(255, 255, 255);">
-            <ui:ProgressBar value="100" title="HP" name="HP" data-source="project://database/Assets/Scripts/Common/TrapGame/TG_PlayerData.asset?fileID=11400000&amp;guid=8572e4042f7f9c34791e022a5598c284&amp;type=2#TG_PlayerData" style="color: rgb(0, 0, 0); -unity-background-image-tint-color: rgb(255, 255, 255); background-color: rgb(255, 255, 255);">
+            <ui:ProgressBar value="100" title="HP" name="HP" data-source="project://database/Assets/Scripts/Common/TrapGame/SO/TG_PlayerData.asset?fileID=11400000&amp;guid=8572e4042f7f9c34791e022a5598c284&amp;type=2#TG_PlayerData" style="color: rgb(0, 0, 0); -unity-background-image-tint-color: rgb(255, 255, 255); background-color: rgb(255, 255, 255);">
                 <Bindings>
                     <ui:DataBinding property="value" data-source-path="_hp" binding-mode="ToTarget" />
                 </Bindings>
@@ -12,17 +12,17 @@
         <ui:VisualElement name="RightInfo" style="flex-grow: 1; -unity-text-align: upper-right;">
             <ui:VisualElement name="Stage" style="flex-grow: 1; flex-direction: row; align-self: auto; justify-content: flex-end; align-content: auto; align-items: stretch; max-height: 35px;">
                 <ui:Label text="Stage:" name="StageLabel" enable-rich-text="false" style="color: rgb(255, 255, 255); -unity-font-style: bold; -unity-text-outline-width: 0.5px; -unity-text-outline-color: rgb(0, 0, 0); justify-content: flex-start; height: 22px; font-size: 16px;" />
-                <ui:Label text="Stage 1" name="StageNum" enable-rich-text="false" data-source="project://database/Assets/Scripts/Common/TrapGame/TG_PlayerData.asset?fileID=11400000&amp;guid=8572e4042f7f9c34791e022a5598c284&amp;type=2#TG_PlayerData" style="-unity-font-style: bold; color: rgb(255, 255, 255); font-size: 16px; -unity-text-outline-width: 0.5px; -unity-text-outline-color: rgb(0, 0, 0);">
+                <ui:Label text="Stage 1" name="StageNum" enable-rich-text="false" data-source="project://database/Assets/Scripts/Common/TrapGame/SO/TG_PlayerData.asset?fileID=11400000&amp;guid=8572e4042f7f9c34791e022a5598c284&amp;type=2#TG_PlayerData" style="-unity-font-style: bold; color: rgb(255, 255, 255); font-size: 16px; -unity-text-outline-width: 0.5px; -unity-text-outline-color: rgb(0, 0, 0);">
                     <Bindings>
-                        <ui:DataBinding property="text" data-source-path="_stage" binding-mode="ToTarget" />
+                        <ui:DataBinding property="text" data-source-path="stage" binding-mode="ToTarget" />
                     </Bindings>
                 </ui:Label>
             </ui:VisualElement>
             <ui:VisualElement name="LifeArea" style="flex-grow: 1; flex-direction: row; justify-content: flex-end; align-self: auto; height: auto; max-height: 35px;">
                 <ui:Label text="Life: " name="LifeLabel" enable-rich-text="false" style="color: rgb(255, 255, 255); -unity-font-style: bold; -unity-text-outline-width: 0.5px; -unity-text-outline-color: rgb(0, 0, 0); justify-content: flex-start; height: 22px; font-size: 16px;" />
-                <ui:Label text="Life: 3" name="Life" enable-rich-text="false" data-source="project://database/Assets/Scripts/Common/TrapGame/TG_PlayerData.asset?fileID=11400000&amp;guid=8572e4042f7f9c34791e022a5598c284&amp;type=2#TG_PlayerData" style="-unity-font-style: bold; color: rgb(255, 255, 255); font-size: 16px; -unity-text-outline-width: 0.5px; -unity-text-outline-color: rgb(0, 0, 0); height: 22px;">
+                <ui:Label text="Life: 3" name="Life" enable-rich-text="false" data-source="project://database/Assets/Scripts/Common/TrapGame/SO/TG_PlayerData.asset?fileID=11400000&amp;guid=8572e4042f7f9c34791e022a5598c284&amp;type=2#TG_PlayerData" style="-unity-font-style: bold; color: rgb(255, 255, 255); font-size: 16px; -unity-text-outline-width: 0.5px; -unity-text-outline-color: rgb(0, 0, 0); height: 22px;">
                     <Bindings>
-                        <ui:DataBinding property="text" data-source-path="_life" data-source="project://database/Assets/Scripts/Common/TrapGame/TG_PlayerData.asset?fileID=11400000&amp;guid=8572e4042f7f9c34791e022a5598c284&amp;type=2#TG_PlayerData" binding-mode="ToTarget" />
+                        <ui:DataBinding property="text" data-source-path="_life" data-source="project://database/Assets/Scripts/Common/TrapGame/SO/TG_PlayerData.asset?fileID=11400000&amp;guid=8572e4042f7f9c34791e022a5598c284&amp;type=2#TG_PlayerData" binding-mode="ToTarget" />
                     </Bindings>
                 </ui:Label>
             </ui:VisualElement>

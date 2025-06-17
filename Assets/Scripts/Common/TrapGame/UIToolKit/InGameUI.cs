@@ -11,7 +11,7 @@ public class InGameUI : MonoBehaviour
     private Label jumpLabel;
     private Label speedLabel;
 
-    private Label[] trapLabelList = new Label[4];
+    //private Label[] trapLabelList = new Label[4];
     private Label totalTrapDamageLabel;
 
     private float time;
@@ -25,11 +25,11 @@ public class InGameUI : MonoBehaviour
         jumpLabel = root.Q<Label>("JumpPower");
         speedLabel = root.Q<Label>("Speed");
 
-        trapLabelList[0] = root.Q<Label>("Trap01Num");
-        trapLabelList[1] = root.Q<Label>("Trap02Num");
-        trapLabelList[2] = root.Q<Label>("Trap03Num");
-        trapLabelList[3] = root.Q<Label>("Trap04Num");
-        totalTrapDamageLabel = root.Q<Label>("TotalTrapDamage");
+        //trapLabelList[0] = root.Q<Label>("Trap01Num");
+        //trapLabelList[1] = root.Q<Label>("Trap02Num");
+        //trapLabelList[2] = root.Q<Label>("Trap03Num");
+        //trapLabelList[3] = root.Q<Label>("Trap04Num");
+        //totalTrapDamageLabel = root.Q<Label>("TotalTrapDamage");
     }
     private void Start()
     {
@@ -48,11 +48,11 @@ public class InGameUI : MonoBehaviour
     }
     public void ChangeDifficultyUI(Trap[] trapList, int[] trapNumList, float totalDamage)
     {
-        for (int i = 0; i < trapLabelList.Length; i++)
-        {
-            trapLabelList[i].text = trapList[i].gameObject.name.ToString()+" : "+trapNumList[i].ToString();
-        }
-        totalTrapDamageLabel.text = "Total Trap Damage: " + totalDamage.ToString();
+        //for (int i = 0; i < trapLabelList.Length; i++)
+        //{
+        //    trapLabelList[i].text = trapList[i].gameObject.name.ToString()+" : "+trapNumList[i].ToString();
+        //}
+        //totalTrapDamageLabel.text = "Total Trap Damage: " + totalDamage.ToString();
     }
     public void ChangeSpeedUI(float curSpeed)
     {

@@ -20,6 +20,7 @@ public enum State
 }
 public class GameManager : MonoBehaviour
 {
+
     public static event Action<bool> OnPaused;
     public static event Action<State> OnGameStateChange;
 
@@ -28,12 +29,12 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] CameraController cameraController;
     [SerializeField] GenerateStage generateStage;
-
+    [SerializeField] StageManager stageManager;
 
     private void Start()
     {
-        playerData.OnGameClear += () => OnGameStateChange?.Invoke(State.GAME_CLEAR);
-        playerData.OnStageClear += HandleStageClear;
+        player.OnStageClear += HandleStageClear;
+
         playerData.OnLifeLost += HandleLifeLost;
         playerData.OnStageOver += HandleStageOver;
 
@@ -45,12 +46,27 @@ public class GameManager : MonoBehaviour
         Trap.OnAnyTrapTrigger += DeathReason;
 
         StartCoroutine(LateStart());
+        playerData.stage = 1;
+    }
+    private void HandleGameClear()
+    {
+        GamePause();
+        SoundManager.Instance.PlaySFX(ESfx.StageClear); //to game clear sound
+        OnGameStateChange?.Invoke(State.GAME_CLEAR);
     }
     private void HandleStageClear()
     {
-        GamePause();
-        SoundManager.Instance.PlaySFX(ESfx.StageClear);
-        OnGameStateChange?.Invoke(State.STAGE_CLEAR);
+        if (stageManager.IsFinalStage())
+        {
+            HandleGameClear();
+        }
+        else
+        {
+            GamePause();
+            SoundManager.Instance.PlaySFX(ESfx.StageClear);
+            OnGameStateChange?.Invoke(State.STAGE_CLEAR);
+        }
+
     }
     private void HandleLifeLost()
     {
@@ -87,25 +103,41 @@ public class GameManager : MonoBehaviour
     }
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.T)) SetStage();
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            player.InitializePlayer();
-            generateStage.ResetTrapsAndItems();
-        }
+        //if (Input.GetKeyDown(KeyCode.T)) SetStage();
+        //if (Input.GetKeyDown(KeyCode.R))
+        //{
+        //    player.InitializePlayer();
+        //    generateStage.ResetTrapsAndItems();
+        //}
     }
+    //private void SetStage()
+    //{
+    //    generateStage.ResetStage();
+    //    OnGameStateChange.Invoke(State.SET_STAGE);
+    //    player.InitializePlayer();
+    //    GameResume();
+    //}
+    //private void NextStage()
+    //{
+    //    //generateStage.desiredTrapCount += 5;
+    //    SetStage();
+    //}
     private void SetStage()
     {
-        generateStage.ResetStage();
+        stageManager.RestartStage();
         OnGameStateChange.Invoke(State.SET_STAGE);
         player.InitializePlayer();
         GameResume();
     }
     private void NextStage()
     {
-        //generateStage.desiredTrapCount += 5;
-        SetStage();
+        stageManager.NextStage();
+        OnGameStateChange.Invoke(State.SET_STAGE);
+        player.InitializePlayer();
+        GameResume();
     }
+
+
 
     private void PlayerRespawn()
     {
