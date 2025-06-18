@@ -15,6 +15,7 @@ TagManager:
   - JumpUp
   - Coin
   - Blade
+  - Bomb
   layers:
   - Default
   - TransparentFX

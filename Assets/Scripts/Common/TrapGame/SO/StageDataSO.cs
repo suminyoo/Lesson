@@ -20,4 +20,9 @@ public class StageDataSO : ScriptableObject
     [Header("Chunk Settings")]
     public GameObject[] chunkPrefabs;
     public int chunkCount;
+
+    [Header("Tile Behavior Settings")]
+    [Range(0f, 1f)] public float movingTileChance = 0.2f;
+    [Range(0f, 1f)] public float fallingTileChance = 0.1f;
+
 }

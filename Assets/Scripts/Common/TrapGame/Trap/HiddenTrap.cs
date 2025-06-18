@@ -12,6 +12,7 @@ public class HiddenTrap : Trap
     }
     protected override void OnTriggerEnter(Collider other)
     {
+
         if (other.CompareTag("Player"))
         {
             if (tag == "Bomb")

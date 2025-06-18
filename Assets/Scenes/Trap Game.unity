@@ -2053,6 +2053,9 @@ MonoBehaviour:
   stages:
   - {fileID: 11400000, guid: 6041bc47f54e5424da074287e3dbf0f4, type: 2}
   - {fileID: 11400000, guid: f8fc1ef8c3e000644a6df654bea23acc, type: 2}
+  - {fileID: 11400000, guid: caa7d175380d31e4081eb9b5917891af, type: 2}
+  - {fileID: 11400000, guid: fc3adb586c476304c95a6dab3d52a295, type: 2}
+  - {fileID: 11400000, guid: 0c9c2da59f47b23498955a60e8b58c21, type: 2}
   currentStageIndex: 0
 --- !u!1001 &1577245142
 PrefabInstance:

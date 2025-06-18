@@ -27,6 +27,14 @@ public class GenerateStage : MonoBehaviour
 
     private List<Vector3> trapCandidatePositions = new List<Vector3>();
 
+    private float movingTileChance;
+    private float fallingTileChance;
+
+    public void SetTileBehaviorChances(float movingChance, float fallingChance)
+    {
+        movingTileChance = movingChance;
+        fallingTileChance = fallingChance;
+    }
 
     public void SetTrapList(Trap[] list, int count)
     {
@@ -43,10 +51,6 @@ public class GenerateStage : MonoBehaviour
         chunkPrefabList = list;
         desiredchunkCount = count;
     }
-
-
-
-
 
     private float GetEmptyDistanceOneDirection(Vector3 position, Vector3 direction, float tileUnit, int maxSteps)
     {
@@ -97,8 +101,8 @@ public class GenerateStage : MonoBehaviour
                 // 랜덤값 준비
                 float rand = UnityEngine.Random.value;
 
-                // 20% 확률로 MovingTile 붙이기
-                if (rand < 0.2f && (canMoveX || canMoveZ))
+                // 확률로 MovingTile 붙이기
+                if (rand < movingTileChance && (canMoveX || canMoveZ))
                 {
                     MovingTile mover = child.gameObject.AddComponent<MovingTile>();
 
@@ -128,8 +132,8 @@ public class GenerateStage : MonoBehaviour
                     mover.moveSpeed = UnityEngine.Random.Range(1.5f, 3f);
                     continue; // 함정 후보 제외
                 }
-                // 10% 확률로 FallingTile 붙이기
-                else if (rand >= 0.2f && rand < 0.3f)
+                // 확률로 FallingTile 붙이기
+                else if (rand < movingTileChance + fallingTileChance)
                 {
                     if (child.GetComponent<FallingTile>() == null)
                         child.gameObject.AddComponent<FallingTile>();

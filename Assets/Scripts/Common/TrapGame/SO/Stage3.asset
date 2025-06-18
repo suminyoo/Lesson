@@ -10,25 +10,29 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ea4260a1587e62f43b359000781d2a9f, type: 3}
-  m_Name: Stage2
+  m_Name: Stage3
   m_EditorClassIdentifier: 
-  stageName: Stage2
+  stageName: Stage3
   repeatCountPerStage: 3
   trapPrefabs:
-  - {fileID: 5721145428466738337, guid: 40f548cdb6947b845aabde2e765d35bb, type: 3}
   - {fileID: 5181220388562524735, guid: f1298e85a8b5d6d4f8bce4a4b3183920, type: 3}
-  trapCount: 5
-  trapIncrementPerRepeat: 2
+  - {fileID: 5721145428466738337, guid: 40f548cdb6947b845aabde2e765d35bb, type: 3}
+  - {fileID: 2474367108900607613, guid: f44982a458f5ec945be175416d67107b, type: 3}
+  trapCount: 8
+  trapIncrementPerRepeat: 3
   itemPrefabs:
-  - {fileID: 3099626940402206331, guid: 11aa79a4969a4ac4c89d518bbafbf3ae, type: 3}
+  - {fileID: 3609176395750161270, guid: 1ebec3c1ff2ac5e4a8b330d705c450fb, type: 3}
   - {fileID: 4413799610964210378, guid: 4a68f3432de74ee40b46d65a138c0f1b, type: 3}
+  - {fileID: 3099626940402206331, guid: 11aa79a4969a4ac4c89d518bbafbf3ae, type: 3}
   itemCount: 3
-  itemIncrementPerRepeat: 0
+  itemIncrementPerRepeat: 1
   chunkPrefabs:
   - {fileID: 9076513251067446109, guid: de4a9614eae212d4dbaf6bd24df22635, type: 3}
   - {fileID: 7935135513578946661, guid: 393ca64734866cf43819acddc77eb754, type: 3}
   - {fileID: 1035300168568544366, guid: e46e498218eecc842a015a570f5a25ef, type: 3}
   - {fileID: 8481727039351821443, guid: 389242e7228a598409f12375cb26789d, type: 3}
-  chunkCount: 5
-  movingTileChance: 0
+  - {fileID: 371487277481247906, guid: d24258552dd61b941bc2a0194c6bc0a8, type: 3}
+  - {fileID: 4338402320923773435, guid: 17d191297c3821043925e655ce524ffb, type: 3}
+  chunkCount: 6
+  movingTileChance: 0.1
   fallingTileChance: 0

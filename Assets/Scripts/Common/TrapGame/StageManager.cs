@@ -17,6 +17,7 @@ public class StageManager : MonoBehaviour
         int trapCount = data.trapCount + data.trapIncrementPerRepeat * currentRepeat;
         int itemCount = data.itemCount + data.itemIncrementPerRepeat * currentRepeat;
 
+        generateStage.SetTileBehaviorChances(data.movingTileChance, data.fallingTileChance);
         generateStage.SetTrapList(data.trapPrefabs, trapCount);
         generateStage.SetItemList(data.itemPrefabs, itemCount);
         generateStage.SetChunkList(data.chunkPrefabs, data.chunkCount);
