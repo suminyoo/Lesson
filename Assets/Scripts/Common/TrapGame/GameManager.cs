@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public enum State
@@ -20,7 +19,6 @@ public enum State
 }
 public class GameManager : MonoBehaviour
 {
-
     public static event Action<bool> OnPaused;
     public static event Action<State> OnGameStateChange;
 
@@ -103,28 +101,18 @@ public class GameManager : MonoBehaviour
     }
     private void Update()
     {
-        //if (Input.GetKeyDown(KeyCode.T)) SetStage();
-        //if (Input.GetKeyDown(KeyCode.R))
-        //{
-        //    player.InitializePlayer();
-        //    generateStage.ResetTrapsAndItems();
-        //}
+
+        if (Input.GetKeyDown(KeyCode.T)) SetStage();
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            player.InitializePlayer();
+            generateStage.ResetTrapsAndItems();
+        }
     }
-    //private void SetStage()
-    //{
-    //    generateStage.ResetStage();
-    //    OnGameStateChange.Invoke(State.SET_STAGE);
-    //    player.InitializePlayer();
-    //    GameResume();
-    //}
-    //private void NextStage()
-    //{
-    //    //generateStage.desiredTrapCount += 5;
-    //    SetStage();
-    //}
+   
     private void SetStage()
     {
-        stageManager.RestartStage();
+        stageManager.LoadCurrentStage();
         OnGameStateChange.Invoke(State.SET_STAGE);
         player.InitializePlayer();
         GameResume();
@@ -137,16 +125,12 @@ public class GameManager : MonoBehaviour
         GameResume();
     }
 
-
-
     private void PlayerRespawn()
     {
         player.RespawnPlayer();
         OnGameStateChange.Invoke(State.PLAYER_RESPAWN);
         GameResume();
     }
-
-
 
     private void GamePause() => OnPaused.Invoke(true);
     private void GameResume() => OnPaused.Invoke(false);

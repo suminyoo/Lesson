@@ -156,7 +156,6 @@ public class GenerateStage : MonoBehaviour
     {
         List<Vector3> shuffled = new List<Vector3>(trapCandidatePositions);
 
-        // Fisher-Yates 알고리즘으로 섞기
         for (int i = 0; i < shuffled.Count; i++)
         {
             int randIndex = UnityEngine.Random.Range(i, shuffled.Count);

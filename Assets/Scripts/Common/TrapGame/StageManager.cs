@@ -43,11 +43,6 @@ public class StageManager : MonoBehaviour
         }
     }
 
-    public void RestartStage()
-    {
-        LoadCurrentStage();
-    }
-
     public bool IsFinalStage()
     {
         bool isLastStageIndex = currentStageIndex == stages.Length - 1;
@@ -56,10 +51,10 @@ public class StageManager : MonoBehaviour
 
         return isLastStageIndex && isLastRepeat;
     }
-    public void ResetProgress()
-    {
-        playerData.stage = 1;
-        currentStageIndex = 0;
-        PlayerPrefs.DeleteKey("CurrentStage"); // 저장한 키 이름에 따라 바꿔줘
-    }
+    //public void ResetProgress()
+    //{
+    //    playerData.stage = 1;
+    //    currentStageIndex = 0;
+    //    PlayerPrefs.DeleteKey("CurrentStage"); // 저장한 키 이름에 따라 바꿔줘
+    //}
 }
